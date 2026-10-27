@@ -3,98 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VividAuraArt - Multiverse Portfolio</title>
-<meta name="description" content="VividAuraArt - Divine • Dark Fantasy • Superheroes • Cartoons • Animation • Spirituality">
-<link rel="icon" type="image/png" href="favicon.png">
-
-<!-- PINTEREST VERIFICATION - DO NOT DELETE -->
+<title>VividAuraArt - Multiverse</title>
+<link rel="icon" href="favicon.png">
 <meta name="p:domain_verify" content="83d97bc5b452b9ba3158c5be4dd2f97f"/>
-
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body { background: #000; color: #e8e2d6; font-family: Georgia, "Times New Roman", serif; text-align: center; }
-  h1.hide-seo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .hero-banner { width: 100%; max-width: 1100px; margin: 0 auto; display: block; }
-  .hero-banner img { width: 100%; height: auto; display: block; }
-  
-  .tagline{padding:15px;opacity:0.6;font-size:13px;letter-spacing:2px;text-transform:uppercase}
-  
-  .filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:20px 15px;position:sticky;top:0;z-index:10;background:rgba(0,0,0,0.9);border-bottom:1px solid rgba(201,161,74,0.2)}
-  .filters button{background:transparent;border:1px solid rgba(232,226,214,0.2);color:#aaa;padding:8px 18px;border-radius:25px;cursor:pointer;font-size:13px;transition:all 0.3s}
-  .filters button:hover,.filters button.active{background:#c9a14a;color:#0a0a0f;border-color:#c9a14a;font-weight:bold}
-  
-  .gallery{columns:2;column-gap:12px;padding:15px;max-width:1200px;margin:0 auto}
-  @media(min-width:768px){.gallery{columns:3}}
-  @media(min-width:1024px){.gallery{columns:4}}
-  .card{break-inside:avoid;margin-bottom:12px;border-radius:12px;overflow:hidden;position:relative;background:#111;border:1px solid rgba(255,255,255,0.06)}
-  .card img{width:100%;display:block}
-  .card .overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.9) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;text-align:left}
-  .card:hover .overlay{opacity:1}
-  .cat{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#c9a14a;background:rgba(0,0,0,0.7);padding:3px 7px;border-radius:10px;width:fit-content;margin-bottom:5px}
-  .title{font-size:12px;font-weight:600;color:#fff}
-  .card.hide{display:none}
-  
-  .footer{padding:50px 20px;border-top:1px solid rgba(201,161,74,0.15);margin-top:30px}
-  .btn{display:inline-block;margin-top:20px;padding:14px 32px;color:#0a0a0f;background:#c9a14a;text-decoration:none;border-radius:30px;font-weight:bold;letter-spacing:0.05em;transition:all 0.3s}
-  .btn:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(201,161,74,0.4)}
-  .socials{margin-top:25px;display:flex;gap:12px;justify-content:center}
-  .socials a{color:#777;text-decoration:none;font-size:12px;border:1px solid rgba(255,255,255,0.1);padding:6px 14px;border-radius:20px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#e8e2d6;font-family:Georgia,serif;text-align:center}
+.hero img{width:100%;max-width:1100px;display:block;margin:0 auto}
+.tagline{padding:12px;opacity:0.6;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:18px;position:sticky;top:0;background:rgba(0,0,0,0.9);z-index:10;border-bottom:1px solid rgba(201,161,74,0.2)}
+.filters button{background:transparent;border:1px solid rgba(255,255,255,0.15);color:#aaa;padding:7px 16px;border-radius:20px;cursor:pointer;font-size:12px}
+.filters button.active{background:#c9a14a;color:#000;font-weight:bold}
+.gallery{columns:2;gap:10px;padding:12px;max-width:1200px;margin:0 auto}
+@media(min-width:768px){.gallery{columns:3}}@media(min-width:1024px){.gallery{columns:4}}
+.card{break-inside:avoid;margin-bottom:10px;border-radius:12px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,0.05);display:none}
+.card.show{display:block}
+.card img{width:100%;display:block}
+.card .info{padding:8px;text-align:left;font-size:11px;opacity:0.7}
+.footer{padding:40px 20px;border-top:1px solid rgba(201,161,74,0.15);margin-top:20px}
+.btn{display:inline-block;margin-top:15px;padding:12px 28px;background:#c9a14a;color:#000;text-decoration:none;border-radius:25px;font-weight:bold}
 </style>
 </head>
 <body>
-  <h1 class="hide-seo">VividAuraArt</h1>
-  
-  <!-- നിന്റെ Banner അതേപടി നിലനിർത്തി -->
-  <div class="hero-banner">
-    <img src="banner.jpg" alt="VividAuraArt">
-  </div>
-  <div class="tagline">Divine • Dark Fantasy • Superheroes • Cartoons • Animation • Spirituality</div>
+<div class="hero"><img src="banner.jpg" alt="VividAuraArt"></div>
+<div class="tagline">DIVINE • DARK FANTASY • SUPERHEROES • CARTOONS • ANIMATION • SPIRITUALITY</div>
 
-  <!-- Category Filters -->
-  <div class="filters">
-    <button class="active" data-filter="all">All</button>
-    <button data-filter="divine">Divine</button>
-    <button data-filter="dark">Dark Fantasy</button>
-    <button data-filter="hero">Superheroes</button>
-    <button data-filter="cartoon">Cartoons</button>
-    <button data-filter="animation">Animation</button>
-    <button data-filter="spirit">Spirituality</button>
-  </div>
+<div class="filters">
+<button class="active" data-f="all">All</button>
+<button data-f="divine">Divine</button>
+<button data-f="dark">Dark Fantasy</button>
+<button data-f="hero">Superheroes</button>
+<button data-f="cartoon">Cartoons</button>
+<button data-f="animation">Animation</button>
+<button data-f="spirit">Spirituality</button>
+</div>
 
-  <!-- Gallery - ഇവിടെ നിന്റെ art-ന്റെ image address ഇടുക -->
-  <div class="gallery">
-    <div class="card" data-cat="divine"><img src="https://via.placeholder.com/400x600/1a1025/c9a14a?text=Divine+Art" alt=""><div class="overlay"><span class="cat">Divine</span><span class="title">Jesus Art</span></div></div>
-    <div class="card" data-cat="dark"><img src="https://via.placeholder.com/400x500/2a0a3a/8A2BE2?text=Dark+Fantasy" alt=""><div class="overlay"><span class="cat">Dark Fantasy</span><span class="title">Shadow Art</span></div></div>
-    <div class="card" data-cat="hero"><img src="https://via.placeholder.com/400x550/0a1025/FF0000?text=Superhero" alt=""><div class="overlay"><span class="cat">Superheroes</span><span class="title">Hero Art</span></div></div>
-    <div class="card" data-cat="cartoon"><img src="https://via.placeholder.com/400x400/2a2a0a/FFFF00?text=Cartoon" alt=""><div class="overlay"><span class="cat">Cartoons</span><span class="title">Toon Art</span></div></div>
-    <div class="card" data-cat="animation"><img src="https://via.placeholder.com/400x600/0a1a2a/00FFFF?text=Animation" alt=""><div class="overlay"><span class="cat">Animation</span><span class="title">Animated Art</span></div></div>
-    <div class="card" data-cat="spirit"><img src="https://via.placeholder.com/400x500/1a1025/FFD700?text=Spirituality" alt=""><div class="overlay"><span class="cat">Spirituality</span><span class="title">Spiritual Aura</span></div></div>
-  </div>
+<div class="gallery" id="gallery"></div>
 
-  <!-- Ko-fi - ചായ കട ഇവിടെ! -->
-  <div class="footer">
-    <h2 style="font-family:Georgia;color:#c9a14a">Support My Multiverse</h2>
-    <p style="opacity:0.6;font-size:14px;max-width:500px;margin:10px auto;line-height:1.6">Each artwork takes 6-8 hours. Your support helps me create more Divine & Fantasy art.</p>
-    <a class="btn" href="https://ko-fi.com/vividaura" target="_blank">☕ Buy me a Coffee on Ko-fi</a>
-    <div class="socials">
-      <a href="https://in.pinterest.com/vividauraart/" target="_blank">Pinterest</a>
-      <a href="https://www.instagram.com/vividauraart/" target="_blank">Instagram</a>
-    </div>
-  </div>
+<div class="footer">
+<h3 style="color:#c9a14a">Support My Multiverse</h3>
+<p style="opacity:0.6;font-size:13px;margin:8px auto;max-width:400px">Each artwork takes 6-8 hours. Your support helps.</p>
+<a class="btn" href="https://ko-fi.com/vividaura" target="_blank">☕ Buy me a Coffee</a>
+</div>
 
 <script>
-const buttons = document.querySelectorAll('.filters button');
-const cards = document.querySelectorAll('.card');
-buttons.forEach(btn=>{
- btn.addEventListener('click',()=>{
-  buttons.forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const filter = btn.dataset.filter;
-  cards.forEach(card=>{
-   if(filter==='all' || card.dataset.cat===filter){card.classList.remove('hide');}
-   else{card.classList.add('hide');}
+// === AUTO-LOAD CONFIG ===
+// നീ ഈ പേരിൽ image ഇട്ടാൽ മതി, code തനിയെ എടുക്കും!
+// ഉദാ: divine-1.jpg, divine-2.jpg ... divine-20.jpg വരെ
+const categories = {
+  divine: 20, // divine-1.jpg to divine-20.jpg വരെ നോക്കും
+  dark: 20,
+  hero: 20,
+  cartoon: 20,
+  animation: 20,
+  spirit: 20
+};
+
+const gallery = document.getElementById('gallery');
+
+Object.keys(categories).forEach(cat => {
+  for(let i=1; i<=categories[cat]; i++){
+    const card = document.createElement('div');
+    card.className = 'card show';
+    card.dataset.cat = cat;
+    const imgName = `${cat}-${i}.jpg`; // ഉദാ: divine-1.jpg
+    card.innerHTML = `<img src="${imgName}" alt="${cat}" onerror="this.parentElement.style.display='none'"><div class="info">${cat} #${i}</div>`;
+    gallery.appendChild(card);
+  }
+});
+
+// Filter
+document.querySelectorAll('.filters button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.f;
+    document.querySelectorAll('.card').forEach(c=>{
+      if(f==='all' || c.dataset.cat===f){
+        if(c.querySelector('img').complete && c.querySelector('img').naturalHeight!==0) c.classList.add('show');
+        // Keep hidden if image failed
+        if(c.style.display!=='none') c.classList.add('show');
+      } else {
+        c.classList.remove('show');
+      }
+    });
+    // Re-apply hidden check
+    document.querySelectorAll('.card').forEach(c=>{
+      if(f!=='all' && c.dataset.cat!==f) c.classList.remove('show');
+    });
   });
- });
 });
 </script>
 </body>
