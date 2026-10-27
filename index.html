@@ -3,96 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VividAuraArt - Multiverse</title>
+<title>VIVID AURA ART - Links</title>
+<meta name="description" content="VIVID AURA ART - Divine • Dark Fantasy • Superheroes">
 <link rel="icon" href="favicon.png">
 <meta name="p:domain_verify" content="83d97bc5b452b9ba3158c5be4dd2f97f"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#000;color:#e8e2d6;font-family:Georgia,serif;text-align:center}
-.hero img{width:100%;max-width:1100px;display:block;margin:0 auto}
-.tagline{padding:12px;opacity:0.6;font-size:12px;letter-spacing:2px;text-transform:uppercase}
-.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:18px;position:sticky;top:0;background:rgba(0,0,0,0.9);z-index:10;border-bottom:1px solid rgba(201,161,74,0.2)}
-.filters button{background:transparent;border:1px solid rgba(255,255,255,0.15);color:#aaa;padding:7px 16px;border-radius:20px;cursor:pointer;font-size:12px}
-.filters button.active{background:#c9a14a;color:#000;font-weight:bold}
-.gallery{columns:2;gap:10px;padding:12px;max-width:1200px;margin:0 auto}
-@media(min-width:768px){.gallery{columns:3}}@media(min-width:1024px){.gallery{columns:4}}
-.card{break-inside:avoid;margin-bottom:10px;border-radius:12px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,0.05);display:none}
-.card.show{display:block}
-.card img{width:100%;display:block}
-.card .info{padding:8px;text-align:left;font-size:11px;opacity:0.7}
-.footer{padding:40px 20px;border-top:1px solid rgba(201,161,74,0.15);margin-top:20px}
-.btn{display:inline-block;margin-top:15px;padding:12px 28px;background:#c9a14a;color:#000;text-decoration:none;border-radius:25px;font-weight:bold}
+body{background:#000;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 15px}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at top,#1a1025 0%,#000 60%);z-index:-1}
+.container{width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center}
+.banner{width:100%;border-radius:20px;overflow:hidden;margin-bottom:20px;box-shadow:0 10px 40px rgba(0,0,0,0.8);border:1px solid rgba(201,161,74,0.15)}
+.banner img{width:100%;display:block}
+.profile{width:100px;height:100px;border-radius:50%;border:3px solid #c9a14a;box-shadow:0 0 25px rgba(201,161,74,0.4);margin-top:-55px;z-index:2;background:#000;object-fit:cover}
+h1{font-family:'Cinzel',serif;margin-top:12px;font-size:22px;letter-spacing:3px;color:#c9a14a}
+.tagline{margin-top:6px;font-size:11px;letter-spacing:2px;opacity:0.5;text-transform:uppercase;text-align:center}
+.bio{margin-top:14px;font-size:13px;opacity:0.7;text-align:center;line-height:1.6;max-width:320px}
+.links{width:100%;margin-top:25px;display:flex;flex-direction:column;gap:12px}
+.link-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:16px 20px;border-radius:14px;text-decoration:none;font-weight:600;font-size:14px;transition:all 0.3s}
+.link-btn:hover{transform:translateY(-2px);border-color:rgba(201,161,74,0.5);background:rgba(255,255,255,0.1)}
+.link-btn.gold{background:linear-gradient(90deg,#c9a14a,#e8c36a);color:#000;border-color:#c9a14a;font-weight:800}
+.icon{font-size:18px}
+.footer{margin-top:30px;text-align:center;opacity:0.3;font-size:10px;letter-spacing:1px}
 </style>
 </head>
 <body>
-<div class="hero"><img src="banner.jpg" alt="VividAuraArt"></div>
-<div class="tagline">DIVINE • DARK FANTASY • SUPERHEROES • CARTOONS • ANIMATION • SPIRITUALITY</div>
+<div class="container">
+<div class="banner"><img src="banner.jpg" alt="VIVID AURA ART"></div>
+<img class="profile" src="https://via.placeholder.com/200/000000/c9a14a?text=VAA" alt="VAA">
+<h1>VIVID AURA ART</h1>
+<div class="tagline">Divine • Dark Fantasy • Superheroes<br>Cartoons • Animation • Spirituality</div>
+<div class="bio">Custom collage art with 6-8 hours of detailed work. Original devotional & fantasy artworks.</div>
 
-<div class="filters">
-<button class="active" data-f="all">All</button>
-<button data-f="divine">Divine</button>
-<button data-f="dark">Dark Fantasy</button>
-<button data-f="hero">Superheroes</button>
-<button data-f="cartoon">Cartoons</button>
-<button data-f="animation">Animation</button>
-<button data-f="spirit">Spirituality</button>
+<div class="links">
+<a class="link-btn gold" href="https://www.instagram.com/vividauraart/" target="_blank">
+<span class="icon">📸</span> Instagram - Follow My Art
+</a>
+
+<a class="link-btn gold" href="https://ko-fi.com/vividaura" target="_blank">
+<span class="icon">☕</span> Buy me a Coffee on Ko-fi
+</a>
+
+<a class="link-btn" href="https://pinme.download/" target="_blank">
+<span class="icon">📌</span> PinMe Downloader Tool
+</a>
+
+<a class="link-btn" href="https://vividartistry1.gumroad.com/" target="_blank">
+<span class="icon">🛒</span> Gumroad Store - Premium Art
+</a>
+
+<a class="link-btn" href="https://in.pinterest.com/vividauraart/" target="_blank">
+<span class="icon">✨</span> Pinterest - VIVID AURA ART
+</a>
 </div>
 
-<div class="gallery" id="gallery"></div>
-
-<div class="footer">
-<h3 style="color:#c9a14a">Support My Multiverse</h3>
-<p style="opacity:0.6;font-size:13px;margin:8px auto;max-width:400px">Each artwork takes 6-8 hours. Your support helps.</p>
-<a class="btn" href="https://ko-fi.com/vividaura" target="_blank">☕ Buy me a Coffee</a>
+<div class="footer">© 2026 VIVID AURA ART - Pinterest Verified</div>
 </div>
-
-<script>
-// === AUTO-LOAD CONFIG ===
-// നീ ഈ പേരിൽ image ഇട്ടാൽ മതി, code തനിയെ എടുക്കും!
-// ഉദാ: divine-1.jpg, divine-2.jpg ... divine-20.jpg വരെ
-const categories = {
-  divine: 20, // divine-1.jpg to divine-20.jpg വരെ നോക്കും
-  dark: 20,
-  hero: 20,
-  cartoon: 20,
-  animation: 20,
-  spirit: 20
-};
-
-const gallery = document.getElementById('gallery');
-
-Object.keys(categories).forEach(cat => {
-  for(let i=1; i<=categories[cat]; i++){
-    const card = document.createElement('div');
-    card.className = 'card show';
-    card.dataset.cat = cat;
-    const imgName = `${cat}-${i}.jpg`; // ഉദാ: divine-1.jpg
-    card.innerHTML = `<img src="${imgName}" alt="${cat}" onerror="this.parentElement.style.display='none'"><div class="info">${cat} #${i}</div>`;
-    gallery.appendChild(card);
-  }
-});
-
-// Filter
-document.querySelectorAll('.filters button').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const f = btn.dataset.f;
-    document.querySelectorAll('.card').forEach(c=>{
-      if(f==='all' || c.dataset.cat===f){
-        if(c.querySelector('img').complete && c.querySelector('img').naturalHeight!==0) c.classList.add('show');
-        // Keep hidden if image failed
-        if(c.style.display!=='none') c.classList.add('show');
-      } else {
-        c.classList.remove('show');
-      }
-    });
-    // Re-apply hidden check
-    document.querySelectorAll('.card').forEach(c=>{
-      if(f!=='all' && c.dataset.cat!==f) c.classList.remove('show');
-    });
-  });
-});
-</script>
 </body>
 </html>
