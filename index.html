@@ -3,30 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VividAuraArt</title>
-<meta name="description" content="VividAuraArt">
+<title>VividAuraArt - Multiverse Portfolio</title>
+<meta name="description" content="VividAuraArt - Divine • Dark Fantasy • Superheroes • Cartoons • Animation • Spirituality">
 <link rel="icon" type="image/png" href="favicon.png">
 
+<!-- PINTEREST VERIFICATION - DO NOT DELETE -->
 <meta name="p:domain_verify" content="83d97bc5b452b9ba3158c5be4dd2f97f"/>
 
 <style>
-  html, body { height: 100%; margin: 0; }
-  body {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: #000; color: #e8e2d6; font-family: Georgia, "Times New Roman", serif;
-    text-align: center; padding: 16px; box-sizing: border-box;
-  }
-  h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  img { width: 100%; max-width: 1100px; height: auto; display: block; }
-  a {
-    display: inline-block; margin-top: 24px; padding: 12px 28px; color: #0a0a0f; background: #c9a14a;
-    text-decoration: none; border-radius: 4px; font-weight: bold; letter-spacing: 0.05em;
-  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body { background: #000; color: #e8e2d6; font-family: Georgia, "Times New Roman", serif; text-align: center; }
+  h1.hide-seo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .hero-banner { width: 100%; max-width: 1100px; margin: 0 auto; display: block; }
+  .hero-banner img { width: 100%; height: auto; display: block; }
+  
+  .tagline{padding:15px;opacity:0.6;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+  
+  .filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:20px 15px;position:sticky;top:0;z-index:10;background:rgba(0,0,0,0.9);border-bottom:1px solid rgba(201,161,74,0.2)}
+  .filters button{background:transparent;border:1px solid rgba(232,226,214,0.2);color:#aaa;padding:8px 18px;border-radius:25px;cursor:pointer;font-size:13px;transition:all 0.3s}
+  .filters button:hover,.filters button.active{background:#c9a14a;color:#0a0a0f;border-color:#c9a14a;font-weight:bold}
+  
+  .gallery{columns:2;column-gap:12px;padding:15px;max-width:1200px;margin:0 auto}
+  @media(min-width:768px){.gallery{columns:3}}
+  @media(min-width:1024px){.gallery{columns:4}}
+  .card{break-inside:avoid;margin-bottom:12px;border-radius:12px;overflow:hidden;position:relative;background:#111;border:1px solid rgba(255,255,255,0.06)}
+  .card img{width:100%;display:block}
+  .card .overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.9) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;text-align:left}
+  .card:hover .overlay{opacity:1}
+  .cat{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#c9a14a;background:rgba(0,0,0,0.7);padding:3px 7px;border-radius:10px;width:fit-content;margin-bottom:5px}
+  .title{font-size:12px;font-weight:600;color:#fff}
+  .card.hide{display:none}
+  
+  .footer{padding:50px 20px;border-top:1px solid rgba(201,161,74,0.15);margin-top:30px}
+  .btn{display:inline-block;margin-top:20px;padding:14px 32px;color:#0a0a0f;background:#c9a14a;text-decoration:none;border-radius:30px;font-weight:bold;letter-spacing:0.05em;transition:all 0.3s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(201,161,74,0.4)}
+  .socials{margin-top:25px;display:flex;gap:12px;justify-content:center}
+  .socials a{color:#777;text-decoration:none;font-size:12px;border:1px solid rgba(255,255,255,0.1);padding:6px 14px;border-radius:20px}
 </style>
 </head>
 <body>
-  <h1>VividAuraArt</h1>
-  <img src="banner.jpg" alt="VividAuraArt">
-  <a href="https://pin.it/3vbyRTtXi" target="_blank" rel="noopener">View on Pinterest</a>
+  <h1 class="hide-seo">VividAuraArt</h1>
+  
+  <!-- നിന്റെ Banner അതേപടി നിലനിർത്തി -->
+  <div class="hero-banner">
+    <img src="banner.jpg" alt="VividAuraArt">
+  </div>
+  <div class="tagline">Divine • Dark Fantasy • Superheroes • Cartoons • Animation • Spirituality</div>
+
+  <!-- Category Filters -->
+  <div class="filters">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="divine">Divine</button>
+    <button data-filter="dark">Dark Fantasy</button>
+    <button data-filter="hero">Superheroes</button>
+    <button data-filter="cartoon">Cartoons</button>
+    <button data-filter="animation">Animation</button>
+    <button data-filter="spirit">Spirituality</button>
+  </div>
+
+  <!-- Gallery - ഇവിടെ നിന്റെ art-ന്റെ image address ഇടുക -->
+  <div class="gallery">
+    <div class="card" data-cat="divine"><img src="https://via.placeholder.com/400x600/1a1025/c9a14a?text=Divine+Art" alt=""><div class="overlay"><span class="cat">Divine</span><span class="title">Jesus Art</span></div></div>
+    <div class="card" data-cat="dark"><img src="https://via.placeholder.com/400x500/2a0a3a/8A2BE2?text=Dark+Fantasy" alt=""><div class="overlay"><span class="cat">Dark Fantasy</span><span class="title">Shadow Art</span></div></div>
+    <div class="card" data-cat="hero"><img src="https://via.placeholder.com/400x550/0a1025/FF0000?text=Superhero" alt=""><div class="overlay"><span class="cat">Superheroes</span><span class="title">Hero Art</span></div></div>
+    <div class="card" data-cat="cartoon"><img src="https://via.placeholder.com/400x400/2a2a0a/FFFF00?text=Cartoon" alt=""><div class="overlay"><span class="cat">Cartoons</span><span class="title">Toon Art</span></div></div>
+    <div class="card" data-cat="animation"><img src="https://via.placeholder.com/400x600/0a1a2a/00FFFF?text=Animation" alt=""><div class="overlay"><span class="cat">Animation</span><span class="title">Animated Art</span></div></div>
+    <div class="card" data-cat="spirit"><img src="https://via.placeholder.com/400x500/1a1025/FFD700?text=Spirituality" alt=""><div class="overlay"><span class="cat">Spirituality</span><span class="title">Spiritual Aura</span></div></div>
+  </div>
+
+  <!-- Ko-fi - ചായ കട ഇവിടെ! -->
+  <div class="footer">
+    <h2 style="font-family:Georgia;color:#c9a14a">Support My Multiverse</h2>
+    <p style="opacity:0.6;font-size:14px;max-width:500px;margin:10px auto;line-height:1.6">Each artwork takes 6-8 hours. Your support helps me create more Divine & Fantasy art.</p>
+    <a class="btn" href="https://ko-fi.com/vividaura" target="_blank">☕ Buy me a Coffee on Ko-fi</a>
+    <div class="socials">
+      <a href="https://in.pinterest.com/vividauraart/" target="_blank">Pinterest</a>
+      <a href="https://www.instagram.com/vividauraart/" target="_blank">Instagram</a>
+    </div>
+  </div>
+
+<script>
+const buttons = document.querySelectorAll('.filters button');
+const cards = document.querySelectorAll('.card');
+buttons.forEach(btn=>{
+ btn.addEventListener('click',()=>{
+  buttons.forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter = btn.dataset.filter;
+  cards.forEach(card=>{
+   if(filter==='all' || card.dataset.cat===filter){card.classList.remove('hide');}
+   else{card.classList.add('hide');}
+  });
+ });
+});
+</script>
 </body>
 </html>
