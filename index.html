@@ -7,7 +7,7 @@
 <link rel="icon" href="favicon.png">
 <script>try{if(sessionStorage.getItem("vaaSplash"))document.documentElement.className="seen"}catch(e){}</script>
 <meta name="p:domain_verify" content="83d97bc5b452b9ba3158c5be4dd2f97f"/>
-<!-- SEO BOOST - FIXED FOR WHATSAPP PREVIEW -->
+<!-- SEO OG TAGS -->
 <meta property="og:title" content="VIVID AURA ART - From Our Imagination to Yours">
 <meta property="og:description" content="Dark fantasy, superheroes, cartoons, divine art. Support us on Ko-fi, download via PinMe.">
 <meta property="og:image" content="https://vividauraart.vercel.app/banner.jpg?v=2">
@@ -43,8 +43,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes pulse{0%,45%{transform:scale(1)}52%{transform:scale(1.03)}62%,100%{transform:scale(1)}}
 @keyframes flash{0%,46%{filter:brightness(1)}52%{filter:brightness(1.4)}66%{filter:brightness(1.1)}100%{filter:brightness(1)}}
 @keyframes logoIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
-.splash-sub{margin-top:24px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;opacity:0;color:#c9a14a;animation:subFade 0.6s forwards;animation-delay:0.3s}
-@keyframes subFade{to{opacity:0.6}}
+.splash-sub{margin-top:24px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:#c9a14a;min-height:14px}
+.splash-sub::after{content:'|';margin-left:2px;animation:blink 0.7s infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
 .container{width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center}
 .banner{width:100%;height:180px;border-radius:20px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(201,161,74,0.15)}
 .banner img{width:100%;height:100%;object-fit:cover;display:block}
@@ -76,7 +77,7 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 <img class="wing-r" src="splash-right.jpg" alt="">
 </div>
 </div>
-<div class="splash-sub">FROM OUR IMAGINATION TO YOURS</div>
+<div class="splash-sub" id="typewriter"></div>
 </div>
 
 <div class="container">
@@ -101,7 +102,18 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 var sp=document.getElementById('splash');
 function hideSplash(){sp.classList.add('hide');}
 try{sessionStorage.setItem('vaaSplash','1');}catch(e){}
-var t=setTimeout(hideSplash,2500);
+var t=setTimeout(hideSplash,4000);
+// Typewriter effect - FROM OUR IMAGINATION TO YOURS
+const twText="FROM OUR IMAGINATION TO YOURS";
+let twIdx=0;
+function typeWriter(){
+  if(twIdx<=twText.length){
+    document.getElementById('typewriter').textContent=twText.substring(0,twIdx);
+    twIdx++;
+    setTimeout(typeWriter, 75);
+  }
+}
+setTimeout(typeWriter, 1800);
 sp.addEventListener('click',function(){clearTimeout(t);hideSplash();});
 function harperVibe(el){
 if(navigator.vibrate){navigator.vibrate([30,20,30]);}
