@@ -7,7 +7,6 @@
 <link rel="icon" href="favicon.png">
 <script>try{if(sessionStorage.getItem("vaaSplash"))document.documentElement.className="seen"}catch(e){}</script>
 <meta name="p:domain_verify" content="83d97bc5b452b9ba3158c5be4dd2f97f"/>
-<!-- SEO OG TAGS -->
 <meta property="og:title" content="VIVID AURA ART - From Our Imagination to Yours">
 <meta property="og:description" content="Dark fantasy, superheroes, cartoons, divine art. Support us on Ko-fi, download via PinMe.">
 <meta property="og:image" content="https://vividauraart.vercel.app/banner.jpg?v=2">
@@ -43,15 +42,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes pulse{0%,45%{transform:scale(1)}52%{transform:scale(1.03)}62%,100%{transform:scale(1)}}
 @keyframes flash{0%,46%{filter:brightness(1)}52%{filter:brightness(1.4)}66%{filter:brightness(1.1)}100%{filter:brightness(1)}}
 @keyframes logoIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
-.splash-sub{margin-top:24px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:#c9a14a;min-height:14px}
-.splash-sub::after{content:'|';margin-left:2px;animation:blink 0.7s infinite}
-@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.splash-sub{margin-top:24px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;opacity:0;color:#c9a14a;animation:subFade 0.6s forwards;animation-delay:0.3s}
+@keyframes subFade{to{opacity:0.6}}
 .container{width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center}
 .banner{width:100%;height:180px;border-radius:20px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(201,161,74,0.15)}
 .banner img{width:100%;height:100%;object-fit:cover;display:block}
 .profile{width:110px;height:110px;border-radius:50%;border:3px solid #c9a14a;box-shadow:0 0 30px rgba(201,161,74,0.5);margin-top:-60px;z-index:2;background:#000;object-fit:cover}
 h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;color:#c9a14a;font-weight:700}
-.tagline{margin-top:10px;font-family:'Cinzel',serif;font-size:15px;letter-spacing:1px;color:#c9a14a;font-weight:600;text-align:center}
+.tagline{margin-top:10px;font-family:'Cinzel',serif;font-size:15px;letter-spacing:1px;color:#c9a14a;font-weight:600;text-align:center;min-height:22px}
+.tagline::after{content:'|';margin-left:2px;animation:blink 0.7s infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
 .links{width:100%;margin-top:28px;display:flex;flex-direction:column;gap:12px}
 .link-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:16px 20px;border-radius:14px;text-decoration:none;font-weight:600;font-size:14px}
 .link-btn:active{transform:scale(0.95)}
@@ -77,14 +77,14 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 <img class="wing-r" src="splash-right.jpg" alt="">
 </div>
 </div>
-<div class="splash-sub" id="typewriter"></div>
+<div class="splash-sub">FROM OUR IMAGINATION TO YOURS</div>
 </div>
 
 <div class="container">
 <div class="banner"><img src="banner.jpg"></div>
 <img class="profile" src="favicon.png">
 <h1>VIVID AURA ART</h1>
-<div class="tagline">From Our Imagination to Yours.</div>
+<div class="tagline" id="innerType"></div>
 
 <div class="links">
 <a class="link-btn gold" href="https://www.instagram.com/vividauraart/" target="_blank" onclick="harperVibe(this)"><span class="icon-box insta"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.5.2.9.5 1.2.9.3.3.6.7.9 1.2.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.5-.5.9-.9 1.2-.3.3-.7.6-1.2.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4a3.6 3.6 0 01-1.2-.9 3.6 3.6 0 01-.9-1.2c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.5.5-.9.9-1.2.3-.3.7-.6 1.2-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0-2.2C8.7 0 8.3 0 7 .1 5.7.2 4.8.4 4 .7A5.9 5.9 0 001.8 1.9 5.9 5.9 0 00.7 4C.4 4.8.2 5.7.1 7 .1 8.3 0 8.7 0 12s0 3.7.1 5c.1 1.3.3 2.2.6 3 .3.8.7 1.5 1.2 2.2.5.7 1 1.2 1.8 1.7.8.3 1.7.5 3 .6 1.3.1 1.7.1 5 .1s3.7 0 5-.1c1.3-.1 2.2-.3 3-.6.8-.3 1.5-.7 2.2-1.2.7-.5 1.2-1 1.7-1.8.3-.8.5-1.7.6-3 .1-1.3.1-1.7.1-5s0-3.7-.1-5c-.1-1.3-.3-2.2-.6-3a5.9 5.9 0 00-1.2-2.2 5.9 5.9 0 00-1.8-1.7c-.8-.3-1.7-.5-3-.6C15.7 0 15.3 0 12 0zm0 5.8A6.2 6.2 0 105.8 12 6.2 6.2 0 0012 5.8zm0 10.2A4 4 0 1116 12a4 4 0 01-4 4zm6.4-11.6a1.4 1.4 0 11-1.4 1.4 1.4 1.4 0 011.4-1.4z"/></svg></span> Inst&#97;gram</a>
@@ -102,19 +102,19 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 var sp=document.getElementById('splash');
 function hideSplash(){sp.classList.add('hide');}
 try{sessionStorage.setItem('vaaSplash','1');}catch(e){}
-var t=setTimeout(hideSplash,4000);
-// Typewriter effect - FROM OUR IMAGINATION TO YOURS
-const twText="FROM OUR IMAGINATION TO YOURS";
-let twIdx=0;
-function typeWriter(){
-  if(twIdx<=twText.length){
-    document.getElementById('typewriter').textContent=twText.substring(0,twIdx);
-    twIdx++;
-    setTimeout(typeWriter, 75);
+var t=setTimeout(hideSplash,2500);
+sp.addEventListener('click',function(){clearTimeout(t);hideSplash();});
+// INNER tagline typewriter - From Our Imagination to Yours.
+const innerText="From Our Imagination to Yours.";
+let ii=0;
+function typeInner(){
+  if(ii<=innerText.length){
+    document.getElementById('innerType').textContent=innerText.substring(0,ii);
+    ii++;
+    setTimeout(typeInner, 85);
   }
 }
-setTimeout(typeWriter, 1800);
-sp.addEventListener('click',function(){clearTimeout(t);hideSplash();});
+setTimeout(typeInner, 3000);
 function harperVibe(el){
 if(navigator.vibrate){navigator.vibrate([30,20,30]);}
 el.classList.add('vibrate');
