@@ -15,33 +15,39 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* SPLASH - REAL WING FLAP */
 .splash{position:fixed;inset:0;background:#000;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity 0.8s ease,visibility 0s linear 0.8s}
 .splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-.logo{position:relative;width:min(98vw,700px);aspect-ratio:1400/707;animation:logoIn 0.9s ease-out both,glow 1.6s ease-in-out 1s 2}
+.logo{position:relative;width:min(98vw,700px);aspect-ratio:1400/707;animation:logoIn 0.9s ease-out both,flash 1.8s linear 0.8s 2}
 .logo img{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;pointer-events:none}
-.body{position:absolute;inset:0;animation:bob 1.5s ease-in-out 0.8s 2}
-.wing-l{transform-origin:33% 54%;animation:flapL 1.5s linear 0.8s 2}
-.wing-r{transform-origin:67.5% 54%;animation:flapR 1.5s linear 0.8s 2}
-/* eagle beat: slow lift, powerful fast downstroke, glide back */
-@keyframes flapL{
-0%{transform:rotate(0deg) scaleX(1);animation-timing-function:cubic-bezier(.35,0,.25,1)}
-45%{transform:rotate(44deg) scaleX(0.86);animation-timing-function:cubic-bezier(.6,0,.85,.45)}
-70%{transform:rotate(-32deg) scaleX(1.04);animation-timing-function:cubic-bezier(.2,.6,.3,1)}
-100%{transform:rotate(0deg) scaleX(1)}
+.body{position:absolute;inset:0;animation:pulse 1.8s ease-in-out 0.8s 2}
+.wing-l{transform-origin:33% 54%;animation:clapL 1.8s linear 0.8s 2}
+.wing-r{transform-origin:67.5% 54%;animation:clapR 1.8s linear 0.8s 2}
+/* arms spread wide -> swing forward and CLAP in front -> open slowly */
+@keyframes clapL{
+0%{transform:perspective(900px) rotateY(0deg);animation-timing-function:cubic-bezier(.4,0,.3,1)}
+35%{transform:perspective(900px) rotateY(-14deg);animation-timing-function:cubic-bezier(.55,0,.9,.35)}
+52%{transform:perspective(900px) rotateY(126deg);animation-timing-function:ease-out}
+58%{transform:perspective(900px) rotateY(118deg);animation-timing-function:cubic-bezier(.35,0,.25,1)}
+100%{transform:perspective(900px) rotateY(0deg)}
 }
-@keyframes flapR{
-0%{transform:rotate(0deg) scaleX(1);animation-timing-function:cubic-bezier(.35,0,.25,1)}
-45%{transform:rotate(-44deg) scaleX(0.86);animation-timing-function:cubic-bezier(.6,0,.85,.45)}
-70%{transform:rotate(32deg) scaleX(1.04);animation-timing-function:cubic-bezier(.2,.6,.3,1)}
-100%{transform:rotate(0deg) scaleX(1)}
+@keyframes clapR{
+0%{transform:perspective(900px) rotateY(0deg);animation-timing-function:cubic-bezier(.4,0,.3,1)}
+35%{transform:perspective(900px) rotateY(14deg);animation-timing-function:cubic-bezier(.55,0,.9,.35)}
+52%{transform:perspective(900px) rotateY(-126deg);animation-timing-function:ease-out}
+58%{transform:perspective(900px) rotateY(-118deg);animation-timing-function:cubic-bezier(.35,0,.25,1)}
+100%{transform:perspective(900px) rotateY(0deg)}
 }
-/* body sinks a little while wings are up, then surges up on the downstroke */
-@keyframes bob{
-0%{transform:translateY(0)}
-45%{transform:translateY(3%)}
-70%{transform:translateY(-7%)}
-100%{transform:translateY(0)}
+/* small impact punch + light flash at the clap */
+@keyframes pulse{
+0%,45%{transform:scale(1)}
+52%{transform:scale(1.05)}
+62%,100%{transform:scale(1)}
+}
+@keyframes flash{
+0%,46%{filter:brightness(1)}
+52%{filter:brightness(1.9)}
+66%{filter:brightness(1.1)}
+100%{filter:brightness(1)}
 }
 @keyframes logoIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
-@keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
 .splash-sub{margin-top:24px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;opacity:0;color:#c9a14a;animation:subFade 0.8s forwards;animation-delay:1.8s}
 @keyframes subFade{to{opacity:0.6}}
 
@@ -95,7 +101,7 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 </div>
 
 <script>
-setTimeout(()=>{document.getElementById('splash').classList.add('hide');},4500);
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');},5000);
 function harperVibe(el){
 if(navigator.vibrate){navigator.vibrate([30,20,30]);}
 el.classList.add('vibrate');
