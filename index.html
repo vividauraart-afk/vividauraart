@@ -12,11 +12,17 @@
 body{background:#000;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 15px;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at top,#1a1025 0%,#000 60%);z-index:-1}
 
-/* SPLASH - LOGO REVEAL + ONE WING CLAP */
+/* SPLASH - LOGO REVEAL + TEXT SHINE + ONE WING CLAP */
 .splash{position:fixed;inset:0;background:#000;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity 0.8s ease,visibility 0s linear 0.8s}
 .splash.hide{opacity:0;visibility:hidden;pointer-events:none}
 .logo{position:relative;width:min(98vw,700px);aspect-ratio:1400/707;animation:logoIn 1.2s ease-out both,flash 1.8s linear 1.8s 1}
 .logo img{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;pointer-events:none}
+.txtwrap{position:absolute;inset:0;clip-path:inset(34% 37% 27% 38%);mix-blend-mode:screen;pointer-events:none}
+.logo .txtwrap img{mix-blend-mode:normal;filter:brightness(3) contrast(1.1);-webkit-mask-image:linear-gradient(105deg,transparent 35%,#000 50%,transparent 65%);mask-image:linear-gradient(105deg,transparent 35%,#000 50%,transparent 65%);-webkit-mask-size:300% 100%;mask-size:300% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:90% 0;mask-position:90% 0;opacity:0;animation:shine 1.5s ease-in-out 1.3s 1 both}
+@keyframes shine{
+0%{opacity:1;-webkit-mask-position:90% 0;mask-position:90% 0}
+100%{opacity:1;-webkit-mask-position:15% 0;mask-position:15% 0}
+}
 .body{position:absolute;inset:0;animation:pulse 1.8s ease-in-out 1.8s 1}
 .wing-l{transform-origin:33% 54%;animation:clapL 1.8s linear 1.8s 1}
 .wing-r{transform-origin:67.5% 54%;animation:clapR 1.8s linear 1.8s 1}
@@ -76,6 +82,7 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 <div class="logo">
 <div class="body">
 <img src="splash-center.jpg" alt="VIVID AURA ART">
+<div class="txtwrap"><img src="splash-center.jpg" alt=""></div>
 <img class="wing-l" src="splash-left.jpg" alt="">
 <img class="wing-r" src="splash-right.jpg" alt="">
 </div>
