@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIVID AURA ART</title>
+<link rel="icon" href="favicon.png">
+<meta name="p:domain_verify" content="83d97bc5b452b9ba3158c5be4dd2f97f"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 15px;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at top,#1a1025 0%,#000 60%);z-index:-1}
+
+/* SPLASH - REAL WING FLAP */
+.splash{position:fixed;inset:0;background:#000;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity 0.8s ease,visibility 0s linear 0.8s}
+.splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.logo{position:relative;width:min(98vw,700px);aspect-ratio:1400/707;animation:logoIn 0.9s ease-out both,glow 1.6s ease-in-out 1s 2}
+.logo img{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;pointer-events:none}
+.body{position:absolute;inset:0;animation:bob 1.5s ease-in-out 0.8s 2}
+.wing-l{transform-origin:33% 54%;animation:flapL 1.5s linear 0.8s 2}
+.wing-r{transform-origin:67.5% 54%;animation:flapR 1.5s linear 0.8s 2}
+/* eagle beat: slow lift, powerful fast downstroke, glide back */
+@keyframes flapL{
+0%{transform:rotate(0deg) scaleX(1);animation-timing-function:cubic-bezier(.35,0,.25,1)}
+45%{transform:rotate(44deg) scaleX(0.86);animation-timing-function:cubic-bezier(.6,0,.85,.45)}
+70%{transform:rotate(-32deg) scaleX(1.04);animation-timing-function:cubic-bezier(.2,.6,.3,1)}
+100%{transform:rotate(0deg) scaleX(1)}
+}
+@keyframes flapR{
+0%{transform:rotate(0deg) scaleX(1);animation-timing-function:cubic-bezier(.35,0,.25,1)}
+45%{transform:rotate(-44deg) scaleX(0.86);animation-timing-function:cubic-bezier(.6,0,.85,.45)}
+70%{transform:rotate(32deg) scaleX(1.04);animation-timing-function:cubic-bezier(.2,.6,.3,1)}
+100%{transform:rotate(0deg) scaleX(1)}
+}
+/* body sinks a little while wings are up, then surges up on the downstroke */
+@keyframes bob{
+0%{transform:translateY(0)}
+45%{transform:translateY(3%)}
+70%{transform:translateY(-7%)}
+100%{transform:translateY(0)}
+}
+@keyframes logoIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
+@keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+.splash-sub{margin-top:24px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;opacity:0;color:#c9a14a;animation:subFade 0.8s forwards;animation-delay:1.8s}
+@keyframes subFade{to{opacity:0.6}}
+
+.container{width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center}
+.banner{width:100%;height:180px;border-radius:20px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(201,161,74,0.15)}
+.banner img{width:100%;height:100%;object-fit:cover;display:block}
+.profile{width:110px;height:110px;border-radius:50%;border:3px solid #c9a14a;box-shadow:0 0 30px rgba(201,161,74,0.5);margin-top:-60px;z-index:2;background:#000;object-fit:cover}
+h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;color:#c9a14a;font-weight:700}
+.tagline{margin-top:10px;font-family:'Cinzel',serif;font-size:15px;letter-spacing:1px;color:#c9a14a;font-weight:600;text-align:center}
+.links{width:100%;margin-top:28px;display:flex;flex-direction:column;gap:12px}
+.link-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:16px 20px;border-radius:14px;text-decoration:none;font-weight:600;font-size:14px}
+.link-btn:active{transform:scale(0.95)}
+.link-btn.vibrate{animation:harperVibe 0.4s ease}
+@keyframes harperVibe{0%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}100%{transform:translateX(0)}}
+.link-btn.gold{background:linear-gradient(90deg,#c9a14a,#e8c36a);color:#000;border-color:#c9a14a;font-weight:800}
+.icon-box{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center}
+.icon-box.insta{background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)}
+.icon-box.pin{background:#E60023}
+.icon-box svg{width:14px;height:14px;fill:white}
+.footer{margin-top:25px;text-align:center;opacity:0.3;font-size:11px}
+</style>
+</head>
+<body>
+
+<div class="splash" id="splash">
+<div class="logo">
+<div class="body">
+<img src="splash-center.jpg" alt="VIVID AURA ART">
+<img class="wing-l" src="splash-left.jpg" alt="">
+<img class="wing-r" src="splash-right.jpg" alt="">
+</div>
+</div>
+<div class="splash-sub">FROM OUR IMAGINATION TO YOURS</div>
+</div>
+
+<div class="container">
+<div class="banner"><img src="banner.jpg"></div>
+<img class="profile" src="favicon.png">
+<h1>VIVID AURA ART</h1>
+<div class="tagline">From Our Imagination to Yours.</div>
+
+<div class="links">
+<a class="link-btn gold" href="https://www.instagram.com/vividauraart/" target="_blank" onclick="harperVibe(this)"><span class="icon-box insta"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.5.2.9.5 1.2.9.3.3.6.7.9 1.2.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.5-.5.9-.9 1.2-.3.3-.7.6-1.2.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4a3.6 3.6 0 01-1.2-.9 3.6 3.6 0 01-.9-1.2c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.5.5-.9.9-1.2.3-.3.7-.6 1.2-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0-2.2C8.7 0 8.3 0 7 .1 5.7.2 4.8.4 4 .7A5.9 5.9 0 001.8 1.9 5.9 5.9 0 00.7 4C.4 4.8.2 5.7.1 7 .1 8.3 0 8.7 0 12s0 3.7.1 5c.1 1.3.3 2.2.6 3 .3.8.7 1.5 1.2 2.2.5.7 1 1.2 1.8 1.7.8.3 1.7.5 3 .6 1.3.1 1.7.1 5 .1s3.7 0 5-.1c1.3-.1 2.2-.3 3-.6.8-.3 1.5-.7 2.2-1.2.7-.5 1.2-1 1.7-1.8.3-.8.5-1.7.6-3 .1-1.3.1-1.7.1-5s0-3.7-.1-5c-.1-1.3-.3-2.2-.6-3a5.9 5.9 0 00-1.2-2.2 5.9 5.9 0 00-1.8-1.7c-.8-.3-1.7-.5-3-.6C15.7 0 15.3 0 12 0zm0 5.8A6.2 6.2 0 105.8 12 6.2 6.2 0 0012 5.8zm0 10.2A4 4 0 1116 12a4 4 0 01-4 4zm6.4-11.6a1.4 1.4 0 11-1.4 1.4 1.4 1.4 0 011.4-1.4z"/></svg></span> Inst&#97;gram</a>
+<a class="link-btn gold" href="https://ko-fi.com/vividaura" target="_blank" onclick="harperVibe(this)">☕ Ko-fi</a>
+<a class="link-btn" href="https://pinme.download/" target="_blank" onclick="harperVibe(this)">📌 PinMe Downloader</a>
+<a class="link-btn" href="https://vividartistry1.gumroad.com/" target="_blank" onclick="harperVibe(this)">🛒 Gumroad Store</a>
+<a class="link-btn" href="https://pin.it/4EIv7oThG" target="_blank" onclick="harperVibe(this)"><span class="icon-box pin"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12c0 5 3.2 9.3 7.7 10.9-.1-.9-.2-2.3 0-3.3.2-.9 1.2-5.4 1.2-5.4s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .8-.5 2.1-.8 3.2-.2 1 .5 1.8 1.6 1.8 1.9 0 3.2-2.4 3.2-5.3 0-2.2-1.5-3.7-3.6-3.7-2.6 0-4.1 1.9-4.1 3.9 0 .7.3 1.5.6 1.9.1.1.1.2.1.3l-.2.8c0 .2-.1.3-.3.3h-.4c-1.2-.5-1.8-1.8-1.8-3.2 0-2.4 2-5.3 6-5.3 3.2 0 5.3 2.3 5.3 4.8 0 2.8-1.8 5.1-4.2 5.1-1 0-1.9-.5-2.2-1.1l-.6 2.2c-.2.9-.8 2-.1 2.8C19.6 21.1 24 16.9 24 12c0-6.6-5.4-12-12-12z"/></svg></span> Pinterest</a>
+<a class="link-btn" href="mailto:vividauraart@gmail.com" onclick="harperVibe(this)">📧 Email Us</a>
+</div>
+<div class="footer">© 2026 VIVID AURA ART</div>
+</div>
+
+<script>
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');},4500);
+function harperVibe(el){
+if(navigator.vibrate){navigator.vibrate([30,20,30]);}
+el.classList.add('vibrate');
+setTimeout(()=>{el.classList.remove('vibrate');},400);
+}
+</script>
+</body>
+</html>
