@@ -250,80 +250,101 @@ animation:lightAppear 5.8s ease-in-out 0s 1 forwards
 100%{opacity:0}
 }
 
-/* VIVID AURA BRAND BURST */
+/* VIVID AURA SPIRAL */
 
-.aura-burst{
+.aura-spiral{
 opacity:0;
 pointer-events:none;
+transform-box:view-box;
+transform-origin:50% 92.6%;
 }
 
-.aura-trail.animate .aura-burst{
-animation:burstAppear 2.2s ease-out 5.65s 1 forwards;
+.aura-trail.animate .aura-spiral{
+animation:spiralAppear 2.4s ease-out 5.65s 1 forwards;
 }
 
-@keyframes burstAppear{
-0%{opacity:0}
-12%{opacity:1}
-45%{opacity:0.85}
-100%{opacity:0}
-}
-
-.aura-smoke{
-fill:url(#auraSmokeGradient);
-filter:blur(7px);
-opacity:0;
-transform-box:fill-box;
-transform-origin:center;
-}
-
-.aura-trail.animate .aura-smoke{
-animation:smokeExpand 2.2s ease-out 5.65s 1 forwards;
-}
-
-@keyframes smokeExpand{
+@keyframes spiralAppear{
 0%{
 opacity:0;
-transform:scale(0.25);
+transform:rotate(0deg) scale(0.2);
 }
-20%{
-opacity:0.75;
-}
-65%{
-opacity:0.4;
-transform:scale(2.1);
-}
-100%{
-opacity:0;
-transform:scale(3.2);
-}
-}
-
-.aura-particle{
-opacity:0;
-filter:blur(1.5px);
-transform-box:fill-box;
-transform-origin:center;
-}
-
-.aura-trail.animate .aura-particle{
-animation:particleSpread 1.9s ease-out 5.7s 1 forwards;
-}
-
-@keyframes particleSpread{
-0%{
-opacity:0;
-transform:translate(0,0) scale(0.5);
-}
-15%{
+12%{
 opacity:1;
 }
-65%{
-opacity:0.8;
+55%{
+opacity:1;
+transform:rotate(360deg) scale(1.15);
+}
+82%{
+opacity:0.85;
+transform:rotate(540deg) scale(1.8);
 }
 100%{
 opacity:0;
-transform:translate(var(--dx),var(--dy)) scale(1.8);
+transform:rotate(540deg) scale(2.3);
 }
+}
+
+.spiral-line{
+fill:none;
+stroke-linecap:round;
+stroke-linejoin:round;
+stroke-dasharray:260;
+stroke-dashoffset:260;
+}
+
+.aura-trail.animate .spiral-line{
+animation:spiralDraw 2.1s ease-out 5.7s 1 forwards;
+}
+
+@keyframes spiralDraw{
+0%{stroke-dashoffset:260;opacity:0}
+15%{stroke-dashoffset:180;opacity:1}
+55%{stroke-dashoffset:50;opacity:1}
+100%{stroke-dashoffset:0;opacity:0}
+}
+
+.spiral-gold{
+stroke:#e8c36a;
+stroke-width:3;
+filter:
+drop-shadow(0 0 4px #e8c36a)
+drop-shadow(0 0 10px rgba(232,195,106,0.9));
+}
+
+.spiral-violet{
+stroke:#9b6bff;
+stroke-width:2.5;
+filter:
+drop-shadow(0 0 4px #9b6bff)
+drop-shadow(0 0 9px rgba(155,107,255,0.9));
+}
+
+.spiral-magenta{
+stroke:#d46bff;
+stroke-width:2;
+filter:
+drop-shadow(0 0 4px #d46bff)
+drop-shadow(0 0 9px rgba(212,107,255,0.9));
+}
+
+.spiral-core{
+fill:#fff;
+filter:
+drop-shadow(0 0 4px #fff)
+drop-shadow(0 0 10px #e8c36a);
+opacity:0;
+}
+
+.aura-trail.animate .spiral-core{
+animation:coreGlow 1.8s ease-out 5.7s 1 forwards;
+}
+
+@keyframes coreGlow{
+0%{opacity:0;transform:scale(0.2)}
+20%{opacity:1;transform:scale(1.4)}
+65%{opacity:0.9;transform:scale(1)}
+100%{opacity:0;transform:scale(0.1)}
 }
 
 /* Profile */
@@ -478,15 +499,6 @@ preserveAspectRatio="none"
 xmlns="http://www.w3.org/2000/svg"
 aria-hidden="true">
 
-<defs>
-<radialGradient id="auraSmokeGradient">
-<stop offset="0%" stop-color="#e8c36a" stop-opacity="0.9"/>
-<stop offset="40%" stop-color="#c9a14a" stop-opacity="0.65"/>
-<stop offset="72%" stop-color="#9b6bff" stop-opacity="0.45"/>
-<stop offset="100%" stop-color="#d46bff" stop-opacity="0"/>
-</radialGradient>
-</defs>
-
 <!-- Continuous path followed by the single white light -->
 
 <path
@@ -524,38 +536,60 @@ keySplines="0.42 0 0.58 1"
 </animateMotion>
 </circle>
 
-<!-- Soft coloured smoke at the ending point -->
+<!-- VIVID AURA SPIRAL AT THE ENDING POINT -->
 
-<g class="aura-burst">
+<g class="aura-spiral">
 
-<ellipse
-class="aura-smoke"
-cx="210"
-cy="250"
-rx="17"
-ry="10"
+<!-- Gold spiral ribbon -->
+
+<path
+class="spiral-line spiral-gold"
+d="
+M210 250
+C198 250 195 237 204 230
+C215 221 233 229 235 244
+C238 264 216 276 197 265
+C174 252 181 222 202 210
+C230 194 260 213 264 242
+"
 />
 
-<!-- Gold particles -->
+<!-- Violet spiral ribbon -->
 
-<circle class="aura-particle" cx="210" cy="250" r="5" fill="#e8c36a" style="--dx:0px;--dy:-38px"/>
-<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#c9a14a" style="--dx:35px;--dy:-22px"/>
-<circle class="aura-particle" cx="210" cy="250" r="4" fill="#e8c36a" style="--dx:-35px;--dy:-24px"/>
-<circle class="aura-particle" cx="210" cy="250" r="3" fill="#c9a14a" style="--dx:25px;--dy:18px"/>
-<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#e8c36a" style="--dx:-25px;--dy:18px"/>
+<path
+class="spiral-line spiral-violet"
+d="
+M210 250
+C219 253 222 241 215 235
+C207 228 195 236 197 247
+C199 262 219 267 231 255
+C247 239 235 214 215 207
+C188 198 166 220 169 246
+"
+/>
 
-<!-- Violet particles -->
+<!-- Magenta spiral ribbon -->
 
-<circle class="aura-particle" cx="210" cy="250" r="4" fill="#9b6bff" style="--dx:0px;--dy:-55px"/>
-<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#9b6bff" style="--dx:48px;--dy:-5px"/>
-<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#9b6bff" style="--dx:-48px;--dy:-5px"/>
+<path
+class="spiral-line spiral-magenta"
+d="
+M210 250
+C205 243 213 236 220 241
+C230 248 221 262 210 261
+C193 260 188 240 199 227
+C214 209 243 218 249 238
+C257 266 231 285 205 278
+"
+/>
 
-<!-- Magenta particles -->
+<!-- Glowing centre -->
 
-<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#d46bff" style="--dx:38px;--dy:-40px"/>
-<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#d46bff" style="--dx:-38px;--dy:-40px"/>
-<circle class="aura-particle" cx="210" cy="250" r="3" fill="#d46bff" style="--dx:15px;--dy:30px"/>
-<circle class="aura-particle" cx="210" cy="250" r="3" fill="#d46bff" style="--dx:-15px;--dy:30px"/>
+<circle
+class="spiral-core"
+cx="210"
+cy="250"
+r="5"
+/>
 
 </g>
 
@@ -670,7 +704,7 @@ el.classList.remove('vibrate');
 
 }
 
-/* SINGLE WHITE LIGHT + BRAND BURST - PLAY ONCE */
+/* SINGLE WHITE LIGHT + AURA SPIRAL - PLAY ONCE */
 
 function triggerAuraTrail(){
 
