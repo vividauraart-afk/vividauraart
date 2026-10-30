@@ -250,6 +250,82 @@ animation:lightAppear 5.8s ease-in-out 0s 1 forwards
 100%{opacity:0}
 }
 
+/* VIVID AURA BRAND BURST */
+
+.aura-burst{
+opacity:0;
+pointer-events:none;
+}
+
+.aura-trail.animate .aura-burst{
+animation:burstAppear 2.2s ease-out 5.65s 1 forwards;
+}
+
+@keyframes burstAppear{
+0%{opacity:0}
+12%{opacity:1}
+45%{opacity:0.85}
+100%{opacity:0}
+}
+
+.aura-smoke{
+fill:url(#auraSmokeGradient);
+filter:blur(7px);
+opacity:0;
+transform-box:fill-box;
+transform-origin:center;
+}
+
+.aura-trail.animate .aura-smoke{
+animation:smokeExpand 2.2s ease-out 5.65s 1 forwards;
+}
+
+@keyframes smokeExpand{
+0%{
+opacity:0;
+transform:scale(0.25);
+}
+20%{
+opacity:0.75;
+}
+65%{
+opacity:0.4;
+transform:scale(2.1);
+}
+100%{
+opacity:0;
+transform:scale(3.2);
+}
+}
+
+.aura-particle{
+opacity:0;
+filter:blur(1.5px);
+transform-box:fill-box;
+transform-origin:center;
+}
+
+.aura-trail.animate .aura-particle{
+animation:particleSpread 1.9s ease-out 5.7s 1 forwards;
+}
+
+@keyframes particleSpread{
+0%{
+opacity:0;
+transform:translate(0,0) scale(0.5);
+}
+15%{
+opacity:1;
+}
+65%{
+opacity:0.8;
+}
+100%{
+opacity:0;
+transform:translate(var(--dx),var(--dy)) scale(1.8);
+}
+}
+
 /* Profile */
 
 .profile{
@@ -403,6 +479,12 @@ xmlns="http://www.w3.org/2000/svg"
 aria-hidden="true">
 
 <defs>
+<radialGradient id="auraSmokeGradient">
+<stop offset="0%" stop-color="#e8c36a" stop-opacity="0.9"/>
+<stop offset="40%" stop-color="#c9a14a" stop-opacity="0.65"/>
+<stop offset="72%" stop-color="#9b6bff" stop-opacity="0.45"/>
+<stop offset="100%" stop-color="#d46bff" stop-opacity="0"/>
+</radialGradient>
 </defs>
 
 <!-- Continuous path followed by the single white light -->
@@ -441,6 +523,41 @@ keySplines="0.42 0 0.58 1"
 <mpath href="#auraFullPath"/>
 </animateMotion>
 </circle>
+
+<!-- Soft coloured smoke at the ending point -->
+
+<g class="aura-burst">
+
+<ellipse
+class="aura-smoke"
+cx="210"
+cy="250"
+rx="17"
+ry="10"
+/>
+
+<!-- Gold particles -->
+
+<circle class="aura-particle" cx="210" cy="250" r="5" fill="#e8c36a" style="--dx:0px;--dy:-38px"/>
+<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#c9a14a" style="--dx:35px;--dy:-22px"/>
+<circle class="aura-particle" cx="210" cy="250" r="4" fill="#e8c36a" style="--dx:-35px;--dy:-24px"/>
+<circle class="aura-particle" cx="210" cy="250" r="3" fill="#c9a14a" style="--dx:25px;--dy:18px"/>
+<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#e8c36a" style="--dx:-25px;--dy:18px"/>
+
+<!-- Violet particles -->
+
+<circle class="aura-particle" cx="210" cy="250" r="4" fill="#9b6bff" style="--dx:0px;--dy:-55px"/>
+<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#9b6bff" style="--dx:48px;--dy:-5px"/>
+<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#9b6bff" style="--dx:-48px;--dy:-5px"/>
+
+<!-- Magenta particles -->
+
+<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#d46bff" style="--dx:38px;--dy:-40px"/>
+<circle class="aura-particle" cx="210" cy="250" r="3.5" fill="#d46bff" style="--dx:-38px;--dy:-40px"/>
+<circle class="aura-particle" cx="210" cy="250" r="3" fill="#d46bff" style="--dx:15px;--dy:30px"/>
+<circle class="aura-particle" cx="210" cy="250" r="3" fill="#d46bff" style="--dx:-15px;--dy:30px"/>
+
+</g>
 
 </svg>
 
@@ -553,7 +670,7 @@ el.classList.remove('vibrate');
 
 }
 
-/* SINGLE WHITE LIGHT - PLAY ONCE */
+/* SINGLE WHITE LIGHT + BRAND BURST - PLAY ONCE */
 
 function triggerAuraTrail(){
 
