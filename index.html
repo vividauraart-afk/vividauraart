@@ -230,20 +230,7 @@ z-index:8;
 overflow:visible
 }
 
-/* Glowing white origin at banner top-center edge */
-
-.aura-origin{
-fill:#fff;
-filter:
-drop-shadow(0 0 3px #fff)
-drop-shadow(0 0 8px #8bdcff)
-drop-shadow(0 0 15px #35cfff);
-opacity:0;
-transform-box:fill-box;
-transform-origin:center
-}
-
-/* Slowly descending white beam */
+/* Slowly revealed white beam */
 
 .aura-beam{
 fill:none;
@@ -259,7 +246,7 @@ stroke-dashoffset:140;
 opacity:0
 }
 
-/* Curved colored light route inside profile logo */
+/* Colored curved route */
 
 .aura-curve{
 fill:none;
@@ -276,7 +263,7 @@ stroke-dashoffset:500;
 opacity:0
 }
 
-/* Moving white highlight */
+/* Moving white light trail */
 
 .aura-head{
 fill:none;
@@ -292,11 +279,19 @@ stroke-dashoffset:500;
 opacity:0
 }
 
-/* Animation timing */
+/* The actual moving white light point */
 
-.aura-trail.animate .aura-origin{
-animation:originGlow 3.2s ease-in-out 0s 1 forwards
+.aura-moving-light{
+fill:#fff;
+filter:
+drop-shadow(0 0 3px #fff)
+drop-shadow(0 0 7px #8bdcff)
+drop-shadow(0 0 13px #35cfff)
+drop-shadow(0 0 18px #a52cff);
+opacity:0
 }
+
+/* Animation timing */
 
 .aura-trail.animate .aura-beam{
 animation:beamFlow 3.2s ease-in-out 0s 1 forwards
@@ -310,11 +305,8 @@ animation:curveFlow 2.8s ease-in-out 2.9s 1 forwards
 animation:headFlow 2.8s ease-in-out 2.9s 1 forwards
 }
 
-@keyframes originGlow{
-0%{opacity:0;transform:scale(.65)}
-12%{opacity:1;transform:scale(1)}
-75%{opacity:1;transform:scale(1)}
-100%{opacity:.75;transform:scale(.9)}
+.aura-trail.animate .aura-moving-light{
+animation:lightAppear 5.8s ease-in-out 0s 1 forwards
 }
 
 @keyframes beamFlow{
@@ -367,6 +359,13 @@ opacity:1
 stroke-dashoffset:-9;
 opacity:0
 }
+}
+
+@keyframes lightAppear{
+0%{opacity:0}
+3%{opacity:1}
+88%{opacity:1}
+100%{opacity:0}
 }
 
 /* Profile */
@@ -533,23 +532,32 @@ aria-hidden="true">
 
 </defs>
 
-<!-- Glowing origin at exact banner top-center edge -->
+<!-- Complete continuous route for the moving light -->
 
-<circle
-class="aura-origin"
-cx="210"
-cy="0"
-r="7"
+<path
+id="auraFullPath"
+d="
+M210 0
+L210 140
+L210 174
+C210 179 226 181 235 187
+C246 194 237 200 222 204
+C204 209 187 213 190 220
+C193 228 213 230 228 235
+C240 239 225 245 210 250
+"
+fill="none"
+stroke="none"
 />
 
-<!-- Slowly descending white light -->
+<!-- White beam from banner top-center to profile -->
 
 <path
 class="aura-beam"
 d="M210 0 L210 140"
 />
 
-<!-- Curved S-shaped light route inside profile logo -->
+<!-- Curved colored route inside profile logo -->
 
 <path
 id="auraCurvePath"
@@ -565,7 +573,7 @@ C240 239 225 245 210 250
 "
 />
 
-<!-- Moving white highlight following the same route -->
+<!-- Moving white highlight along the curved route -->
 
 <path
 class="aura-head"
@@ -579,6 +587,24 @@ C193 228 213 230 228 235
 C240 239 225 245 210 250
 "
 />
+
+<!-- One white light point travelling along the COMPLETE path -->
+
+<circle
+class="aura-moving-light"
+r="4.2"
+>
+<animateMotion
+dur="5.8s"
+begin="0s"
+fill="freeze"
+calcMode="spline"
+keyTimes="0;1"
+keySplines="0.42 0 0.58 1"
+>
+<mpath href="#auraFullPath"/>
+</animateMotion>
+</circle>
 
 </svg>
 
