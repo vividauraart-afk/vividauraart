@@ -263,23 +263,7 @@ stroke-dashoffset:500;
 opacity:0
 }
 
-/* Moving white light trail */
-
-.aura-head{
-fill:none;
-stroke:#fff;
-stroke-width:3;
-stroke-linecap:round;
-filter:
-drop-shadow(0 0 3px #fff)
-drop-shadow(0 0 7px #8bdcff)
-drop-shadow(0 0 11px #b34cff);
-stroke-dasharray:9 500;
-stroke-dashoffset:500;
-opacity:0
-}
-
-/* The actual moving white light point */
+/* The single moving white light point */
 
 .aura-moving-light{
 fill:#fff;
@@ -299,10 +283,6 @@ animation:beamFlow 3.2s ease-in-out 0s 1 forwards
 
 .aura-trail.animate .aura-curve{
 animation:curveFlow 2.8s ease-in-out 2.9s 1 forwards
-}
-
-.aura-trail.animate .aura-head{
-animation:headFlow 2.8s ease-in-out 2.9s 1 forwards
 }
 
 .aura-trail.animate .aura-moving-light{
@@ -341,22 +321,6 @@ opacity:.75
 }
 100%{
 stroke-dashoffset:0;
-opacity:0
-}
-}
-
-@keyframes headFlow{
-0%{
-stroke-dashoffset:500;
-opacity:0
-}
-8%{opacity:1}
-82%{
-stroke-dashoffset:0;
-opacity:1
-}
-100%{
-stroke-dashoffset:-9;
 opacity:0
 }
 }
@@ -573,22 +537,7 @@ C240 239 225 245 210 250
 "
 />
 
-<!-- Moving white highlight along the curved route -->
-
-<path
-class="aura-head"
-d="
-M210 140
-L210 174
-C210 179 226 181 235 187
-C246 194 237 200 222 204
-C204 209 187 213 190 220
-C193 228 213 230 228 235
-C240 239 225 245 210 250
-"
-/>
-
-<!-- One white light point travelling along the COMPLETE path -->
+<!-- Only one moving white light point -->
 
 <circle
 class="aura-moving-light"
