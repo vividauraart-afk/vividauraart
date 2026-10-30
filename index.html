@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -229,7 +230,20 @@ z-index:8;
 overflow:visible
 }
 
-/* Slow white light descending from the exact top-center edge */
+/* Glowing white origin at banner top-center edge */
+
+.aura-origin{
+fill:#fff;
+filter:
+drop-shadow(0 0 3px #fff)
+drop-shadow(0 0 8px #8bdcff)
+drop-shadow(0 0 15px #35cfff);
+opacity:0;
+transform-box:fill-box;
+transform-origin:center
+}
+
+/* Slowly descending white beam */
 
 .aura-beam{
 fill:none;
@@ -238,13 +252,14 @@ stroke-width:1.8;
 stroke-linecap:round;
 filter:
 drop-shadow(0 0 3px #fff)
-drop-shadow(0 0 7px #8bdcff);
+drop-shadow(0 0 7px #8bdcff)
+drop-shadow(0 0 12px #35cfff);
 stroke-dasharray:140;
 stroke-dashoffset:140;
 opacity:0
 }
 
-/* Actual curved light route inside the profile logo */
+/* Curved colored light route inside profile logo */
 
 .aura-curve{
 fill:none;
@@ -261,7 +276,7 @@ stroke-dashoffset:500;
 opacity:0
 }
 
-/* Small moving white light */
+/* Moving white highlight */
 
 .aura-head{
 fill:none;
@@ -279,16 +294,27 @@ opacity:0
 
 /* Animation timing */
 
+.aura-trail.animate .aura-origin{
+animation:originGlow 3.2s ease-in-out 0s 1 forwards
+}
+
 .aura-trail.animate .aura-beam{
-animation:beamFlow 2.2s ease-in-out 0s 1 forwards
+animation:beamFlow 3.2s ease-in-out 0s 1 forwards
 }
 
 .aura-trail.animate .aura-curve{
-animation:curveFlow 2.4s ease-in-out 2.05s 1 forwards
+animation:curveFlow 2.8s ease-in-out 2.9s 1 forwards
 }
 
 .aura-trail.animate .aura-head{
-animation:headFlow 2.4s ease-in-out 2.05s 1 forwards
+animation:headFlow 2.8s ease-in-out 2.9s 1 forwards
+}
+
+@keyframes originGlow{
+0%{opacity:0;transform:scale(.65)}
+12%{opacity:1;transform:scale(1)}
+75%{opacity:1;transform:scale(1)}
+100%{opacity:.75;transform:scale(.9)}
 }
 
 @keyframes beamFlow{
@@ -296,7 +322,7 @@ animation:headFlow 2.4s ease-in-out 2.05s 1 forwards
 stroke-dashoffset:140;
 opacity:0
 }
-12%{opacity:1}
+10%{opacity:1}
 85%{
 stroke-dashoffset:0;
 opacity:1
@@ -507,17 +533,23 @@ aria-hidden="true">
 
 </defs>
 
-<!-- Slow straight white light from the exact top-center edge -->
+<!-- Glowing origin at exact banner top-center edge -->
+
+<circle
+class="aura-origin"
+cx="210"
+cy="0"
+r="7"
+/>
+
+<!-- Slowly descending white light -->
 
 <path
 class="aura-beam"
 d="M210 0 L210 140"
 />
 
-<!--
-Curved route mapped to the flowing S-shaped light
-inside the A of the VAA profile logo.
--->
+<!-- Curved S-shaped light route inside profile logo -->
 
 <path
 id="auraCurvePath"
@@ -533,7 +565,7 @@ C240 239 225 245 210 250
 "
 />
 
-<!-- Moving white highlight following the same curved route -->
+<!-- Moving white highlight following the same route -->
 
 <path
 class="aura-head"
