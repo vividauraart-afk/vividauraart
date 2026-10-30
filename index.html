@@ -553,7 +553,7 @@ el.classList.remove('vibrate');
 
 }
 
-/* SINGLE WHITE LIGHT - PLAY ONCE PER PAGE LOAD */
+/* SINGLE WHITE LIGHT - PLAY ONCE */
 
 function triggerAuraTrail(){
 
@@ -572,13 +572,56 @@ motion.beginElement();
 
 }
 
-/* Start the light animation after the page has loaded */
+/* WAIT FOR PAGE LOAD AND SPLASH SCREEN TO FINISH */
+
+let auraPageLoaded=false;
+let auraSplashFinished=
+document.documentElement.classList.contains('seen') ||
+sp.classList.contains('hide');
+
+let auraStarted=false;
+
+function tryStartAura(){
+
+if(!auraPageLoaded || !auraSplashFinished || auraStarted){
+return;
+}
+
+auraStarted=true;
+
+setTimeout(function(){
+triggerAuraTrail();
+},600);
+
+}
+
+/* Detect when splash screen has completely disappeared */
+
+sp.addEventListener('transitionend',function(e){
+
+if(e.propertyName==='opacity'){
+
+auraSplashFinished=true;
+tryStartAura();
+
+}
+
+});
+
+/* Wait until all page resources are loaded */
 
 window.addEventListener('load',function(){
 
-requestAnimationFrame(function(){
-setTimeout(triggerAuraTrail,300);
-});
+auraPageLoaded=true;
+
+if(
+document.documentElement.classList.contains('seen') ||
+sp.classList.contains('hide')
+){
+auraSplashFinished=true;
+}
+
+tryStartAura();
 
 });
 
