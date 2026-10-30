@@ -217,7 +217,7 @@ object-fit:cover;
 display:block
 }
 
-/* AURA LIGHT TRAIL */
+/* SINGLE WHITE AURA LIGHT */
 
 .aura-trail{
 position:absolute;
@@ -230,99 +230,17 @@ z-index:8;
 overflow:visible
 }
 
-/* Slowly revealed white beam */
-
-.aura-beam{
-fill:none;
-stroke:#fff;
-stroke-width:1.8;
-stroke-linecap:round;
-filter:
-drop-shadow(0 0 3px #fff)
-drop-shadow(0 0 7px #8bdcff)
-drop-shadow(0 0 12px #35cfff);
-stroke-dasharray:140;
-stroke-dashoffset:140;
-opacity:0
-}
-
-/* Colored curved route */
-
-.aura-curve{
-fill:none;
-stroke:url(#auraGradient);
-stroke-width:2.8;
-stroke-linecap:round;
-stroke-linejoin:round;
-filter:
-drop-shadow(0 0 3px #35cfff)
-drop-shadow(0 0 6px #8a2be2)
-drop-shadow(0 0 9px #ff8a32);
-stroke-dasharray:500;
-stroke-dashoffset:500;
-opacity:0
-}
-
-/* The single moving white light point */
-
 .aura-moving-light{
 fill:#fff;
 filter:
 drop-shadow(0 0 3px #fff)
-drop-shadow(0 0 7px #8bdcff)
-drop-shadow(0 0 13px #35cfff)
-drop-shadow(0 0 18px #a52cff);
+drop-shadow(0 0 7px #fff)
+drop-shadow(0 0 13px rgba(255,255,255,0.9));
 opacity:0
-}
-
-/* Animation timing */
-
-.aura-trail.animate .aura-beam{
-animation:beamFlow 3.2s ease-in-out 0s 1 forwards
-}
-
-.aura-trail.animate .aura-curve{
-animation:curveFlow 2.8s ease-in-out 2.9s 1 forwards
 }
 
 .aura-trail.animate .aura-moving-light{
 animation:lightAppear 5.8s ease-in-out 0s 1 forwards
-}
-
-@keyframes beamFlow{
-0%{
-stroke-dashoffset:140;
-opacity:0
-}
-10%{opacity:1}
-85%{
-stroke-dashoffset:0;
-opacity:1
-}
-100%{
-stroke-dashoffset:0;
-opacity:0
-}
-}
-
-@keyframes curveFlow{
-0%{
-stroke-dashoffset:500;
-opacity:0
-}
-8%{opacity:1}
-78%{
-stroke-dashoffset:0;
-opacity:1
-}
-92%{
-stroke-dashoffset:0;
-opacity:.75
-}
-100%{
-stroke-dashoffset:0;
-opacity:0
-}
 }
 
 @keyframes lightAppear{
@@ -474,7 +392,7 @@ FROM OUR IMAGINATION TO YOURS
 <img src="banner.jpg" alt="VIVID AURA ART banner">
 </div>
 
-<!-- AURA LIGHT TRAIL SVG -->
+<!-- SINGLE WHITE LIGHT SVG -->
 
 <svg
 class="aura-trail"
@@ -485,18 +403,9 @@ xmlns="http://www.w3.org/2000/svg"
 aria-hidden="true">
 
 <defs>
-
-<linearGradient id="auraGradient" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0%" stop-color="#25bfff"/>
-<stop offset="38%" stop-color="#287dff"/>
-<stop offset="63%" stop-color="#a52cff"/>
-<stop offset="82%" stop-color="#d52bba"/>
-<stop offset="100%" stop-color="#ff8a32"/>
-</linearGradient>
-
 </defs>
 
-<!-- Complete continuous route for the moving light -->
+<!-- Continuous path followed by the single white light -->
 
 <path
 id="auraFullPath"
@@ -514,38 +423,16 @@ fill="none"
 stroke="none"
 />
 
-<!-- White beam from banner top-center to profile -->
-
-<path
-class="aura-beam"
-d="M210 0 L210 140"
-/>
-
-<!-- Curved colored route inside profile logo -->
-
-<path
-id="auraCurvePath"
-class="aura-curve"
-d="
-M210 140
-L210 174
-C210 179 226 181 235 187
-C246 194 237 200 222 204
-C204 209 187 213 190 220
-C193 228 213 230 228 235
-C240 239 225 245 210 250
-"
-/>
-
-<!-- Only one moving white light point -->
+<!-- One moving white light -->
 
 <circle
 class="aura-moving-light"
 r="4.2"
 >
 <animateMotion
+id="auraMotion"
 dur="5.8s"
-begin="0s"
+begin="indefinite"
 fill="freeze"
 calcMode="spline"
 keyTimes="0;1"
@@ -666,7 +553,7 @@ el.classList.remove('vibrate');
 
 }
 
-/* AURA LIGHT TRAIL - PLAY ONCE PER PAGE LOAD */
+/* SINGLE WHITE LIGHT - PLAY ONCE PER PAGE LOAD */
 
 function triggerAuraTrail(){
 
@@ -676,6 +563,12 @@ if(!trail || trail.dataset.played==="true") return;
 
 trail.dataset.played="true";
 trail.classList.add('animate');
+
+const motion=document.getElementById('auraMotion');
+
+if(motion){
+motion.beginElement();
+}
 
 }
 
