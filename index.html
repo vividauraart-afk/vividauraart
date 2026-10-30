@@ -229,7 +229,7 @@ z-index:8;
 overflow:visible
 }
 
-/* White light descending from the banner center */
+/* Slow white light descending from the exact top-center edge */
 
 .aura-beam{
 fill:none;
@@ -280,15 +280,15 @@ opacity:0
 /* Animation timing */
 
 .aura-trail.animate .aura-beam{
-animation:beamFlow 1.15s ease-in-out 0s 1 forwards
+animation:beamFlow 2.2s ease-in-out 0s 1 forwards
 }
 
 .aura-trail.animate .aura-curve{
-animation:curveFlow 2.4s ease-in-out 1.05s 1 forwards
+animation:curveFlow 2.4s ease-in-out 2.05s 1 forwards
 }
 
 .aura-trail.animate .aura-head{
-animation:headFlow 2.4s ease-in-out 1.05s 1 forwards
+animation:headFlow 2.4s ease-in-out 2.05s 1 forwards
 }
 
 @keyframes beamFlow{
@@ -507,11 +507,11 @@ aria-hidden="true">
 
 </defs>
 
-<!-- Straight white light from the banner center -->
+<!-- Slow straight white light from the exact top-center edge -->
 
 <path
 class="aura-beam"
-d="M210 2 L210 140"
+d="M210 0 L210 140"
 />
 
 <!--
