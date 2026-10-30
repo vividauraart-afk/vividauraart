@@ -48,14 +48,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .banner-wrap{position:relative;width:100%;display:flex;flex-direction:column;align-items:center}
 .banner{width:100%;height:180px;border-radius:20px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(201,161,74,0.15)}
 .banner img{width:100%;height:100%;object-fit:cover;display:block}
-/* LAST EDGE END - INSIDE GOLD BORDER BOTTOM STAR */
+/* CENTER A RIGHT EDGE -> ORANGE SIDE -> S SNAKE -> BOTTOM STAR LAST EDGE */
 .prakasham-svg{position:absolute;left:0;top:0;width:100%;height:360px;pointer-events:none;z-index:7;overflow:visible}
-.prakasham-path{fill:none;stroke:url(#prakashamGrad);stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 8px #00d4ff) drop-shadow(0 0 14px #8a2be2) drop-shadow(0 0 18px #ff6a00);stroke-dasharray:600;stroke-dashoffset:600;opacity:0}
-.prakasham-path.animate{animation:prakashamDraw 3.8s ease-in-out 0.5s 1 forwards}
-.prakasham-dot{fill:#fff;filter:drop-shadow(0 0 10px #fff) drop-shadow(0 0 18px #00d4ff) drop-shadow(0 0 25px #ff6a00);opacity:0;offset-path:path("M210 0 L210 192 Q218 210 206 230 Q185 250 165 275 Q135 300 170 320 Q190 335 210 345");offset-rotate:0deg}
-.prakasham-dot.animate{animation:dotTravel 3.8s ease-in-out 0.5s 1 forwards}
-@keyframes prakashamDraw{0%{stroke-dashoffset:600;opacity:0}10%{opacity:1}85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
-@keyframes dotTravel{0%{offset-distance:0%;opacity:0}10%{opacity:1}85%{opacity:1}100%{offset-distance:100%;opacity:0}}
+.prakasham-path{fill:none;stroke:url(#prakashamGrad);stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 8px #00d4ff) drop-shadow(0 0 14px #8a2be2) drop-shadow(0 0 18px #ff6a00);stroke-dasharray:650;stroke-dashoffset:650;opacity:0}
+.prakasham-path.animate{animation:prakashamDraw 4s ease-in-out 0.5s 1 forwards}
+.prakasham-dot{fill:#fff;filter:drop-shadow(0 0 10px #fff) drop-shadow(0 0 18px #00d4ff) drop-shadow(0 0 25px #ff6a00);opacity:0;offset-path:path("M210 0 L210 192 Q222 208 230 230 Q238 255 210 270 Q170 290 145 315 Q165 335 190 350 Q205 360 210 345");offset-rotate:0deg}
+.prakasham-dot.animate{animation:dotTravel 4s ease-in-out 0.5s 1 forwards}
+@keyframes prakashamDraw{0%{stroke-dashoffset:650;opacity:0}8%{opacity:1}85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes dotTravel{0%{offset-distance:0%;opacity:0}8%{opacity:1}90%{opacity:1}100%{offset-distance:100%;opacity:0}}
 .profile{width:110px;height:110px;border-radius:50%;border:3px solid #c9a14a;box-shadow:0 0 30px rgba(201,161,74,0.5);margin-top:-60px;z-index:6;background:#000;object-fit:cover}
 h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;color:#c9a14a;font-weight:700}
 .tagline{margin-top:10px;font-family:'Cinzel',serif;font-size:15px;letter-spacing:1px;color:#c9a14a;font-weight:600;text-align:center;min-height:22px}
@@ -90,21 +90,21 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 <div class="container">
 <div class="banner-wrap">
 <div class="banner"><img src="banner.jpg"></div>
-<!-- LAST EDGE: Bottom star inside gold border, not outside -->
+<!-- CENTER A RIGHT EDGE -> ORANGE SIDE -> S SNAKE -> BOTTOM STAR -->
 <svg class="prakasham-svg" viewBox="0 0 420 360" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <linearGradient id="prakashamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
 <stop offset="0%" stop-color="#00d4ff" stop-opacity="1"/>
-<stop offset="18%" stop-color="#ffffff" stop-opacity="1"/>
-<stop offset="38%" stop-color="#8a2be2" stop-opacity="0.9"/>
-<stop offset="68%" stop-color="#ff6a00" stop-opacity="0.8"/>
-<stop offset="88%" stop-color="#c9a14a" stop-opacity="1"/>
+<stop offset="20%" stop-color="#ffffff" stop-opacity="1"/>
+<stop offset="40%" stop-color="#ff6a00" stop-opacity="0.9"/>
+<stop offset="65%" stop-color="#8a2be2" stop-opacity="0.9"/>
+<stop offset="85%" stop-color="#c9a14a" stop-opacity="1"/>
 <stop offset="100%" stop-color="#ffffff" stop-opacity="1"/>
 </linearGradient>
 </defs>
-<!-- END AT 345 = Bottom star inside gold border, last edge -->
-<path id="mainPath" class="prakasham-path" d="M210 0 L210 192 Q218 210 206 230 Q185 250 165 275 Q135 300 170 320 Q190 335 210 345" />
-<circle class="prakasham-dot" r="6" />
+<!-- M210 0 = VERY TOP Star top -> ring center -> Center A right edge curved -> orange side -> S -> bottom star last edge -->
+<path id="mainPath" class="prakasham-path" d="M210 0 L210 192 Q222 208 230 230 Q238 255 210 270 Q170 290 145 315 Q165 335 190 350 Q205 360 210 345" />
+<circle class="prakasham-dot" r="6.5" />
 </svg>
 </div>
 <img class="profile" src="favicon.png">
