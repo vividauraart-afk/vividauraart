@@ -48,22 +48,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .banner-wrap{position:relative;width:100%;display:flex;flex-direction:column;align-items:center}
 .banner{width:100%;height:180px;border-radius:20px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(201,161,74,0.15)}
 .banner img{width:100%;height:100%;object-fit:cover;display:block}
-/* CENTER TOP LINE START - NOT FROM BLUE STAR */
-.prakasham-svg{position:absolute;left:0;top:0;width:100%;height:380px;pointer-events:none;z-index:7;overflow:visible}
-.prakasham-path{fill:none;stroke:url(#prakashamGrad);stroke-width:2.6;stroke-linecap:round;filter:drop-shadow(0 0 6px #00d4ff) drop-shadow(0 0 12px #8a2be2) drop-shadow(0 0 18px #c9a14a);stroke-dasharray:480;stroke-dashoffset:480;opacity:0}
-.prakasham-path.animate{animation:prakashamDraw 3.5s ease-in-out 0.5s 1 forwards}
-.prakasham-dot{fill:#fff;filter:drop-shadow(0 0 8px #fff) drop-shadow(0 0 15px #00d4ff) drop-shadow(0 0 22px #c9a14a);opacity:0;offset-path:path("M210 22 L210 180 Q210 200 185 218 Q160 238 200 258 Q240 278 210 298 L210 335");offset-rotate:0deg}
-.prakasham-dot.animate{animation:dotTravel 3.5s ease-in-out 0.5s 1 forwards}
-@keyframes prakashamDraw{0%{stroke-dashoffset:480;opacity:0}10%{opacity:1}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
-@keyframes dotTravel{0%{offset-distance:0%;opacity:0}10%{opacity:1}85%{opacity:1}100%{offset-distance:100%;opacity:0}}
-.smoke-container{position:absolute;left:50%;top:330px;width:100px;height:100px;transform:translateX(-50%);pointer-events:none;z-index:8;opacity:0}
-.smoke-container.animate{animation:smokeShow 4s ease-out 3.6s 1 forwards}
-.smoke{position:absolute;left:50%;bottom:0;width:9px;height:9px;background:radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(138,43,226,0.3) 35%, rgba(0,212,255,0.25) 60%, transparent 100%);border-radius:50%;filter:blur(1.2px);transform:translateX(-50%);opacity:0}
+/* VERY TOP STAR TOP -> RING CENTER -> 2ND A MIDDLE -> S SNAKE -> BOTTOM STAR */
+.prakasham-svg{position:absolute;left:0;top:0;width:100%;height:410px;pointer-events:none;z-index:7;overflow:visible}
+.prakasham-path{fill:none;stroke:url(#prakashamGrad);stroke-width:3.2;stroke-linecap:round;filter:drop-shadow(0 0 8px #00d4ff) drop-shadow(0 0 14px #8a2be2) drop-shadow(0 0 20px #ff6a00);stroke-dasharray:650;stroke-dashoffset:650;opacity:0}
+.prakasham-path.animate{animation:prakashamDraw 4s ease-in-out 0.5s 1 forwards}
+.prakasham-dot{fill:#fff;filter:drop-shadow(0 0 10px #fff) drop-shadow(0 0 18px #00d4ff) drop-shadow(0 0 28px #ff6a00);opacity:0;offset-path:path("M210 0 L210 185 Q210 205 210 225 Q215 245 200 265 Q180 285 160 305 Q135 330 170 355 Q195 375 210 395");offset-rotate:0deg}
+.prakasham-dot.animate{animation:dotTravel 4s ease-in-out 0.5s 1 forwards}
+@keyframes prakashamDraw{0%{stroke-dashoffset:650;opacity:0}8%{opacity:1}85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes dotTravel{0%{offset-distance:0%;opacity:0}8%{opacity:1}90%{opacity:1}100%{offset-distance:100%;opacity:0}}
+.smoke-container{position:absolute;left:50%;top:385px;width:120px;height:120px;transform:translateX(-50%);pointer-events:none;z-index:8;opacity:0}
+.smoke-container.animate{animation:smokeShow 4s ease-out 4.2s 1 forwards}
+.smoke{position:absolute;left:50%;bottom:0;width:10px;height:10px;background:radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,106,0,0.4) 30%, rgba(0,212,255,0.3) 60%, transparent 100%);border-radius:50%;filter:blur(1.5px);transform:translateX(-50%);opacity:0}
 .smoke.s1{animation:smokeRise 3s ease-out 0s 1 forwards}
-.smoke.s2{animation:smokeRise 3.3s ease-out 0.35s 1 forwards}
-.smoke.s3{animation:smokeRise 3.6s ease-out 0.7s 1 forwards}
+.smoke.s2{animation:smokeRise 3.3s ease-out 0.4s 1 forwards}
+.smoke.s3{animation:smokeRise 3.6s ease-out 0.8s 1 forwards}
 @keyframes smokeShow{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
-@keyframes smokeRise{0%{transform:translateX(-50%) translateY(0) scale(0.5);opacity:0}15%{opacity:0.8}50%{transform:translateX(-20%) translateY(-45px) scale(1.2);opacity:0.5}100%{transform:translateX(10%) translateY(-90px) scale(2);opacity:0}}
+@keyframes smokeRise{0%{transform:translateX(-50%) translateY(0) scale(0.5);opacity:0}15%{opacity:0.9}50%{transform:translateX(-15%) translateY(-50px) scale(1.3);opacity:0.5}100%{transform:translateX(20%) translateY(-100px) scale(2.5);opacity:0}}
 .profile{width:110px;height:110px;border-radius:50%;border:3px solid #c9a14a;box-shadow:0 0 30px rgba(201,161,74,0.5);margin-top:-60px;z-index:6;background:#000;object-fit:cover}
 h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;color:#c9a14a;font-weight:700}
 .tagline{margin-top:10px;font-family:'Cinzel',serif;font-size:15px;letter-spacing:1px;color:#c9a14a;font-weight:600;text-align:center;min-height:22px}
@@ -98,21 +98,22 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 <div class="container">
 <div class="banner-wrap">
 <div class="banner"><img src="banner.jpg"></div>
-<!-- START FROM CENTER TOP LINE - NOT FROM BLUE STAR -->
-<svg class="prakasham-svg" viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
+<!-- VERY TOP: Star top nila vara -> ring center -> 2nd A middle -> S snake -> bottom star -->
+<svg class="prakasham-svg" viewBox="0 0 420 410" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <linearGradient id="prakashamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-<stop offset="0%" stop-color="#00d4ff" stop-opacity="0"/>
-<stop offset="12%" stop-color="#ffffff" stop-opacity="1"/>
-<stop offset="35%" stop-color="#00d4ff" stop-opacity="0.9"/>
-<stop offset="55%" stop-color="#8a2be2" stop-opacity="0.8"/>
-<stop offset="85%" stop-color="#c9a14a" stop-opacity="1"/>
-<stop offset="100%" stop-color="#ffd700" stop-opacity="0.9"/>
+<stop offset="0%" stop-color="#00d4ff" stop-opacity="1"/>
+<stop offset="15%" stop-color="#ffffff" stop-opacity="1"/>
+<stop offset="30%" stop-color="#00d4ff" stop-opacity="1"/>
+<stop offset="50%" stop-color="#8a2be2" stop-opacity="0.9"/>
+<stop offset="70%" stop-color="#ff6a00" stop-opacity="0.8"/>
+<stop offset="90%" stop-color="#c9a14a" stop-opacity="1"/>
+<stop offset="100%" stop-color="#ffffff" stop-opacity="1"/>
 </linearGradient>
 </defs>
-<!-- START AT 22: TOP EDGE OF CIRCLE, NOT 0 -->
-<path id="mainPath" class="prakasham-path" d="M210 22 L210 180 Q210 200 185 218 Q160 238 200 258 Q240 278 210 298 L210 335" />
-<circle class="prakasham-dot" r="5.5" />
+<!-- PATH: M210 0 = Cover top Star top nila vara -> ring center -> 2nd A middle -> S snake -> bottom star -->
+<path id="mainPath" class="prakasham-path" d="M210 0 L210 185 Q210 205 210 225 Q215 245 200 265 Q180 285 160 305 Q135 330 170 355 Q195 375 210 395" />
+<circle class="prakasham-dot" r="6.5" />
 </svg>
 <div class="smoke-container" id="smokeBox">
 <div class="smoke s1"></div>
