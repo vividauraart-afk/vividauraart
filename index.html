@@ -48,11 +48,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .banner-wrap{position:relative;width:100%;display:flex;flex-direction:column;align-items:center}
 .banner{width:100%;height:180px;border-radius:20px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(201,161,74,0.15)}
 .banner img{width:100%;height:100%;object-fit:cover;display:block}
-.light-beam{position:absolute;left:50%;top:0;width:2px;height:180px;background:linear-gradient(to bottom, #00d4ff 0%, #fff 20%, #c9a14a 60%, transparent 100%);box-shadow:0 0 8px #00d4ff, 0 0 15px #c9a14a, 0 0 25px rgba(0,212,255,0.5);transform:translateX(-50%);z-index:5;opacity:0;animation:lightFlow 3s ease-in-out infinite}
-.light-beam::before{content:'';position:absolute;left:50%;top:0;width:8px;height:100%;background:linear-gradient(to bottom, transparent, rgba(0,212,255,0.3), rgba(201,161,74,0.3), transparent);transform:translateX(-50%);filter:blur(4px)}
-.light-beam::after{content:'';position:absolute;left:50%;top:-10px;width:12px;height:12px;background:#fff;border-radius:50%;box-shadow:0 0 10px #fff, 0 0 20px #00d4ff, 0 0 30px #c9a14a;transform:translateX(-50%);animation:dotFlow 3s ease-in-out infinite}
-@keyframes lightFlow{0%{height:0;opacity:0}15%{opacity:1}50%{height:220px;opacity:1}80%{height:220px;opacity:0.8}100%{height:220px;opacity:0;transform:translateX(-50%) translateY(10px)}}
-@keyframes dotFlow{0%{top:-10px;opacity:0}15%{opacity:1}85%{top:210px;opacity:1}100%{top:210px;opacity:0}}
+/* PRAKASHAM - ONE TIME FLOW THROUGH S PATH */
+.prakasham-svg{position:absolute;left:0;top:0;width:100%;height:340px;pointer-events:none;z-index:7;overflow:visible}
+.prakasham-path{fill:none;stroke:url(#prakashamGrad);stroke-width:2.5;stroke-linecap:round;filter:drop-shadow(0 0 6px #00d4ff) drop-shadow(0 0 12px #c9a14a);stroke-dasharray:400;stroke-dashoffset:400;opacity:0}
+.prakasham-path.animate{animation:prakashamDraw 2.8s ease-in-out 0.5s 1 forwards}
+.prakasham-dot{fill:#fff;filter:drop-shadow(0 0 8px #fff) drop-shadow(0 0 15px #00d4ff) drop-shadow(0 0 25px #c9a14a);opacity:0;offset-path:path("M210 0 L210 155 Q210 195 190 215 Q165 240 210 265 Q255 290 210 315");offset-rotate:0deg}
+.prakasham-dot.animate{animation:dotTravel 2.8s ease-in-out 0.5s 1 forwards, dotGlow 2.8s ease-in-out 0.5s 1 forwards}
+@keyframes prakashamDraw{0%{stroke-dashoffset:400;opacity:0}10%{opacity:1}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes dotTravel{0%{offset-distance:0%;opacity:0}10%{opacity:1}90%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes dotGlow{0%{r:4}50%{r:6}100%{r:4}}
 .profile{width:110px;height:110px;border-radius:50%;border:3px solid #c9a14a;box-shadow:0 0 30px rgba(201,161,74,0.5);margin-top:-60px;z-index:6;background:#000;object-fit:cover}
 h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;color:#c9a14a;font-weight:700}
 .tagline{margin-top:10px;font-family:'Cinzel',serif;font-size:15px;letter-spacing:1px;color:#c9a14a;font-weight:600;text-align:center;min-height:22px}
@@ -87,7 +91,21 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 <div class="container">
 <div class="banner-wrap">
 <div class="banner"><img src="banner.jpg"></div>
-<div class="light-beam"></div>
+<!-- PRAKASHAM FLOW SVG - ONE TIME ONLY -->
+<svg class="prakasham-svg" viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="prakashamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+<stop offset="0%" stop-color="#00d4ff" stop-opacity="0"/>
+<stop offset="15%" stop-color="#00d4ff" stop-opacity="1"/>
+<stop offset="40%" stop-color="#ffffff" stop-opacity="1"/>
+<stop offset="70%" stop-color="#c9a14a" stop-opacity="1"/>
+<stop offset="100%" stop-color="#c9a14a" stop-opacity="0"/>
+</linearGradient>
+</defs>
+<!-- Path: Banner center -> profile top -> S curve inside VAA -> end at A center -->
+<path id="mainPath" class="prakasham-path" d="M210 0 L210 155 Q210 195 190 215 Q165 240 210 265 Q255 290 210 315" />
+<circle class="prakasham-dot" r="5" />
+</svg>
 </div>
 <img class="profile" src="favicon.png">
 <h1>VIVID AURA ART</h1>
@@ -107,7 +125,7 @@ h1{font-family:'Cinzel',serif;margin-top:14px;font-size:22px;letter-spacing:3px;
 
 <script>
 var sp=document.getElementById('splash');
-function hideSplash(){sp.classList.add('hide');}
+function hideSplash(){sp.classList.add('hide'); triggerPrakasham();}
 try{sessionStorage.setItem('vaaSplash','1');}catch(e){}
 var t=setTimeout(hideSplash,2500);
 sp.addEventListener('click',function(){clearTimeout(t);hideSplash();});
@@ -126,6 +144,26 @@ if(navigator.vibrate){navigator.vibrate([30,20,30]);}
 el.classList.add('vibrate');
 setTimeout(()=>{el.classList.remove('vibrate');},400);
 }
+// PRAKASHAM - ONE TIME ONLY ON LOAD + REFRESH
+function triggerPrakasham(){
+  const path=document.querySelector('.prakasham-path');
+  const dot=document.querySelector('.prakasham-dot');
+  if(path && dot){
+    // Reset
+    path.classList.remove('animate');
+    dot.classList.remove('animate');
+    void path.offsetWidth; // reflow
+    // Start animation once
+    setTimeout(()=>{
+      path.classList.add('animate');
+      dot.classList.add('animate');
+    }, 100);
+  }
+}
+// Auto trigger after page load (for when splash is skipped)
+window.addEventListener('load', ()=>{
+  setTimeout(triggerPrakasham, 2600);
+});
 </script>
 </body>
 </html>
