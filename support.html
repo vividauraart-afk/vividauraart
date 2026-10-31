@@ -197,6 +197,35 @@
       color: #e8c36a;
     }
 
+    .copy-btn {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      padding: 11px;
+      border: 1px solid rgba(190,150,255,0.4);
+      border-radius: 9px;
+      background: rgba(155,107,255,0.13);
+      color: #e8c3ff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .amazon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 11px;
+      background: linear-gradient(110deg, #e8a52c, #f5c76b);
+      color: #171019;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
     .gift-note {
       margin-top: 15px;
       color: #aaa1b9;
@@ -323,24 +352,63 @@
 
       <div class="gift">
         <strong>🇮🇳 For Supporters in India</strong><br>
-        You can choose an Amazon.in Gift Card and send it to my email address.
-      </div>
+        You can purchase an Amazon.in Gift Card and send it to my email address.
 
-      <div class="gift">
-        <strong>🌎 For International Supporters</strong><br>
-        You can choose an Amazon Gift Card from your own country's Amazon store,
-        subject to that store's gift card rules and availability.
+        <a
+          class="amazon-btn"
+          href="https://www.amazon.in/gift-cards/b?ie=UTF8&node=3704982031"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          🎁 Buy Amazon.in Gift Card
+        </a>
       </div>
 
       <div class="recipient">
         <strong>Gift Card Recipient Email:</strong><br>
-        vividauraart@gmail.com
+        <span id="recipientEmail">vividauraart@gmail.com</span>
+
+        <button
+          type="button"
+          class="copy-btn"
+          onclick="copyRecipientEmail()"
+        >
+          📋 Copy Email Address
+        </button>
+      </div>
+
+      <div class="gift">
+        <strong>🌎 For International Supporters</strong><br>
+        Amazon Gift Cards are generally restricted to their respective
+        Amazon marketplaces. Please do not send a Gift Card from another
+        country's Amazon store, as it may not be usable in India.
+
+        <p class="gift-note">
+          You can support my work internationally using the payment options below:
+        </p>
+
+        <a
+          class="payment-btn paypal-btn"
+          href="https://www.paypal.com/ncp/payment/J28NCB2BNL7XY"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          💙 Support with PayPal
+        </a>
+
+        <a
+          class="payment-btn razorpay-btn"
+          href="https://rzp.io/rzp/VividAuraArtYTc5H3g"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          💜 Support with Razorpay
+        </a>
       </div>
 
       <p class="gift-note">
-        Please make sure the Gift Card is valid for the intended Amazon
-        marketplace and can be delivered to the recipient's email address.
-        Gift Cards from different Amazon countries may not be interchangeable.
+        Please check the Gift Card terms, delivery method and recipient
+        details carefully before completing your purchase.
       </p>
 
     </section>
@@ -359,6 +427,36 @@
     </div>
 
   </main>
+
+  <script>
+    async function copyRecipientEmail() {
+      const email = "vividauraart@gmail.com";
+      const button = document.querySelector(".copy-btn");
+
+      try {
+        await navigator.clipboard.writeText(email);
+        button.textContent = "✅ Email Copied!";
+      } catch (error) {
+        const textArea = document.createElement("textarea");
+        textArea.value = email;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        const copied = document.execCommand("copy");
+        textArea.remove();
+
+        button.textContent = copied
+          ? "✅ Email Copied!"
+          : "Copy failed — please copy manually";
+      }
+
+      setTimeout(() => {
+        button.textContent = "📋 Copy Email Address";
+      }, 2500);
+    }
+  </script>
 
 </body>
 </html>
