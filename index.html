@@ -459,6 +459,45 @@ text-align:center;
 opacity:0.3;
 font-size:11px
 }
+
+/* VAA SUPPORT ICON - ADDED */
+
+.support-float{
+position:fixed;
+right:20px;
+bottom:22px;
+z-index:9998;
+width:58px;
+height:58px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:18px;
+text-decoration:none;
+background:linear-gradient(145deg,#25212f,#08080d);
+border:1px solid #a77aff;
+box-shadow:
+0 0 12px rgba(167,122,255,0.45),
+inset 0 0 12px rgba(167,122,255,0.12);
+transition:transform 0.25s ease,box-shadow 0.25s ease
+}
+
+.support-float:hover{
+transform:translateY(-4px);
+box-shadow:
+0 0 22px rgba(167,122,255,0.7),
+inset 0 0 14px rgba(167,122,255,0.2)
+}
+
+.support-float span{
+background:linear-gradient(135deg,#fff,#c9a14a,#bd8aff);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+font-size:17px;
+font-weight:800;
+letter-spacing:-1px
+}
 </style>
 </head>
 
@@ -663,6 +702,12 @@ Inst&#97;gram
 <div class="footer">© 2026 VIVID AURA ART</div>
 
 </div>
+
+<!-- VAA SUPPORT ICON - ADDED -->
+
+<a href="support.html" class="support-float" aria-label="Support VividAuraArt" title="Support VividAuraArt">
+<span>VAA</span>
+</a>
 
 <script>
 
