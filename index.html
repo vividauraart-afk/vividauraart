@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -399,6 +400,9 @@ gap:10px;
 background:
 linear-gradient(rgba(255,255,255,0.06),rgba(255,255,255,0.06)) padding-box,
 linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff,#c9a14a) border-box;
+background-size:100% 100%,300% 300%;
+background-position:0 0,0% 50%;
+animation:auraBorderFlow 9s ease-in-out infinite;
 border:1px solid transparent;
 color:#e8c36a;
 padding:16px 20px;
@@ -406,6 +410,12 @@ border-radius:14px;
 text-decoration:none;
 font-weight:600;
 font-size:14px
+}
+
+@keyframes auraBorderFlow{
+0%{background-position:0 0,0% 50%}
+50%{background-position:0 0,100% 50%}
+100%{background-position:0 0,0% 50%}
 }
 
 .link-btn:active{transform:scale(0.95)}
