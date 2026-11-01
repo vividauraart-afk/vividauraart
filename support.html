@@ -346,117 +346,53 @@
 
     </section>
 
-    <section class="section gift-card-section">
+  
+<section class="section gift-card-section">
 
-      <h2>🎁 Send an Amazon Gift Card</h2>
+  <h2>🎁 Send an Amazon Gift Card</h2>
 
-      <div class="gift">
-        <strong>🇮🇳 For Supporters in India</strong><br>
-        You can purchase an Amazon.in Gift Card and send it to my email address.
+  <div class="gift">
+    <strong>🇮🇳 For Supporters in India</strong><br>
+    You can purchase an Amazon.in Gift Card and send it to my email address.
 
-        <a
-          class="amazon-btn"
-          href="https://www.amazon.in/gift-cards/b?ie=UTF8&node=3704982031"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🎁 Buy Amazon.in Gift Card
-        </a>
-      </div>
-
-      <div class="recipient">
-        <strong>Gift Card Recipient Email:</strong><br>
-        <span id="recipientEmail">vividauraart@gmail.com</span>
-
-        <button
-          type="button"
-          class="copy-btn"
-          onclick="copyRecipientEmail()"
-        >
-          📋 Copy Email Address
-        </button>
-      </div>
-
-      <div class="gift">
-        <strong>🌎 For International Supporters</strong><br>
-        Amazon Gift Cards are generally restricted to their respective
-        Amazon marketplaces. Please do not send a Gift Card from another
-        country's Amazon store, as it may not be usable in India.
-
-        <p class="gift-note">
-          You can support my work internationally using the payment options below:
-        </p>
-
-        <a
-          class="payment-btn paypal-btn"
-          href="https://www.paypal.com/ncp/payment/J28NCB2BNL7XY"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💙 Support with PayPal
-        </a>
-
-        <a
-          class="payment-btn razorpay-btn"
-          href="https://rzp.io/rzp/VividAuraArtYTc5H3g"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💜 Support with Razorpay
-        </a>
-      </div>
-
-      <p class="gift-note">
-        Please check the Gift Card terms, delivery method and recipient
-        details carefully before completing your purchase.
-      </p>
-
-    </section>
-
-    <p class="privacy">
-      Your support is always appreciated. Please review the payment
-      provider's details before completing your contribution.
-    </p>
-
-    <a class="back-link" href="index.html">
-      ← Back to VividAuraArt
+    <a
+      class="amazon-btn"
+      href="https://www.amazon.in/gift-cards/b?ie=UTF8&node=3704982031"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      🎁 Buy Amazon.in Gift Card
     </a>
+  </div>
 
-    <div class="footer">
-      © 2026 VividAuraArt. Made with 💜
-    </div>
+  <div class="recipient">
+    <strong>Gift Card Recipient Email:</strong><br>
+    <span id="recipientEmail">vividauraart@gmail.com</span>
 
-  </main>
+    <button
+      type="button"
+      class="copy-btn"
+      onclick="copyRecipientEmail()"
+    >
+      📋 Copy Email Address
+    </button>
+  </div>
 
-  <script>
-    async function copyRecipientEmail() {
-      const email = "vividauraart@gmail.com";
-      const button = document.querySelector(".copy-btn");
+  <div class="gift">
+    <strong>🌎 For International Supporters</strong><br>
+    Amazon Gift Cards are generally restricted to their respective
+    Amazon marketplaces. Please do not send a Gift Card from another
+    country's Amazon store, as it may not be usable in India.
 
-      try {
-        await navigator.clipboard.writeText(email);
-        button.textContent = "✅ Email Copied!";
-      } catch (error) {
-        const textArea = document.createElement("textarea");
-        textArea.value = email;
-        textArea.style.position = "fixed";
-        textArea.style.opacity = "0";
-        document.body.appendChild(textArea);
-        textArea.select();
+    <p class="gift-note">
+      International supporters can use the Razorpay or PayPal
+      payment options available in the Support My Work section above.
+    </p>
+  </div>
 
-        const copied = document.execCommand("copy");
-        textArea.remove();
+  <p class="gift-note">
+    Please check the Gift Card terms, delivery method and recipient
+    details carefully before completing your purchase.
+  </p>
 
-        button.textContent = copied
-          ? "✅ Email Copied!"
-          : "Copy failed — please copy manually";
-      }
-
-      setTimeout(() => {
-        button.textContent = "📋 Copy Email Address";
-      }, 2500);
-    }
-  </script>
-
-</body>
-</html>
+</section>
