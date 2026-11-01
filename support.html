@@ -46,28 +46,15 @@
     }
 
     .logo {
-      width: 76px;
-      height: 76px;
+      width: 170px;
+      height: 170px;
+      display: block;
+      object-fit: contain;
       margin: 0 auto 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #a77aff;
-      border-radius: 22px;
-      background: #100d18;
-      box-shadow: 0 0 22px rgba(167,122,255,0.3);
-      font-size: 25px;
-      font-weight: 900;
-      letter-spacing: -2px;
-      background-image: linear-gradient(
-        135deg,
-        #fff,
-        #c9a14a,
-        #bd8aff
-      );
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
     }
 
     h1 {
@@ -267,7 +254,11 @@
 
   <main class="support-card">
 
-    <div class="logo">VAA</div>
+    <img
+      class="logo"
+      src="assets/donation-pot.png"
+      alt="VividAuraArt Golden Donation Pot"
+    >
 
     <h1>Support VividAuraArt 💜</h1>
 
@@ -346,53 +337,100 @@
 
     </section>
 
-  
-<section class="section gift-card-section">
+    <section class="section gift-card-section">
 
-  <h2>🎁 Send an Amazon Gift Card</h2>
+      <h2>🎁 Send an Amazon Gift Card</h2>
 
-  <div class="gift">
-    <strong>🇮🇳 For Supporters in India</strong><br>
-    You can purchase an Amazon.in Gift Card and send it to my email address.
+      <div class="gift">
+        <strong>🇮🇳 For Supporters in India</strong><br>
+        You can purchase an Amazon.in Gift Card and send it to my email address.
 
-    <a
-      class="amazon-btn"
-      href="https://www.amazon.in/gift-cards/b?ie=UTF8&node=3704982031"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      🎁 Buy Amazon.in Gift Card
-    </a>
-  </div>
+        <a
+          class="amazon-btn"
+          href="https://www.amazon.in/gift-cards/b?ie=UTF8&node=3704982031"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          🎁 Buy Amazon.in Gift Card
+        </a>
+      </div>
 
-  <div class="recipient">
-    <strong>Gift Card Recipient Email:</strong><br>
-    <span id="recipientEmail">vividauraart@gmail.com</span>
+      <div class="recipient">
+        <strong>Gift Card Recipient Email:</strong><br>
+        <span id="recipientEmail">vividauraart@gmail.com</span>
 
-    <button
-      type="button"
-      class="copy-btn"
-      onclick="copyRecipientEmail()"
-    >
-      📋 Copy Email Address
-    </button>
-  </div>
+        <button
+          type="button"
+          class="copy-btn"
+          onclick="copyRecipientEmail()"
+        >
+          📋 Copy Email Address
+        </button>
+      </div>
 
-  <div class="gift">
-    <strong>🌎 For International Supporters</strong><br>
-    Amazon Gift Cards are generally restricted to their respective
-    Amazon marketplaces. Please do not send a Gift Card from another
-    country's Amazon store, as it may not be usable in India.
+      <div class="gift">
+        <strong>🌎 For International Supporters</strong><br>
+        Amazon Gift Cards are generally restricted to their respective
+        Amazon marketplaces. Please do not send a Gift Card from another
+        country's Amazon store, as it may not be usable in India.
 
-    <p class="gift-note">
-      International supporters can use the Razorpay or PayPal
-      payment options available in the Support My Work section above.
+        <p class="gift-note">
+          International supporters can use the Razorpay or PayPal
+          payment options available in the Support My Work section above.
+        </p>
+      </div>
+
+      <p class="gift-note">
+        Please check the Gift Card terms, delivery method and recipient
+        details carefully before completing your purchase.
+      </p>
+
+    </section>
+
+    <p class="privacy">
+      Your support is always appreciated. Please review the payment
+      provider's details before completing your contribution.
     </p>
-  </div>
 
-  <p class="gift-note">
-    Please check the Gift Card terms, delivery method and recipient
-    details carefully before completing your purchase.
-  </p>
+    <a class="back-link" href="index.html">
+      ← Back to VividAuraArt
+    </a>
 
-</section>
+    <div class="footer">
+      © 2026 VividAuraArt. Made with 💜
+    </div>
+
+  </main>
+
+  <script>
+    async function copyRecipientEmail() {
+      const email = "vividauraart@gmail.com";
+      const button = document.querySelector(".copy-btn");
+
+      try {
+        await navigator.clipboard.writeText(email);
+        button.textContent = "✅ Email Copied!";
+      } catch (error) {
+        const textArea = document.createElement("textarea");
+        textArea.value = email;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        const copied = document.execCommand("copy");
+        textArea.remove();
+
+        button.textContent = copied
+          ? "✅ Email Copied!"
+          : "Copy failed — please copy manually";
+      }
+
+      setTimeout(() => {
+        button.textContent = "📋 Copy Email Address";
+      }, 2500);
+    }
+  </script>
+
+</body>
+</html>
