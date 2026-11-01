@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,14 +155,9 @@
     }
 
     /* One-time Magical Smoke Entrance */
+    /* Disabled to prevent the oversized oval smoke cloud */
     .smoke-intro {
-      position: absolute;
-      inset: 0;
-      z-index: 10;
-      pointer-events: none;
-      overflow: hidden;
-      border-radius: 24px;
-      animation: smokeOverlayFade 5.2s ease-out forwards;
+      display: none;
     }
 
     .smoke-cloud {
