@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -258,13 +257,13 @@
       }
     }
 
-    /* NEW: Magical Pot Message Effect */
+    /* Fixed Magical Pot Message Effect */
     .pot-magic {
       position: absolute;
       width: 320px;
-      height: 250px;
+      height: 210px;
       left: 50%;
-      bottom: 58px;
+      bottom: 0;
       transform: translateX(-50%);
       z-index: 4;
       pointer-events: none;
@@ -293,13 +292,13 @@
           rgba(255,190,75,0.48),
           transparent 65%
         );
-      animation: potSmokeRise 6.5s ease-out 5.4s forwards;
+      animation: potSmokeRise 4.5s ease-out 1.2s forwards;
     }
 
     .pot-magic-smoke:nth-child(2) {
       width: 125px;
       height: 130px;
-      animation-delay: 5.65s;
+      animation-delay: 1.45s;
       background:
         radial-gradient(ellipse at 35% 55%,
           rgba(150,60,255,0.75),
@@ -318,44 +317,40 @@
     .pot-magic-smoke:nth-child(3) {
       width: 90px;
       height: 110px;
-      animation-delay: 5.9s;
+      animation-delay: 1.7s;
     }
 
     @keyframes potSmokeRise {
       0% {
         opacity: 0;
-        transform: translate(-50%, 15px) scale(0.35);
+        transform: translate(-50%, 0) scale(0.35);
       }
-      15% {
+      20% {
         opacity: 0.85;
       }
-      40% {
-        opacity: 0.8;
-        transform: translate(-65%, -65px) scale(1.3);
+      50% {
+        opacity: 0.75;
+        transform: translate(-60%, -55px) scale(1.3);
       }
-      65% {
-        opacity: 0.65;
-        transform: translate(-35%, -135px) scale(1.7);
-      }
-      85% {
-        opacity: 0.3;
-        transform: translate(-55%, -185px) scale(2);
+      75% {
+        opacity: 0.45;
+        transform: translate(-40%, -105px) scale(1.8);
       }
       100% {
         opacity: 0;
-        transform: translate(-50%, -220px) scale(2.3);
+        transform: translate(-50%, -145px) scale(2);
       }
     }
 
     .pot-magic-message {
       position: absolute;
       left: 50%;
-      bottom: 115px;
+      top: 5px;
       width: 270px;
       padding: 13px 12px;
       border: 1px solid rgba(190,145,255,0.65);
       border-radius: 15px;
-      background: rgba(16,10,30,0.82);
+      background: rgba(16,10,30,0.94);
       box-shadow:
         0 0 15px rgba(0,150,255,0.35),
         0 0 28px rgba(155,65,255,0.35),
@@ -366,8 +361,9 @@
       line-height: 1.5;
       text-align: center;
       opacity: 0;
-      transform: translate(-50%, 25px) scale(0.75);
-      animation: potMessageReveal 6.5s ease-out 7.1s forwards;
+      visibility: hidden;
+      transform: translate(-50%, 12px) scale(0.9);
+      animation: potMessageReveal 5s ease-out 2.5s forwards;
     }
 
     .pot-magic-message span {
@@ -381,28 +377,25 @@
     @keyframes potMessageReveal {
       0% {
         opacity: 0;
-        transform: translate(-50%, 25px) scale(0.75);
-        filter: blur(8px);
+        visibility: visible;
+        transform: translate(-50%, 12px) scale(0.9);
+        filter: blur(5px);
       }
       15% {
         opacity: 1;
         transform: translate(-50%, 0) scale(1);
         filter: blur(0);
       }
-      65% {
+      75% {
         opacity: 1;
         transform: translate(-50%, 0) scale(1);
         filter: blur(0);
       }
-      85% {
-        opacity: 0.5;
-        transform: translate(-50%, -10px) scale(0.95);
-        filter: blur(3px);
-      }
       100% {
         opacity: 0;
-        transform: translate(-50%, -28px) scale(0.85);
-        filter: blur(10px);
+        visibility: hidden;
+        transform: translate(-50%, -8px) scale(0.95);
+        filter: blur(5px);
       }
     }
 
@@ -716,7 +709,7 @@
         alt="VividAuraArt Golden Donation Pot"
       >
 
-      <!-- NEW: Magical smoke rising from the pot -->
+      <!-- Magical smoke rising from the pot -->
       <div class="pot-magic" aria-hidden="true">
         <span class="pot-magic-smoke"></span>
         <span class="pot-magic-smoke"></span>
