@@ -262,7 +262,7 @@
       }
     }
 
-    /* Continuous Coloured Smoke Rising from the Pot */
+    /* Magical Pot Smoke and Message */
     .pot-magic {
       position: absolute;
       width: 320px;
@@ -273,51 +273,49 @@
       transform: translateX(-50%);
       z-index: 4;
       pointer-events: none;
-      overflow: hidden;
     }
 
     .pot-magic-smoke {
       position: absolute;
+      bottom: 105px;
       left: 50%;
-      bottom: 116px;
       width: 105px;
       height: 115px;
       border-radius: 50%;
       opacity: 0;
-      filter: blur(15px);
-      transform: translateX(-50%) scale(0.4);
+      filter: blur(17px);
+      transform: translateX(-50%) scale(0.35);
       background:
         radial-gradient(ellipse at 35% 65%,
-          rgba(26,47,128,0.9),
+          rgba(0,165,255,0.75),
           transparent 65%
         ),
         radial-gradient(ellipse at 65% 45%,
-          rgba(94,41,118,0.85),
+          rgba(165,65,255,0.8),
           transparent 68%
         ),
         radial-gradient(ellipse at 50% 25%,
-          rgba(161,131,74,0.65),
+          rgba(255,190,75,0.48),
           transparent 65%
         );
-      animation: potSmokeRise 5s ease-in-out 5.3s infinite;
+      animation: potSmokeRise 4.5s ease-out 1.2s forwards;
     }
 
     .pot-magic-smoke:nth-child(2) {
       width: 125px;
       height: 130px;
-      bottom: 113px;
-      animation-delay: 6.1s;
+      animation-delay: 1.45s;
       background:
         radial-gradient(ellipse at 35% 55%,
-          rgba(79,152,200,0.85),
+          rgba(150,60,255,0.75),
           transparent 65%
         ),
         radial-gradient(ellipse at 65% 45%,
-          rgba(157,78,221,0.8),
+          rgba(0,155,255,0.7),
           transparent 68%
         ),
         radial-gradient(ellipse at 50% 25%,
-          rgba(212,175,55,0.55),
+          rgba(255,185,65,0.4),
           transparent 65%
         );
     }
@@ -325,51 +323,182 @@
     .pot-magic-smoke:nth-child(3) {
       width: 90px;
       height: 110px;
-      bottom: 117px;
-      animation-delay: 6.9s;
-      background:
-        radial-gradient(ellipse at 35% 55%,
-          rgba(116,51,99,0.85),
-          transparent 65%
-        ),
-        radial-gradient(ellipse at 65% 45%,
-          rgba(136,69,48,0.75),
-          transparent 68%
-        ),
-        radial-gradient(ellipse at 50% 25%,
-          rgba(10,10,15,0.7),
-          transparent 65%
-        );
+      animation-delay: 1.7s;
     }
 
     @keyframes potSmokeRise {
       0% {
         opacity: 0;
-        transform: translate(-50%, 0) scale(0.4);
+        transform: translate(-50%, 0) scale(0.35);
       }
-
-      15% {
+      20% {
+        opacity: 0.85;
+      }
+      50% {
         opacity: 0.75;
+        transform: translate(-60%, -55px) scale(1.3);
       }
-
-      35% {
-        opacity: 0.8;
-        transform: translate(-65%, -25px) scale(1);
-      }
-
-      55% {
-        opacity: 0.65;
-        transform: translate(-35%, -55px) scale(1.45);
-      }
-
       75% {
-        opacity: 0.5;
-        transform: translate(-60%, -85px) scale(1.8);
+        opacity: 0.45;
+        transform: translate(-40%, -105px) scale(1.8);
       }
-
       100% {
         opacity: 0;
-        transform: translate(-40%, -115px) scale(2.1);
+        transform: translate(-50%, -145px) scale(2);
+      }
+    }
+
+    /* NEW: Continuous coloured smoke after existing animations */
+    .continuous-smoke {
+      position: absolute;
+      left: 50%;
+      bottom: 105px;
+      width: 270px;
+      height: 125px;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      filter: blur(19px);
+      animation: continuousSmokeStart 2s ease-out 7.6s forwards;
+    }
+
+    .continuous-smoke span {
+      position: absolute;
+      display: block;
+      width: 115px;
+      height: 135px;
+      left: 50%;
+      bottom: 0;
+      border-radius: 50%;
+      opacity: 0.65;
+      filter: blur(18px);
+      background:
+        radial-gradient(ellipse at 35% 60%, #1A2F80, transparent 68%),
+        radial-gradient(ellipse at 65% 40%, #4F98C8, transparent 68%),
+        radial-gradient(ellipse at 50% 50%, #5E2976, transparent 70%);
+      animation: continuousSmokeFlow 5s ease-in-out infinite alternate;
+    }
+
+    .continuous-smoke span:nth-child(2) {
+      width: 145px;
+      height: 155px;
+      margin-left: -65px;
+      background:
+        radial-gradient(ellipse at 35% 50%, #9D4EDD, transparent 68%),
+        radial-gradient(ellipse at 65% 55%, #743363, transparent 68%),
+        radial-gradient(ellipse at 50% 25%, #884530, transparent 70%);
+      animation-delay: -1.8s;
+      animation-duration: 6s;
+    }
+
+    .continuous-smoke span:nth-child(3) {
+      width: 125px;
+      height: 145px;
+      margin-left: -15px;
+      background:
+        radial-gradient(ellipse at 35% 50%, #A1834A, transparent 68%),
+        radial-gradient(ellipse at 65% 45%, #D4AF37, transparent 68%),
+        radial-gradient(ellipse at 50% 60%, #0A0A0F, transparent 70%);
+      animation-delay: -3s;
+      animation-duration: 5.5s;
+    }
+
+    .continuous-smoke span:nth-child(4) {
+      width: 150px;
+      height: 130px;
+      margin-left: -90px;
+      background:
+        radial-gradient(ellipse at 35% 50%, #1A2F80, transparent 68%),
+        radial-gradient(ellipse at 65% 50%, #743363, transparent 68%),
+        radial-gradient(ellipse at 50% 30%, #D4AF37, transparent 70%);
+      animation-delay: -2.5s;
+      animation-duration: 6.5s;
+    }
+
+    @keyframes continuousSmokeStart {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes continuousSmokeFlow {
+      0% {
+        transform: translate(-50%, 10px) scale(0.8) rotate(-8deg);
+        opacity: 0.35;
+      }
+      35% {
+        transform: translate(-35%, -30px) scale(1.15) rotate(8deg);
+        opacity: 0.7;
+      }
+      70% {
+        transform: translate(-65%, -65px) scale(1.35) rotate(-5deg);
+        opacity: 0.55;
+      }
+      100% {
+        transform: translate(-45%, -95px) scale(1.5) rotate(10deg);
+        opacity: 0.4;
+      }
+    }
+
+    .pot-magic-message {
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      width: 270px;
+      max-width: 95%;
+      padding: 13px 12px;
+      border: 1px solid rgba(190,145,255,0.65);
+      border-radius: 15px;
+      background: rgba(16,10,30,0.94);
+      box-shadow:
+        0 0 15px rgba(0,150,255,0.35),
+        0 0 28px rgba(155,65,255,0.35),
+        inset 0 0 15px rgba(155,65,255,0.12);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.5;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, 12px) scale(0.9);
+      animation: potMessageReveal 5s ease-out 2.5s forwards;
+    }
+
+    .pot-magic-message span {
+      display: block;
+      margin-top: 4px;
+      color: #d8b6ff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @keyframes potMessageReveal {
+      0% {
+        opacity: 0;
+        visibility: visible;
+        transform: translate(-50%, 12px) scale(0.9);
+        filter: blur(5px);
+      }
+      15% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+        filter: blur(0);
+      }
+      75% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, -8px) scale(0.95);
+        filter: blur(5px);
       }
     }
 
@@ -637,6 +766,11 @@
       h1 {
         font-size: 24px;
       }
+
+      .pot-magic-message {
+        width: 250px;
+        font-size: 15px;
+      }
     }
 
     /* Accessibility */
@@ -646,7 +780,10 @@
       .logo-wrap::after,
       .smoke-intro,
       .smoke-cloud,
-      .pot-magic-smoke {
+      .pot-magic-smoke,
+      .pot-magic-message,
+      .continuous-smoke,
+      .continuous-smoke span {
         animation: none !important;
       }
 
@@ -657,7 +794,8 @@
       }
 
       .smoke-intro,
-      .pot-magic {
+      .pot-magic,
+      .continuous-smoke {
         display: none;
       }
     }
@@ -682,11 +820,27 @@
         alt="VividAuraArt Golden Donation Pot"
       >
 
-      <!-- Continuous coloured smoke rising from the pot -->
+      <!-- Magical smoke rising from the pot -->
       <div class="pot-magic" aria-hidden="true">
+
         <span class="pot-magic-smoke"></span>
         <span class="pot-magic-smoke"></span>
         <span class="pot-magic-smoke"></span>
+
+        <!-- NEW: Continuous coloured smoke layer -->
+        <div class="continuous-smoke">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <!-- Existing Thank You Message - PRESERVED -->
+        <div class="pot-magic-message">
+          Thank you for being here 💜
+          <span>Your kindness means a lot!</span>
+        </div>
+
       </div>
     </div>
 
