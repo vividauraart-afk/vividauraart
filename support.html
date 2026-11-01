@@ -43,9 +43,11 @@
       );
       box-shadow: 0 0 35px rgba(145,85,220,0.13);
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Golden Donation Pot Animation */
+    /* Golden Donation Pot */
     .logo-wrap {
       position: relative;
       width: 145px;
@@ -55,6 +57,7 @@
       align-items: center;
       justify-content: center;
       isolation: isolate;
+      z-index: 2;
     }
 
     .logo {
@@ -145,6 +148,113 @@
       100% {
         opacity: 0;
         transform: translateY(-25px) scale(1.15);
+      }
+    }
+
+    /* One-time Magical Smoke Entrance */
+    .smoke-intro {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: 24px;
+      animation: smokeOverlayFade 5.2s ease-out forwards;
+    }
+
+    .smoke-cloud {
+      position: absolute;
+      top: 105px;
+      left: 50%;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      opacity: 0;
+      filter: blur(22px);
+      transform: translateX(-50%) scale(0.25);
+      background:
+        radial-gradient(ellipse at 35% 40%,
+          rgba(0,155,255,0.65),
+          transparent 65%
+        ),
+        radial-gradient(ellipse at 65% 55%,
+          rgba(155,65,255,0.72),
+          transparent 68%
+        ),
+        radial-gradient(ellipse at 50% 70%,
+          rgba(255,190,75,0.35),
+          transparent 65%
+        );
+      animation: smokeSpread 5.2s ease-out forwards;
+    }
+
+    .smoke-cloud:nth-child(2) {
+      width: 220px;
+      height: 220px;
+      animation-delay: 0.15s;
+      background:
+        radial-gradient(ellipse at 35% 45%,
+          rgba(155,65,255,0.68),
+          transparent 65%
+        ),
+        radial-gradient(ellipse at 65% 55%,
+          rgba(0,155,255,0.58),
+          transparent 68%
+        ),
+        radial-gradient(ellipse at 50% 70%,
+          rgba(255,190,75,0.3),
+          transparent 65%
+        );
+    }
+
+    .smoke-cloud:nth-child(3) {
+      width: 175px;
+      height: 175px;
+      animation-delay: 0.3s;
+      background:
+        radial-gradient(ellipse at 35% 40%,
+          rgba(0,155,255,0.6),
+          transparent 65%
+        ),
+        radial-gradient(ellipse at 65% 55%,
+          rgba(155,65,255,0.7),
+          transparent 68%
+        );
+    }
+
+    @keyframes smokeSpread {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(0.25);
+      }
+      12% {
+        opacity: 0.85;
+      }
+      35% {
+        opacity: 0.9;
+        transform: translate(-50%, 100px) scale(1.6);
+      }
+      65% {
+        opacity: 0.75;
+        transform: translate(-50%, 330px) scale(2.7);
+      }
+      85% {
+        opacity: 0.35;
+        transform: translate(-50%, 480px) scale(3.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, 550px) scale(3.6);
+      }
+    }
+
+    @keyframes smokeOverlayFade {
+      0%, 75% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        visibility: hidden;
       }
     }
 
@@ -414,18 +524,24 @@
       }
     }
 
-    /* Accessibility: Respect reduced motion settings */
+    /* Accessibility */
     @media (prefers-reduced-motion: reduce) {
       .logo,
       .logo-wrap::before,
-      .logo-wrap::after {
-        animation: none;
+      .logo-wrap::after,
+      .smoke-intro,
+      .smoke-cloud {
+        animation: none !important;
       }
 
       .logo {
         filter:
           drop-shadow(0 0 7px rgba(0,130,255,0.65))
           drop-shadow(0 0 10px rgba(140,55,255,0.4));
+      }
+
+      .smoke-intro {
+        display: none;
       }
     }
   </style>
@@ -434,6 +550,13 @@
 <body>
 
   <main class="support-card">
+
+    <!-- One-time smoke entrance overlay -->
+    <div class="smoke-intro" aria-hidden="true">
+      <span class="smoke-cloud"></span>
+      <span class="smoke-cloud"></span>
+      <span class="smoke-cloud"></span>
+    </div>
 
     <div class="logo-wrap">
       <img
