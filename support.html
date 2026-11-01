@@ -113,6 +113,81 @@
       color: #e8c36a;
     }
 
+    /* Appreciation Form */
+    .appreciation-form {
+      margin-top: 15px;
+    }
+
+    .appreciation-form label {
+      display: block;
+      margin: 15px 0 8px;
+      color: #d8b6ff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .appreciation-form input,
+    .appreciation-form textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid rgba(190,150,255,0.3);
+      border-radius: 10px;
+      background: rgba(8,8,13,0.75);
+      color: #eeeaf7;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .appreciation-form input:focus,
+    .appreciation-form textarea:focus {
+      border-color: #b487ff;
+      box-shadow: 0 0 12px rgba(155,107,255,0.15);
+    }
+
+    .appreciation-form textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+
+    .appreciation-form input::placeholder,
+    .appreciation-form textarea::placeholder {
+      color: #81778f;
+    }
+
+    .anonymous-note {
+      margin-top: 7px;
+      color: #aaa1b9;
+      font-size: 12px;
+    }
+
+    .appreciation-submit {
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px;
+      border: none;
+      border-radius: 11px;
+      background: linear-gradient(110deg, #6c45e8, #9b6bff);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(120,80,230,0.2);
+    }
+
+    .appreciation-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-status {
+      display: none;
+      margin-top: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
     .privacy {
       margin-top: 22px;
       color: #aaa1b9;
@@ -309,6 +384,54 @@
       <div class="gift">
         <strong>✨ Appreciation</strong><br>
         Your kind words and encouragement mean a lot to me.
+
+        <form
+          class="appreciation-form"
+          id="appreciationForm"
+          action="https://formspree.io/f/xqppylqq"
+          method="POST"
+        >
+
+          <label for="visitorName">Your Name (Optional)</label>
+
+          <input
+            type="text"
+            id="visitorName"
+            name="name"
+            placeholder="Enter your name"
+            maxlength="80"
+          >
+
+          <p class="anonymous-note">
+            You can leave this blank to send your message anonymously.
+          </p>
+
+          <label for="visitorMessage">Your Message</label>
+
+          <textarea
+            id="visitorMessage"
+            name="message"
+            placeholder="Write your appreciation message..."
+            maxlength="2000"
+            required
+          ></textarea>
+
+          <button
+            type="submit"
+            class="appreciation-submit"
+            id="appreciationSubmit"
+          >
+            💜 Send Appreciation
+          </button>
+
+          <p
+            class="form-status"
+            id="formStatus"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+        </form>
       </div>
 
     </section>
@@ -430,6 +553,46 @@
         button.textContent = "📋 Copy Email Address";
       }, 2500);
     }
+
+    const appreciationForm = document.getElementById("appreciationForm");
+    const appreciationSubmit = document.getElementById("appreciationSubmit");
+    const formStatus = document.getElementById("formStatus");
+
+    appreciationForm.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      appreciationSubmit.disabled = true;
+      appreciationSubmit.textContent = "Sending...";
+      formStatus.style.display = "block";
+      formStatus.style.color = "#d8b6ff";
+      formStatus.textContent = "Sending your message...";
+
+      try {
+        const response = await fetch(appreciationForm.action, {
+          method: "POST",
+          body: new FormData(appreciationForm),
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+
+        if (response.ok) {
+          appreciationForm.reset();
+          formStatus.style.color = "#9ee6b0";
+          formStatus.textContent = "💜 Thank you! Your appreciation message has been sent successfully.";
+        } else {
+          formStatus.style.color = "#ff9999";
+          formStatus.textContent = "Sorry, your message could not be sent. Please try again.";
+        }
+
+      } catch (error) {
+        formStatus.style.color = "#ff9999";
+        formStatus.textContent = "Network error. Please check your internet connection and try again.";
+      }
+
+      appreciationSubmit.disabled = false;
+      appreciationSubmit.textContent = "💜 Send Appreciation";
+    });
   </script>
 
 </body>
