@@ -77,98 +77,53 @@ visibility:hidden;
 pointer-events:none
 }
 
-.logo{
+/* GOLDEN DONATION POT */
+
+.pot-logo{
+width:min(65vw,260px);
+aspect-ratio:1;
+display:flex;
+align-items:center;
+justify-content:center;
 position:relative;
-width:min(98vw,700px);
-aspect-ratio:1400/707;
-animation:logoIn 0.6s ease-out both,flash 1.2s linear 0.8s 1
+animation:potEntrance 0.9s ease-out both;
 }
 
-.logo img{
-position:absolute;
-inset:0;
+.pot-logo img{
 width:100%;
 height:100%;
+object-fit:contain;
 mix-blend-mode:screen;
-pointer-events:none
+animation:potColorFlow 5s ease-in-out infinite,
+          potGlow 2.5s ease-in-out infinite;
 }
 
-.txtwrap{
-position:absolute;
-inset:0;
-clip-path:inset(34% 37% 27% 38%);
-mix-blend-mode:screen;
-pointer-events:none
-}
-
-.logo .txtwrap img{
-mix-blend-mode:normal;
-filter:brightness(3) contrast(1.1);
--webkit-mask-image:linear-gradient(105deg,transparent 35%,#000 50%,transparent 65%);
-mask-image:linear-gradient(105deg,transparent 35%,#000 50%,transparent 65%);
--webkit-mask-size:300% 100%;
-mask-size:300% 100%;
--webkit-mask-repeat:no-repeat;
-mask-repeat:no-repeat;
--webkit-mask-position:90% 0;
-mask-position:90% 0;
+@keyframes potEntrance{
+0%{
 opacity:0;
-animation:shine 0.9s ease-in-out 0.5s 1 both
+transform:scale(0.65) translateY(20px);
+}
+100%{
+opacity:1;
+transform:scale(1) translateY(0);
+}
 }
 
-@keyframes shine{
-0%{opacity:1;-webkit-mask-position:90% 0;mask-position:90% 0}
-100%{opacity:1;-webkit-mask-position:15% 0;mask-position:15% 0}
+@keyframes potColorFlow{
+0%{filter:hue-rotate(0deg) saturate(1.2) brightness(1);}
+25%{filter:hue-rotate(35deg) saturate(1.6) brightness(1.15);}
+50%{filter:hue-rotate(-25deg) saturate(1.8) brightness(1.2);}
+75%{filter:hue-rotate(45deg) saturate(1.5) brightness(1.1);}
+100%{filter:hue-rotate(0deg) saturate(1.2) brightness(1);}
 }
 
-.body{
-position:absolute;
-inset:0;
-animation:pulse 1.2s ease-in-out 0.8s 1
+@keyframes potGlow{
+0%,100%{
+transform:scale(1);
 }
-
-.wing-l{
-transform-origin:33% 54%;
-animation:clapL 1.2s linear 0.8s 1
+50%{
+transform:scale(1.035);
 }
-
-.wing-r{
-transform-origin:67.5% 54%;
-animation:clapR 1.2s linear 0.8s 1
-}
-
-@keyframes clapL{
-0%{transform:perspective(900px) rotateY(0deg);animation-timing-function:cubic-bezier(.4,0,.3,1)}
-35%{transform:perspective(900px) rotateY(-10deg);animation-timing-function:cubic-bezier(.55,0,.9,.35)}
-52%{transform:perspective(900px) rotateY(120deg);animation-timing-function:ease-out}
-58%{transform:perspective(900px) rotateY(112deg);animation-timing-function:cubic-bezier(.35,0,.25,1)}
-100%{transform:perspective(900px) rotateY(0deg)}
-}
-
-@keyframes clapR{
-0%{transform:perspective(900px) rotateY(0deg);animation-timing-function:cubic-bezier(.4,0,.3,1)}
-35%{transform:perspective(900px) rotateY(10deg);animation-timing-function:cubic-bezier(.55,0,.9,.35)}
-52%{transform:perspective(900px) rotateY(-120deg);animation-timing-function:ease-out}
-58%{transform:perspective(900px) rotateY(-112deg);animation-timing-function:cubic-bezier(.35,0,.25,1)}
-100%{transform:perspective(900px) rotateY(0deg)}
-}
-
-@keyframes pulse{
-0%,45%{transform:scale(1)}
-52%{transform:scale(1.03)}
-62%,100%{transform:scale(1)}
-}
-
-@keyframes flash{
-0%,46%{filter:brightness(1)}
-52%{filter:brightness(1.4)}
-66%{filter:brightness(1.1)}
-100%{filter:brightness(1)}
-}
-
-@keyframes logoIn{
-from{opacity:0;transform:scale(0.88)}
-to{opacity:1;transform:scale(1)}
 }
 
 .splash-sub{
@@ -504,19 +459,10 @@ letter-spacing:-1px
 <body>
 
 <div class="splash" id="splash">
-<div class="logo">
-<div class="body">
 
-<img src="splash-center.jpg" alt="VIVID AURA ART">
-
-<div class="txtwrap">
-<img src="splash-center.jpg" alt="">
-</div>
-
-<img class="wing-l" src="splash-left.jpg" alt="">
-<img class="wing-r" src="splash-right.jpg" alt="">
-
-</div>
+<div class="pot-logo">
+<img src="assets/donation-pot.png"
+     alt="VividAuraArt Golden Donation Pot">
 </div>
 
 <div class="splash-sub">
