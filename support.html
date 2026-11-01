@@ -45,16 +45,107 @@
       text-align: center;
     }
 
+    /* Golden Donation Pot Animation */
+    .logo-wrap {
+      position: relative;
+      width: 145px;
+      height: 145px;
+      margin: 0 auto 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      isolation: isolate;
+    }
+
     .logo {
-      width: 170px;
-      height: 170px;
+      width: 125px;
+      height: 125px;
       display: block;
       object-fit: contain;
-      margin: 0 auto 22px;
+      position: relative;
+      z-index: 2;
       border: none;
       border-radius: 0;
       box-shadow: none;
       background: transparent;
+      animation: auraPulse 3.5s ease-in-out infinite;
+    }
+
+    .logo-wrap::before {
+      content: "";
+      position: absolute;
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle,
+          rgba(0,140,255,0.32),
+          rgba(130,40,255,0.18) 45%,
+          rgba(255,175,45,0.12) 65%,
+          transparent 75%
+        );
+      filter: blur(15px);
+      z-index: 1;
+      animation: auraGlow 3.5s ease-in-out infinite;
+    }
+
+    .logo-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, #ffd878 1.5px, transparent 2.5px),
+        radial-gradient(circle, #b88aff 1.5px, transparent 2.5px),
+        radial-gradient(circle, #55caff 1.5px, transparent 2.5px),
+        radial-gradient(circle, #ffe7a3 1px, transparent 2px);
+      background-size: 43px 43px, 57px 57px, 49px 49px, 37px 37px;
+      background-position: 5px 100%, 25px 100%, 10px 100%, 35px 100%;
+      background-repeat: no-repeat;
+      animation: goldenSparkles 4s ease-in-out infinite;
+    }
+
+    @keyframes auraPulse {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0 5px rgba(0,130,255,0.65))
+          drop-shadow(0 0 9px rgba(140,55,255,0.35));
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 10px rgba(0,160,255,0.9))
+          drop-shadow(0 0 18px rgba(165,65,255,0.7))
+          drop-shadow(0 0 23px rgba(255,190,75,0.35));
+      }
+    }
+
+    @keyframes auraGlow {
+      0%, 100% {
+        opacity: 0.55;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes goldenSparkles {
+      0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.7);
+      }
+      25% {
+        opacity: 1;
+      }
+      75% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-25px) scale(1.15);
+      }
     }
 
     h1 {
@@ -322,6 +413,21 @@
         font-size: 24px;
       }
     }
+
+    /* Accessibility: Respect reduced motion settings */
+    @media (prefers-reduced-motion: reduce) {
+      .logo,
+      .logo-wrap::before,
+      .logo-wrap::after {
+        animation: none;
+      }
+
+      .logo {
+        filter:
+          drop-shadow(0 0 7px rgba(0,130,255,0.65))
+          drop-shadow(0 0 10px rgba(140,55,255,0.4));
+      }
+    }
   </style>
 </head>
 
@@ -329,11 +435,13 @@
 
   <main class="support-card">
 
-    <img
-      class="logo"
-      src="assets/donation-pot.png"
-      alt="VividAuraArt Golden Donation Pot"
-    >
+    <div class="logo-wrap">
+      <img
+        class="logo"
+        src="assets/donation-pot.png"
+        alt="VividAuraArt Golden Donation Pot"
+      >
+    </div>
 
     <h1>Support VividAuraArt 💜</h1>
 
