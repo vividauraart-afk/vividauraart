@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Our Services | VIVID AURA ART</title>
+
+<meta name="description" content="Explore creative services by Vivid Aura Art — AI image generation, prompt writing, KDP cover design, content writing and more.">
+
+<meta name="theme-color" content="#000000">
+
+<link rel="icon" href="favicon.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#000;
+color:#fff;
+font-family:'Inter',sans-serif;
+min-height:100vh;
+padding:35px 18px;
+overflow-x:hidden;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:radial-gradient(ellipse at top,#1a1025 0%,#000 65%);
+z-index:-1;
+}
+
+.container{
+width:100%;
+max-width:850px;
+margin:auto;
+}
+
+.header{
+text-align:center;
+margin-bottom:35px;
+}
+
+.logo{
+width:76px;
+height:76px;
+object-fit:cover;
+border-radius:50%;
+border:2px solid #c9a14a;
+box-shadow:0 0 22px rgba(201,161,74,.35);
+}
+
+h1{
+font-family:'Cinzel',serif;
+color:#e8c36a;
+font-size:clamp(24px,5vw,36px);
+letter-spacing:3px;
+margin-top:17px;
+}
+
+.tagline{
+color:#c9a14a;
+font-family:'Cinzel',serif;
+font-size:13px;
+margin-top:10px;
+}
+
+.intro{
+text-align:center;
+color:#bbb;
+line-height:1.8;
+font-size:14px;
+max-width:600px;
+margin:25px auto 35px;
+}
+
+.section-title{
+text-align:center;
+font-family:'Cinzel',serif;
+color:#e8c36a;
+font-size:21px;
+margin-bottom:22px;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:15px;
+}
+
+.service-card{
+background:linear-gradient(
+145deg,
+rgba(255,255,255,.065),
+rgba(155,107,255,.045)
+);
+border:1px solid rgba(201,161,74,.3);
+border-radius:16px;
+padding:22px 17px;
+display:flex;
+flex-direction:column;
+min-height:215px;
+transition:transform .2s ease,border-color .2s ease;
+}
+
+.service-card:hover{
+transform:translateY(-4px);
+border-color:#c9a14a;
+}
+
+.service-icon{
+font-size:29px;
+margin-bottom:14px;
+}
+
+.service-card h2{
+font-family:'Cinzel',serif;
+font-size:16px;
+color:#e8c36a;
+margin-bottom:10px;
+}
+
+.service-card p{
+font-size:12px;
+line-height:1.7;
+color:#bbb;
+flex:1;
+}
+
+.request{
+display:block;
+text-align:center;
+margin-top:18px;
+padding:11px 12px;
+border:1px solid rgba(201,161,74,.65);
+border-radius:30px;
+background:linear-gradient(
+110deg,
+rgba(201,161,74,.12),
+rgba(155,107,255,.12)
+);
+color:#e8c36a;
+text-decoration:none;
+font-size:12px;
+font-weight:700;
+transition:.2s;
+}
+
+.request:hover{
+background:linear-gradient(
+110deg,
+rgba(201,161,74,.28),
+rgba(155,107,255,.28)
+);
+color:#fff;
+}
+
+.note{
+text-align:center;
+margin:30px auto;
+max-width:600px;
+font-size:12px;
+line-height:1.8;
+color:#999;
+}
+
+.contact{
+text-align:center;
+margin-top:35px;
+padding:25px 15px;
+border:1px solid rgba(201,161,74,.25);
+border-radius:17px;
+background:rgba(255,255,255,.035);
+}
+
+.contact h2{
+font-family:'Cinzel',serif;
+color:#e8c36a;
+font-size:19px;
+margin-bottom:12px;
+}
+
+.contact p{
+color:#aaa;
+font-size:13px;
+line-height:1.8;
+}
+
+.contact a{
+display:inline-block;
+margin-top:17px;
+padding:12px 25px;
+border-radius:30px;
+background:linear-gradient(110deg,#c9a14a,#9b6bff);
+color:#000;
+text-decoration:none;
+font-weight:700;
+font-size:13px;
+}
+
+.back{
+display:block;
+text-align:center;
+margin:30px auto 0;
+color:#c9a14a;
+text-decoration:none;
+font-size:13px;
+}
+
+.footer{
+text-align:center;
+margin-top:30px;
+font-size:11px;
+color:#666;
+}
+
+@media(max-width:540px){
+body{
+padding:25px 14px;
+}
+
+.services{
+grid-template-columns:1fr;
+}
+
+.service-card{
+min-height:190px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="header">
+
+<img class="logo" src="favicon.png" alt="Vivid Aura Art Logo">
+
+<h1>OUR SERVICES</h1>
+
+<div class="tagline">
+VIVID AURA ART
+</div>
+
+</header>
+
+<p class="intro">
+Have a creative idea? Let's bring it to life.
+Explore our services and send us your project request.
+</p>
+
+<h2 class="section-title">What We Offer</h2>
+
+<div class="services">
+
+<div class="service-card">
+<div class="service-icon">🎨</div>
+<h2>AI Image Generation</h2>
+<p>Turn your imagination into creative AI-generated artwork and visuals.</p>
+<a class="request" href="mailto:vividauraart@gmail.com?subject=AI%20Image%20Generation%20Request">Request a Service →</a>
+</div>
+
+<div class="service-card">
+<div class="service-icon">✍️</div>
+<h2>AI Prompt Writing</h2>
+<p>Creative and detailed prompts for AI image and video generation.</p>
+<a class="request" href="mailto:vividauraart@gmail.com?subject=AI%20Prompt%20Writing%20Request">Request a Service →</a>
+</div>
+
+<div class="service-card">
+<div class="service-icon">🪄</div>
+<h2>Logo to App Icon</h2>
+<p>Transform your existing logo into an app icon design.</p>
+<a class="request" href="mailto:vividauraart@gmail.com?subject=Logo%20to%20App%20Icon%20Request">Request a Service →</a>
+</div>
+
+<div class="service-card">
+<div class="service-icon">📱</div>
+<h2>Basic App UI Concepts</h2>
+<p>Creative basic interface concepts for your app ideas.</p>
+<a class="request" href="mailto:vividauraart@gmail.com?subject=App%20UI%20Concept%20Request">Request a Service →</a>
+</div>
+
+<div class="service-card">
+<div class="service-icon">📚</div>
+<h2>KDP Cover Design</h2>
+<p>Creative book cover concepts for Amazon Kindle Direct Publishing projects.</p>
+<a class="request" href="mailto:vividauraart@gmail.com?subject=KDP%20Cover%20Design%20Request">Request a Service →</a>
+</div>
+
+<div class="service-card">
+<div class="service-icon">📝</div>
+<h2>Content Writing</h2>
+<p>Creative written content for websites, descriptions and digital projects.</p>
+<a class="request" href="mailto:vividauraart@gmail.com?subject=Content%20Writing%20Request">Request a Service →</a>
+</div>
+
+<div class="service-card">
+<div class="service-icon">💻</div>
+<h2>Basic Coding Assistance</h2>
+<p>Basic website and app code assistance for suitable small projects.</p>
+<a class="request" href="mailto:vividauraart@gmail.com?subject=Basic%20Coding%20Assistance%20Request">Request a Service →</a>
+</div>
+
+<div class="service-card">
+<div class="service-icon">🌌</div>
+<h2>Custom Wallpapers</h2>
+<p>Creative custom wallpapers for phones and digital screens.</p>
+<a class="request" href="mailto:vividauraart@gmail.com?subject=Custom%20Wallpaper%20Request">Request a Service →</a>
+</div>
+
+</div>
+
+<p class="note">
+Every project is different. Send us your idea and requirements.
+We will review your request and discuss the details before starting.
+</p>
+
+<section class="contact">
+
+<h2>Have Something in Mind?</h2>
+
+<p>
+Tell us about your idea.
+We would love to hear from you.
+</p>
+
+<a href="mailto:vividauraart@gmail.com?subject=Vivid%20Aura%20Art%20Service%20Inquiry">
+Contact Us
+</a>
+
+</section>
+
+<a class="back" href="index.html">← Back to Home</a>
+
+<div class="footer">
+© 2026 VIVID AURA ART
+</div>
+
+</div>
+
+<!-- SOFT BUTTON CLICK SOUND -->
+
+<script>
+(function(){
+
+let audioContext = null;
+
+function playSoftClick(){
+
+try{
+
+const AudioContext =
+window.AudioContext || window.webkitAudioContext;
+
+if(!AudioContext) return;
+
+if(!audioContext){
+audioContext = new AudioContext();
+}
+
+if(audioContext.state === "suspended"){
+audioContext.resume();
+}
+
+const now = audioContext.currentTime;
+
+const oscillator = audioContext.createOscillator();
+const gain = audioContext.createGain();
+
+oscillator.type = "sine";
+
+oscillator.frequency.setValueAtTime(950,now);
+oscillator.frequency.exponentialRampToValueAtTime(520,now+0.045);
+
+gain.gain.setValueAtTime(0.0001,now);
+gain.gain.exponentialRampToValueAtTime(0.055,now+0.005);
+gain.gain.exponentialRampToValueAtTime(0.0001,now+0.065);
+
+oscillator.connect(gain);
+gain.connect(audioContext.destination);
+
+oscillator.start(now);
+oscillator.stop(now+0.07);
+
+}catch(error){}
+
+}
+
+document.addEventListener("click",function(event){
+
+const clickedElement = event.target.closest(
+"a"
+);
+
+if(!clickedElement) return;
+
+playSoftClick();
+
+});
+
+})();
+</script>
+
+</body>
+</html>
