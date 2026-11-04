@@ -293,8 +293,8 @@ to{opacity:1;transform:translateY(0)}
 
 /* Image Style */
 .product-img {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: 8px;
     object-fit: cover;
     background: #fff;
@@ -311,7 +311,7 @@ to{opacity:1;transform:translateY(0)}
 
 .product-title {
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     color: #fff;
     margin-bottom: 4px;
@@ -333,7 +333,7 @@ to{opacity:1;transform:translateY(0)}
     background: linear-gradient(110deg, rgba(255,153,0,0.15), rgba(255,153,0,0.05));
     border: 1px solid #ff9900;
     color: #ffcc00;
-    padding: 8px 12px;
+    padding: 10px 14px;
     border-radius: 8px;
     font-size: 12px;
     font-weight: bold;
@@ -374,7 +374,7 @@ margin-bottom:20px;
 
 <div class="magic-box">
 <div class="magic-inner">
-<textarea id="giftInput" placeholder="e.g. 'Teddy bear', 'A gamer', 'Coffee mug'"></textarea>
+<textarea id="giftInput" placeholder="e.g. 'Teddy bear', 'Helicopter', 'Coffee mug'"></textarea>
 <button class="reveal-btn" onclick="findGifts()">✨ Reveal Gifts</button>
 </div>
 </div>
@@ -424,29 +424,20 @@ function findGifts() {
     
     // Format the search term for Amazon
     const encodedQuery = encodeURIComponent(searchQuery);
+    const amazonLink = `https://www.amazon.in/s?k=${encodedQuery}&tag=${affiliateTag}`;
 
-    // We create 3 variations based on the exact word the user typed
+    // We only need 2 items now
     let productList = [
         { 
             title: searchQuery, 
-            desc: `Best selling ${searchQuery} on Amazon.`, 
-            // Use Unsplash (free image API) to get a related photo dynamically
-            img: `https://source.unsplash.com/150x150/?${encodedQuery}`
-        },
-        { 
-            title: `Premium ${searchQuery}`, 
-            desc: `Top rated premium ${searchQuery} gifts.`, 
-            img: `https://source.unsplash.com/150x150/?${encodedQuery},gift`
+            desc: `Best selling ${searchQuery} on Amazon. Perfect for gifting.`, 
+            // Using DuckDuckGo's free image service
+            img: `https://duckduckgo.com/iu/?u=https://source.unsplash.com/150x150/?${encodedQuery}&f=1&nofb=1`
         },
         { 
             title: `${searchQuery} Gift Set`, 
-            desc: `A curated collection of ${searchQuery}.`, 
-            img: `https://source.unsplash.com/150x150/?${encodedQuery},box`
-        },
-        { 
-            title: `Personalized ${searchQuery}`, 
-            desc: `Custom made ${searchQuery} for your loved ones.`, 
-            img: `https://source.unsplash.com/150x150/?${encodedQuery},custom`
+            desc: `Top rated premium ${searchQuery} gifts. A curated collection.`, 
+            img: `https://duckduckgo.com/iu/?u=https://source.unsplash.com/150x150/?${encodedQuery},gift&f=1&nofb=1`
         }
     ];
 
@@ -456,13 +447,10 @@ function findGifts() {
         let resultsHTML = `<div style="font-family:'Cinzel',serif; font-size:14px; color:#e8c36a; text-align:center; margin-bottom:15px; letter-spacing:1px;">Top Picks for "${searchQuery}"</div>`;
 
         productList.forEach(product => {
-            // Create Amazon direct link
-            const itemQuery = encodeURIComponent(product.title);
-            const amazonLink = `https://www.amazon.in/s?k=${itemQuery}&tag=${affiliateTag}`;
-            
+            // Since you want both items to go to the SAME exact product search:
             resultsHTML += `
                 <a href="${amazonLink}" target="_blank" class="product-list-card">
-                    <img src="${product.img}" class="product-img" alt="${product.title}" onerror="this.src='https://via.placeholder.com/150?text=Gift'">
+                    <img src="${product.img}" class="product-img" alt="${product.title}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23ccc\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'12\' fill=\'%23666\'>Image</text></svg>'">
                     <div class="product-info">
                         <div class="product-title">${product.title}</div>
                         <div class="product-desc">${product.desc}</div>
