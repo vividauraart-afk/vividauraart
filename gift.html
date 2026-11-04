@@ -269,29 +269,58 @@ from{opacity:0;transform:translateY(15px)}
 to{opacity:1;transform:translateY(0)}
 }
 
-.result-card{
-background:linear-gradient(rgba(20,10,30,0.8),rgba(10,5,15,0.8)) padding-box,
-linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff) border-box;
-border:1.5px solid transparent;
-border-radius:16px;
-padding:22px;
-margin-bottom:14px;
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
+/* Product List Card Style */
+.product-list-card {
+    background: #0a0a0f;
+    border: 1.5px solid rgba(201,161,74,0.3);
+    border-radius: 16px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-.result-card h3{
-font-family:'Cinzel',serif;
-background:linear-gradient(110deg,#e8c36a,#d46bff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-font-size:16px;
-margin-bottom:10px;
+.product-list-card:active {
+    transform: scale(0.97);
+    border-color: #ff9900;
+    box-shadow: 0 0 15px rgba(255,153,0,0.3);
 }
 
-.result-card p{
-font-size:13px;
-color:#bbb;
-line-height:1.5;
+.product-info {
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+}
+
+.product-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.product-desc {
+    font-size: 11px;
+    color: #888;
+}
+
+.buy-btn-small {
+    background: linear-gradient(110deg, rgba(255,153,0,0.15), rgba(255,153,0,0.05));
+    border: 1px solid #ff9900;
+    color: #ffcc00;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 /* Footer */
@@ -331,10 +360,10 @@ margin-bottom:20px;
 
 <div class="quick-picks-label">QUICK SUMMONS:</div>
 <div class="quick-picks">
-<div class="chip" onclick="setQuickPick('The Coffee Snob ☕')">☕ The Coffee Snob</div>
-<div class="chip" onclick="setQuickPick('The Hardcore Gamer 🎮')">🎮 The Gamer</div>
-<div class="chip" onclick="setQuickPick('The Dark Fantasy Lover 🦇')">🦇 Fantasy Lover</div>
-<div class="chip" onclick="setQuickPick('The Divine Soul 🕉️')">🕉️ Divine Soul</div>
+<div class="chip" onclick="setQuickPick('Coffee Snob')">☕ The Coffee Snob</div>
+<div class="chip" onclick="setQuickPick('Gamer')">🎮 The Gamer</div>
+<div class="chip" onclick="setQuickPick('Dark Fantasy Lover')">🦇 Fantasy Lover</div>
+<div class="chip" onclick="setQuickPick('Divine Soul')">🕉️ Divine Soul</div>
 </div>
 
 <!-- Loading Text -->
@@ -357,9 +386,8 @@ function setQuickPick(text) {
 // The Real "Aura Oracle" Search Function
 function findGifts() {
     const inputField = document.getElementById('giftInput');
-    const searchQuery = inputField.value.trim();
+    let searchQuery = inputField.value.trim();
     
-    // Empty fallback
     if(!searchQuery) {
         alert("Please describe what kind of gift you are looking for! ✨");
         return;
@@ -368,59 +396,73 @@ function findGifts() {
     const resultsSection = document.getElementById('results');
     const loader = document.getElementById('loader');
     
-    // Hide old results, show loader
     resultsSection.style.display = 'none';
     loader.style.display = 'block';
     
-    // Fake AI loading effect (1 second)
+    const affiliateTag = "vividauraart-21";
+    const queryLower = searchQuery.toLowerCase();
+    
+    // Curated lists based on what user searches
+    let productList = [];
+    
+    if (queryLower.includes('coffee') || queryLower.includes('snob')) {
+        productList = [
+            { title: "Premium Coffee Beans", desc: "Freshly roasted Arabica beans for the perfect brew.", img: "☕" },
+            { title: "Mason Jar Coffee Mug", desc: "Stylish glass mug for their morning coffee.", img: "🥛" },
+            { title: "Coffee Grinder", desc: "Manual burr grinder for freshly ground coffee.", img: "⚙️" },
+            { title: "Milk Frother", desc: "Create barista-style foam at home.", img: "🥛" }
+        ];
+    } else if (queryLower.includes('gamer') || queryLower.includes('game')) {
+        productList = [
+            { title: "RGB Gaming Mouse", desc: "High precision mouse for intense gaming.", img: "🖱️" },
+            { title: "Gaming Headset", desc: "Immersive audio with a noise-canceling mic.", img: "🎧" },
+            { title: "Large Desk Mat", desc: "Smooth surface for precise aim and movement.", img: "🎮" },
+            { title: "LED Strip Lights", desc: "Customize their gaming setup vibe.", img: "💡" }
+        ];
+    } else if (queryLower.includes('fantasy') || queryLower.includes('dark')) {
+        productList = [
+            { title: "Leather Journal", desc: "For writing down their dark fantasy stories.", img: "📜" },
+            { title: "Fantasy Art Tapestry", desc: "Beautiful wall hanging art for their room.", img: "🖼️" },
+            { title: "Dragon Figurine", desc: "Detailed collectible for fantasy lovers.", img: "🐉" },
+            { title: "Tarot Cards", desc: "Beautifully illustrated cards for mystical vibes.", img: "🔮" }
+        ];
+    } else {
+        // Default gifts for any other search
+        productList = [
+            { title: "Personalized Mug", desc: "A custom mug for their daily brew.", img: "☕" },
+            { title: "Scented Candles", desc: "Relaxing aromatherapy candles.", img: "🕯️" },
+            { title: "Minimalist Wallet", desc: "A sleek and practical everyday wallet.", img: "👛" },
+            { title: "Blue Light Glasses", desc: "Protect their eyes during screen time.", img: "👓" }
+        ];
+    }
+
     setTimeout(() => {
         loader.style.display = 'none';
         
-        // Create Amazon Search Links with your Associate ID
-        const encodedQuery = encodeURIComponent(searchQuery);
-        
-        // YOUR AMAZON AFFILIATE TAG
-        const affiliateTag = "vividauraart-21"; 
-        
-        // Amazon India search link with Affiliate Tag
-        const amazonLink = `https://www.amazon.in/s?k=${encodedQuery}+gift&tag=${affiliateTag}`;
-        // Amazon Global link with Affiliate Tag
-        const amazonGlobalLink = `https://www.amazon.com/s?k=${encodedQuery}+gift&tag=${affiliateTag}`;
+        let resultsHTML = `<div style="font-family:'Cinzel',serif; font-size:14px; color:#e8c36a; text-align:center; margin-bottom:15px; letter-spacing:1px;">Top Picks for "${searchQuery}"</div>`;
 
-        // Display the cards with links
-        let resultsHTML = `
-            <div class="result-card" style="border: 1.5px solid #ff9900; background: linear-gradient(rgba(255,153,0,0.1), rgba(10,5,15,0.8)) padding-box;">
-                <h3 style="background: linear-gradient(110deg,#ff9900,#ffcc00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">🛒 Search on Amazon (India)</h3>
-                <p>Click below to instantly find the perfect <b>"${searchQuery}"</b> gifts on Amazon India.</p>
-                <a href="${amazonLink}" target="_blank" class="reveal-btn" style="text-decoration:none; margin-top:15px; display:inline-flex; justify-content:center; border-color:#ff9900; color:#ffcc00;">
-                    Buy on Amazon.in ➜
-                </a>
-            </div>
-
-            <div class="result-card" style="border: 1.5px solid #00a8e1; background: linear-gradient(rgba(0,168,225,0.1), rgba(10,5,15,0.8)) padding-box;">
-                <h3 style="background: linear-gradient(110deg,#00a8e1,#ffffff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">🌍 Search on Amazon (Global)</h3>
-                <p>Looking for international brands? Search the global Amazon store for <b>"${searchQuery}"</b>.</p>
-                <a href="${amazonGlobalLink}" target="_blank" class="reveal-btn" style="text-decoration:none; margin-top:15px; display:inline-flex; justify-content:center; border-color:#00a8e1; color:#00a8e1;">
-                    Buy on Amazon.com ➜
-                </a>
-            </div>
+        // Loop through the curated list and create cards
+        productList.forEach(product => {
+            // Create Amazon search link for the specific item
+            const itemQuery = encodeURIComponent(product.title);
+            const amazonLink = `https://www.amazon.in/s?k=${itemQuery}&tag=${affiliateTag}`;
             
-            <div class="result-card" style="border: 1.5px solid #c9a14a; background: linear-gradient(rgba(201,161,74,0.1), rgba(10,5,15,0.8)) padding-box;">
-                <h3 style="background: linear-gradient(110deg,#c9a14a,#d46bff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">✨ VIVID AURA Custom Art</h3>
-                <p>Can't find it on Amazon? Commission a custom, personalized glowing portrait for them from VIVID AURA ART.</p>
-                <a href="support.html" class="reveal-btn" style="text-decoration:none; margin-top:15px; display:inline-flex; justify-content:center;">
-                    Contact Us ➜
+            resultsHTML += `
+                <a href="${amazonLink}" target="_blank" class="product-list-card">
+                    <div class="product-info">
+                        <div class="product-title">${product.img} ${product.title}</div>
+                        <div class="product-desc">${product.desc}</div>
+                    </div>
+                    <div class="buy-btn-small">
+                        Buy ➜
+                    </div>
                 </a>
-            </div>
-        `;
+            `;
+        });
 
-        // Inject the new HTML
         resultsSection.innerHTML = resultsHTML;
-        
-        // Show results
         resultsSection.style.display = 'block';
         
-        // Scroll to results smoothly
         setTimeout(() => {
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
