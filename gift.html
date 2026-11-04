@@ -54,25 +54,62 @@ align-items:center;
 margin-top:10px;
 }
 
-/* VIVIDGIFTS Logo CSS */
+/* VIVIDGIFTS Logo & Rotating Light Animation */
 .logo-wrap {
-width: 100%;
+position: relative;
+width: 130px;
+height: 130px;
+margin-bottom: 15px;
+margin-top: 5px;
 display: flex;
 justify-content: center;
-margin-bottom: 12px;
-margin-top: 5px;
+align-items: center;
+}
+
+/* Rotating Light Effect */
+.logo-wrap::before {
+content: '';
+position: absolute;
+inset: -4px; /* ലൈറ്റ് അൽപ്പം പുറത്തേക്ക് തെളിയാൻ */
+border-radius: 50%;
+background: conic-gradient(
+from 0deg,
+transparent 0deg,
+transparent 270deg,
+rgba(255, 255, 255, 0.2) 300deg,
+#ffffff 345deg,
+#ffffff 360deg
+);
+animation: rotateLight 3s linear infinite;
+z-index: 1;
+-webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+}
+
+@keyframes rotateLight {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+/* Soft Glow behind logo */
+.logo-wrap::after {
+content: '';
+position: absolute;
+inset: 0;
+border-radius: 50%;
+box-shadow: 0 0 20px rgba(155,107,255,0.3), inset 0 0 20px rgba(201,161,74,0.2);
+z-index: 0;
+pointer-events: none;
 }
 
 .gift-logo {
-width: 130px; /* ലോഗോ വലുപ്പം കുറച്ചു */
-height: auto;
-filter: drop-shadow(0 0 15px rgba(155,107,255,0.4)); /* Magical violet glow */
-animation: floatLogo 3s ease-in-out infinite;
-}
-
-@keyframes floatLogo {
-0%, 100% { transform: translateY(0); }
-50% { transform: translateY(-5px); }
+position: relative;
+width: 100%;
+height: 100%;
+object-fit: contain;
+z-index: 2;
+border-radius: 50%; /* ലോഗോയും റൗണ്ട് ആയിരിക്കാൻ */
+background: #000; /* ലൈറ്റ് ലോഗോയുടെ പിന്നിലേക്ക് പോകാതിരിക്കാൻ */
 }
 
 /* Heading */
@@ -83,6 +120,7 @@ text-align:center;
 line-height:1.2;
 color:#fff;
 margin-bottom:12px;
+z-index: 2;
 }
 
 h1 .highlight{
@@ -273,7 +311,7 @@ margin-bottom:20px;
 
 <div class="container">
 
-<!-- VIVIDGIFTS Logo -->
+<!-- VIVIDGIFTS Logo with Rotating Light -->
 <div class="logo-wrap">
     <img src="vividgifts-logo.png" alt="VIVIDGIFTS Logo" class="gift-logo">
 </div>
@@ -330,7 +368,6 @@ function setQuickPick(text) {
 function findGifts() {
     const input = document.getElementById('giftInput').value;
     
-    // Empty placeholder fallback
     if(!input.trim()) {
         document.getElementById('giftInput').value = "A creative soul seeking inspiration";
     }
@@ -338,16 +375,13 @@ function findGifts() {
     const resultsSection = document.getElementById('results');
     const loader = document.getElementById('loader');
     
-    // Hide results, show loader
     resultsSection.style.display = 'none';
     loader.style.display = 'block';
     
-    // Fake AI loading effect (1.5 seconds)
     setTimeout(() => {
         loader.style.display = 'none';
         resultsSection.style.display = 'block';
         
-        // Scroll to results smoothly
         setTimeout(() => {
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
