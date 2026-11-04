@@ -274,14 +274,15 @@ to{opacity:1;transform:translateY(0)}
     background: #0a0a0f;
     border: 1.5px solid rgba(201,161,74,0.3);
     border-radius: 16px;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     text-decoration: none;
     transition: 0.3s;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    gap: 12px;
 }
 
 .product-list-card:active {
@@ -290,10 +291,22 @@ to{opacity:1;transform:translateY(0)}
     box-shadow: 0 0 15px rgba(255,153,0,0.3);
 }
 
+/* Image Style */
+.product-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #fff;
+    border: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+}
+
 .product-info {
     display: flex;
     flex-direction: column;
-    padding-right: 10px;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .product-title {
@@ -302,18 +315,25 @@ to{opacity:1;transform:translateY(0)}
     font-weight: 700;
     color: #fff;
     margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .product-desc {
     font-size: 11px;
     color: #888;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .buy-btn-small {
     background: linear-gradient(110deg, rgba(255,153,0,0.15), rgba(255,153,0,0.05));
     border: 1px solid #ff9900;
     color: #ffcc00;
-    padding: 10px 14px;
+    padding: 8px 12px;
     border-radius: 8px;
     font-size: 12px;
     font-weight: bold;
@@ -321,6 +341,7 @@ to{opacity:1;transform:translateY(0)}
     display: flex;
     align-items: center;
     gap: 5px;
+    flex-shrink: 0;
 }
 
 /* Footer */
@@ -353,17 +374,17 @@ margin-bottom:20px;
 
 <div class="magic-box">
 <div class="magic-inner">
-<textarea id="giftInput" placeholder="e.g. 'A gamer who loves dark fantasy and late-night coffee'"></textarea>
+<textarea id="giftInput" placeholder="e.g. 'Teddy bear', 'A gamer', 'Coffee mug'"></textarea>
 <button class="reveal-btn" onclick="findGifts()">✨ Reveal Gifts</button>
 </div>
 </div>
 
 <div class="quick-picks-label">QUICK SUMMONS:</div>
 <div class="quick-picks">
-<div class="chip" onclick="setQuickPick('Coffee Snob')">☕ The Coffee Snob</div>
-<div class="chip" onclick="setQuickPick('Gamer')">🎮 The Gamer</div>
-<div class="chip" onclick="setQuickPick('Dark Fantasy Lover')">🦇 Fantasy Lover</div>
-<div class="chip" onclick="setQuickPick('Divine Soul')">🕉️ Divine Soul</div>
+<div class="chip" onclick="setQuickPick('Coffee Mug')">☕ Coffee Mug</div>
+<div class="chip" onclick="setQuickPick('Gaming Mouse')">🎮 Gaming Mouse</div>
+<div class="chip" onclick="setQuickPick('Teddy Bear')">🧸 Teddy Bear</div>
+<div class="chip" onclick="setQuickPick('Scented Candle')">🕯️ Candle</div>
 </div>
 
 <!-- Loading Text -->
@@ -400,57 +421,50 @@ function findGifts() {
     loader.style.display = 'block';
     
     const affiliateTag = "vividauraart-21";
-    const queryLower = searchQuery.toLowerCase();
     
-    // Curated lists based on what user searches
-    let productList = [];
-    
-    if (queryLower.includes('coffee') || queryLower.includes('snob')) {
-        productList = [
-            { title: "Premium Coffee Beans", desc: "Freshly roasted Arabica beans for the perfect brew.", img: "☕" },
-            { title: "Mason Jar Coffee Mug", desc: "Stylish glass mug for their morning coffee.", img: "🥛" },
-            { title: "Coffee Grinder", desc: "Manual burr grinder for freshly ground coffee.", img: "⚙️" },
-            { title: "Milk Frother", desc: "Create barista-style foam at home.", img: "🥛" }
-        ];
-    } else if (queryLower.includes('gamer') || queryLower.includes('game')) {
-        productList = [
-            { title: "RGB Gaming Mouse", desc: "High precision mouse for intense gaming.", img: "🖱️" },
-            { title: "Gaming Headset", desc: "Immersive audio with a noise-canceling mic.", img: "🎧" },
-            { title: "Large Desk Mat", desc: "Smooth surface for precise aim and movement.", img: "🎮" },
-            { title: "LED Strip Lights", desc: "Customize their gaming setup vibe.", img: "💡" }
-        ];
-    } else if (queryLower.includes('fantasy') || queryLower.includes('dark')) {
-        productList = [
-            { title: "Leather Journal", desc: "For writing down their dark fantasy stories.", img: "📜" },
-            { title: "Fantasy Art Tapestry", desc: "Beautiful wall hanging art for their room.", img: "🖼️" },
-            { title: "Dragon Figurine", desc: "Detailed collectible for fantasy lovers.", img: "🐉" },
-            { title: "Tarot Cards", desc: "Beautifully illustrated cards for mystical vibes.", img: "🔮" }
-        ];
-    } else {
-        // Default gifts for any other search
-        productList = [
-            { title: "Personalized Mug", desc: "A custom mug for their daily brew.", img: "☕" },
-            { title: "Scented Candles", desc: "Relaxing aromatherapy candles.", img: "🕯️" },
-            { title: "Minimalist Wallet", desc: "A sleek and practical everyday wallet.", img: "👛" },
-            { title: "Blue Light Glasses", desc: "Protect their eyes during screen time.", img: "👓" }
-        ];
-    }
+    // Format the search term for Amazon
+    const encodedQuery = encodeURIComponent(searchQuery);
+
+    // We create 3 variations based on the exact word the user typed
+    let productList = [
+        { 
+            title: searchQuery, 
+            desc: `Best selling ${searchQuery} on Amazon.`, 
+            // Use Unsplash (free image API) to get a related photo dynamically
+            img: `https://source.unsplash.com/150x150/?${encodedQuery}`
+        },
+        { 
+            title: `Premium ${searchQuery}`, 
+            desc: `Top rated premium ${searchQuery} gifts.`, 
+            img: `https://source.unsplash.com/150x150/?${encodedQuery},gift`
+        },
+        { 
+            title: `${searchQuery} Gift Set`, 
+            desc: `A curated collection of ${searchQuery}.`, 
+            img: `https://source.unsplash.com/150x150/?${encodedQuery},box`
+        },
+        { 
+            title: `Personalized ${searchQuery}`, 
+            desc: `Custom made ${searchQuery} for your loved ones.`, 
+            img: `https://source.unsplash.com/150x150/?${encodedQuery},custom`
+        }
+    ];
 
     setTimeout(() => {
         loader.style.display = 'none';
         
         let resultsHTML = `<div style="font-family:'Cinzel',serif; font-size:14px; color:#e8c36a; text-align:center; margin-bottom:15px; letter-spacing:1px;">Top Picks for "${searchQuery}"</div>`;
 
-        // Loop through the curated list and create cards
         productList.forEach(product => {
-            // Create Amazon search link for the specific item
+            // Create Amazon direct link
             const itemQuery = encodeURIComponent(product.title);
             const amazonLink = `https://www.amazon.in/s?k=${itemQuery}&tag=${affiliateTag}`;
             
             resultsHTML += `
                 <a href="${amazonLink}" target="_blank" class="product-list-card">
+                    <img src="${product.img}" class="product-img" alt="${product.title}" onerror="this.src='https://via.placeholder.com/150?text=Gift'">
                     <div class="product-info">
-                        <div class="product-title">${product.img} ${product.title}</div>
+                        <div class="product-title">${product.title}</div>
                         <div class="product-desc">${product.desc}</div>
                     </div>
                     <div class="buy-btn-small">
