@@ -70,7 +70,7 @@ align-items: center;
 .logo-wrap::before {
 content: '';
 position: absolute;
-inset: -4px; /* ലൈറ്റ് അൽപ്പം പുറത്തേക്ക് തെളിയാൻ */
+inset: -4px;
 border-radius: 50%;
 background: conic-gradient(
 from 0deg,
@@ -108,8 +108,8 @@ width: 100%;
 height: 100%;
 object-fit: contain;
 z-index: 2;
-border-radius: 50%; /* ലോഗോയും റൗണ്ട് ആയിരിക്കാൻ */
-background: #000; /* ലൈറ്റ് ലോഗോയുടെ പിന്നിലേക്ക് പോകാതിരിക്കാൻ */
+border-radius: 50%;
+background: #000;
 }
 
 /* Heading */
@@ -342,18 +342,6 @@ margin-bottom:20px;
 
 <!-- Results Section -->
 <div class="results-section" id="results">
-    <div class="result-card">
-        <h3>🖼️ Custom "Aura" Portrait</h3>
-        <p>Commission a personalized artwork blending their favorite themes (dark fantasy, superhero, or divine) into a glowing masterpiece.</p>
-    </div>
-    <div class="result-card">
-        <h3>📜 Ancient Grimoire Notebook</h3>
-        <p>A beautifully crafted leather-bound journal with gold accents. Perfect for writers, artists, or anyone who loves a mystical touch.</p>
-    </div>
-    <div class="result-card">
-        <h3>☕ Midnight Ritual Coffee Set</h3>
-        <p>Premium dark roast coffee paired with a custom VIVID AURA ART ceramic mug. Fuel for late-night creators.</p>
-    </div>
 </div>
 
 </div>
@@ -361,32 +349,83 @@ margin-bottom:20px;
 <div class="footer">© 2026 VIVID AURA ART</div>
 
 <script>
+// Quick Pick handler
 function setQuickPick(text) {
     document.getElementById('giftInput').value = text;
 }
 
+// The Real "Aura Oracle" Search Function
 function findGifts() {
-    const input = document.getElementById('giftInput').value;
+    const inputField = document.getElementById('giftInput');
+    const searchQuery = inputField.value.trim();
     
-    if(!input.trim()) {
-        document.getElementById('giftInput').value = "A creative soul seeking inspiration";
+    // Empty fallback
+    if(!searchQuery) {
+        alert("Please describe what kind of gift you are looking for! ✨");
+        return;
     }
 
     const resultsSection = document.getElementById('results');
     const loader = document.getElementById('loader');
     
+    // Hide old results, show loader
     resultsSection.style.display = 'none';
     loader.style.display = 'block';
     
+    // Fake AI loading effect (1 second)
     setTimeout(() => {
         loader.style.display = 'none';
+        
+        // Create Amazon Search Links with your Associate ID
+        const encodedQuery = encodeURIComponent(searchQuery);
+        
+        // YOUR AMAZON AFFILIATE TAG
+        const affiliateTag = "vividauraart-21"; 
+        
+        // Amazon India search link with Affiliate Tag
+        const amazonLink = `https://www.amazon.in/s?k=${encodedQuery}+gift&tag=${affiliateTag}`;
+        // Amazon Global link with Affiliate Tag
+        const amazonGlobalLink = `https://www.amazon.com/s?k=${encodedQuery}+gift&tag=${affiliateTag}`;
+
+        // Display the cards with links
+        let resultsHTML = `
+            <div class="result-card" style="border: 1.5px solid #ff9900; background: linear-gradient(rgba(255,153,0,0.1), rgba(10,5,15,0.8)) padding-box;">
+                <h3 style="background: linear-gradient(110deg,#ff9900,#ffcc00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">🛒 Search on Amazon (India)</h3>
+                <p>Click below to instantly find the perfect <b>"${searchQuery}"</b> gifts on Amazon India.</p>
+                <a href="${amazonLink}" target="_blank" class="reveal-btn" style="text-decoration:none; margin-top:15px; display:inline-flex; justify-content:center; border-color:#ff9900; color:#ffcc00;">
+                    Buy on Amazon.in ➜
+                </a>
+            </div>
+
+            <div class="result-card" style="border: 1.5px solid #00a8e1; background: linear-gradient(rgba(0,168,225,0.1), rgba(10,5,15,0.8)) padding-box;">
+                <h3 style="background: linear-gradient(110deg,#00a8e1,#ffffff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">🌍 Search on Amazon (Global)</h3>
+                <p>Looking for international brands? Search the global Amazon store for <b>"${searchQuery}"</b>.</p>
+                <a href="${amazonGlobalLink}" target="_blank" class="reveal-btn" style="text-decoration:none; margin-top:15px; display:inline-flex; justify-content:center; border-color:#00a8e1; color:#00a8e1;">
+                    Buy on Amazon.com ➜
+                </a>
+            </div>
+            
+            <div class="result-card" style="border: 1.5px solid #c9a14a; background: linear-gradient(rgba(201,161,74,0.1), rgba(10,5,15,0.8)) padding-box;">
+                <h3 style="background: linear-gradient(110deg,#c9a14a,#d46bff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">✨ VIVID AURA Custom Art</h3>
+                <p>Can't find it on Amazon? Commission a custom, personalized glowing portrait for them from VIVID AURA ART.</p>
+                <a href="support.html" class="reveal-btn" style="text-decoration:none; margin-top:15px; display:inline-flex; justify-content:center;">
+                    Contact Us ➜
+                </a>
+            </div>
+        `;
+
+        // Inject the new HTML
+        resultsSection.innerHTML = resultsHTML;
+        
+        // Show results
         resultsSection.style.display = 'block';
         
+        // Scroll to results smoothly
         setTimeout(() => {
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
         
-    }, 1500);
+    }, 1000); 
 }
 </script>
 
