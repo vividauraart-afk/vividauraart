@@ -54,7 +54,7 @@ align-items:center;
 margin-top:10px;
 }
 
-/* VIVIDGIFTS Logo & Rotating Light Animation */
+/* VIVIDGIFTS Logo & Simple Glow Animation */
 .logo-wrap {
 position: relative;
 width: 130px;
@@ -64,42 +64,15 @@ margin-top: 5px;
 display: flex;
 justify-content: center;
 align-items: center;
-}
-
-/* Rotating Light Effect */
-.logo-wrap::before {
-content: '';
-position: absolute;
-inset: -4px;
 border-radius: 50%;
-background: conic-gradient(
-from 0deg,
-transparent 0deg,
-transparent 270deg,
-rgba(255, 255, 255, 0.2) 300deg,
-#ffffff 345deg,
-#ffffff 360deg
-);
-animation: rotateLight 3s linear infinite;
-z-index: 1;
--webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+/* Soft Glow Animation */
+box-shadow: 0 0 15px rgba(155,107,255,0.2), inset 0 0 15px rgba(201,161,74,0.1);
+animation: softGlow 3s ease-in-out infinite;
 }
 
-@keyframes rotateLight {
-0% { transform: rotate(0deg); }
-100% { transform: rotate(360deg); }
-}
-
-/* Soft Glow behind logo */
-.logo-wrap::after {
-content: '';
-position: absolute;
-inset: 0;
-border-radius: 50%;
-box-shadow: 0 0 20px rgba(155,107,255,0.3), inset 0 0 20px rgba(201,161,74,0.2);
-z-index: 0;
-pointer-events: none;
+@keyframes softGlow {
+0%, 100% { box-shadow: 0 0 10px rgba(155,107,255,0.2), inset 0 0 10px rgba(201,161,74,0.1); }
+50% { box-shadow: 0 0 25px rgba(212,107,255,0.5), inset 0 0 20px rgba(201,161,74,0.4); }
 }
 
 .gift-logo {
@@ -201,44 +174,6 @@ border-color:#d46bff;
 color:#fff;
 }
 
-/* Quick Picks (Mystical tags) */
-.quick-picks-label{
-width:100%;
-text-align:left;
-font-size:11px;
-color:#888;
-letter-spacing:1.5px;
-margin-bottom:12px;
-font-weight:700;
-}
-
-.quick-picks{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-width:100%;
-justify-content:flex-start;
-margin-bottom:20px;
-}
-
-.chip{
-padding:8px 14px;
-background:rgba(255,255,255,0.04);
-border:1px solid rgba(201,161,74,0.2);
-border-radius:50px;
-font-size:12px;
-color:#ccc;
-cursor:pointer;
-transition:0.2s;
-}
-
-.chip:active{
-background:rgba(155,107,255,0.2);
-border-color:#9b6bff;
-color:#fff;
-transform:scale(0.95);
-}
-
 /* Loading State */
 .loader{
 display:none;
@@ -273,9 +208,9 @@ to{opacity:1;transform:translateY(0)}
 .product-list-card {
     background: #0a0a0f;
     border: 1.5px solid rgba(201,161,74,0.3);
-    border-radius: 16px;
-    padding: 12px;
-    margin-bottom: 12px;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -291,17 +226,6 @@ to{opacity:1;transform:translateY(0)}
     box-shadow: 0 0 15px rgba(255,153,0,0.3);
 }
 
-/* Image Style */
-.product-img {
-    width: 70px;
-    height: 70px;
-    border-radius: 8px;
-    object-fit: cover;
-    background: #fff;
-    border: 1px solid rgba(255,255,255,0.1);
-    flex-shrink: 0;
-}
-
 .product-info {
     display: flex;
     flex-direction: column;
@@ -311,7 +235,7 @@ to{opacity:1;transform:translateY(0)}
 
 .product-title {
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: #fff;
     margin-bottom: 4px;
@@ -320,20 +244,11 @@ to{opacity:1;transform:translateY(0)}
     text-overflow: ellipsis;
 }
 
-.product-desc {
-    font-size: 11px;
-    color: #888;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
 .buy-btn-small {
     background: linear-gradient(110deg, rgba(255,153,0,0.15), rgba(255,153,0,0.05));
     border: 1px solid #ff9900;
     color: #ffcc00;
-    padding: 10px 14px;
+    padding: 8px 16px;
     border-radius: 8px;
     font-size: 12px;
     font-weight: bold;
@@ -361,7 +276,7 @@ margin-bottom:20px;
 
 <div class="container">
 
-<!-- VIVIDGIFTS Logo with Rotating Light -->
+<!-- VIVIDGIFTS Logo with Soft Glow -->
 <div class="logo-wrap">
     <img src="vividgifts-logo.png" alt="VIVIDGIFTS Logo" class="gift-logo">
 </div>
@@ -379,14 +294,6 @@ margin-bottom:20px;
 </div>
 </div>
 
-<div class="quick-picks-label">QUICK SUMMONS:</div>
-<div class="quick-picks">
-<div class="chip" onclick="setQuickPick('Coffee Mug')">☕ Coffee Mug</div>
-<div class="chip" onclick="setQuickPick('Gaming Mouse')">🎮 Gaming Mouse</div>
-<div class="chip" onclick="setQuickPick('Teddy Bear')">🧸 Teddy Bear</div>
-<div class="chip" onclick="setQuickPick('Scented Candle')">🕯️ Candle</div>
-</div>
-
 <!-- Loading Text -->
 <div class="loader" id="loader">Channeling the Aura...</div>
 
@@ -399,11 +306,6 @@ margin-bottom:20px;
 <div class="footer">© 2026 VIVID AURA ART</div>
 
 <script>
-// Quick Pick handler
-function setQuickPick(text) {
-    document.getElementById('giftInput').value = text;
-}
-
 // The Real "Aura Oracle" Search Function
 function findGifts() {
     const inputField = document.getElementById('giftInput');
@@ -424,36 +326,30 @@ function findGifts() {
     
     // Format the search term for Amazon
     const encodedQuery = encodeURIComponent(searchQuery);
-    const amazonLink = `https://www.amazon.in/s?k=${encodedQuery}&tag=${affiliateTag}`;
 
-    // We only need 2 items now
-    let productList = [
-        { 
-            title: searchQuery, 
-            desc: `Best selling ${searchQuery} on Amazon. Perfect for gifting.`, 
-            // Using DuckDuckGo's free image service
-            img: `https://duckduckgo.com/iu/?u=https://source.unsplash.com/150x150/?${encodedQuery}&f=1&nofb=1`
-        },
-        { 
-            title: `${searchQuery} Gift Set`, 
-            desc: `Top rated premium ${searchQuery} gifts. A curated collection.`, 
-            img: `https://duckduckgo.com/iu/?u=https://source.unsplash.com/150x150/?${encodedQuery},gift&f=1&nofb=1`
-        }
-    ];
+    // Generate 10 variations to look like a search list
+    let prefixes = ["Best Selling", "Premium", "Classic", "Personalized", "Deluxe", "Trending", "Exclusive", "Budget", "Top Rated", "Handmade"];
+    let productList = [];
+
+    for(let i = 0; i < 10; i++) {
+        productList.push(`${prefixes[i]} ${searchQuery}`);
+    }
 
     setTimeout(() => {
         loader.style.display = 'none';
         
         let resultsHTML = `<div style="font-family:'Cinzel',serif; font-size:14px; color:#e8c36a; text-align:center; margin-bottom:15px; letter-spacing:1px;">Top Picks for "${searchQuery}"</div>`;
 
-        productList.forEach(product => {
-            // Since you want both items to go to the SAME exact product search:
+        productList.forEach(productName => {
+            const itemQuery = encodeURIComponent(productName);
+            
+            // IMPORTANT: We use Amazon's Direct Search Link. When clicked, it opens the Amazon App and shows results.
+            const amazonLink = `https://www.amazon.in/s?k=${itemQuery}&tag=${affiliateTag}`;
+            
             resultsHTML += `
                 <a href="${amazonLink}" target="_blank" class="product-list-card">
-                    <img src="${product.img}" class="product-img" alt="${product.title}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23ccc\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'12\' fill=\'%23666\'>Image</text></svg>'">
                     <div class="product-info">
-                        <div class="product-title">${product.title}</div>
-                        <div class="product-desc">${product.desc}</div>
+                        <div class="product-title">${productName}</div>
                     </div>
                     <div class="buy-btn-small">
                         Buy ➜
