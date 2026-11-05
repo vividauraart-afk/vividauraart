@@ -119,6 +119,7 @@ padding:2px;
 background:linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff);
 box-shadow:0 0 25px rgba(155,107,255,0.25);
 margin-bottom:15px;
+position: relative;
 }
 
 .magic-inner{
@@ -143,6 +144,37 @@ height:80px;
 }
 
 textarea::placeholder{color:#666;font-style:italic;}
+
+/* Auto-suggestions Dropdown */
+.suggestions-box {
+position: absolute;
+top: 85%;
+left: 0;
+width: 100%;
+background: #0a0a0f;
+border: 1px solid rgba(201,161,74,0.3);
+border-radius: 12px;
+z-index: 50;
+display: none;
+flex-direction: column;
+overflow: hidden;
+box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+margin-top: 5px;
+}
+
+.suggestion-item {
+padding: 12px 15px;
+font-size: 14px;
+color: #ccc;
+cursor: pointer;
+border-bottom: 1px solid rgba(255,255,255,0.05);
+transition: 0.2s;
+}
+
+.suggestion-item:hover {
+background: rgba(155,107,255,0.15);
+color: #fff;
+}
 
 /* Reveal Button (Disabled by default) */
 .reveal-btn{
@@ -189,6 +221,7 @@ gap: 10px;
 width: 100%;
 margin-bottom: 20px;
 justify-content: center;
+z-index: 10;
 }
 
 .filter-btn {
@@ -402,7 +435,10 @@ margin-bottom:20px;
 
 <div class="magic-box">
 <div class="magic-inner">
-<textarea id="giftInput" oninput="checkInput()"></textarea>
+<textarea id="giftInput" oninput="handleInput()" onblur="hideSuggestions()" autocomplete="off"></textarea>
+<!-- Live Suggestions Box -->
+<div class="suggestions-box" id="suggestionsBox"></div>
+
 <button class="reveal-btn" id="revealBtn" onclick="findGifts()" disabled>✨ Reveal Gifts</button>
 </div>
 </div>
@@ -486,22 +522,76 @@ function setRandomPlaceholder() {
 
 setRandomPlaceholder();
 
-// Selected Values
+// Live Suggestions Data (നിനക്ക് വേണ്ടത്ര പേരുകൾ ഇവിടെ കൂട്ടിച്ചേർക്കാം)
+const allGiftNames = [
+    "Coloring Book", "Adult Coloring Book", "Kids Coloring Book", "Mandala Coloring Book",
+    "Teddy Bear", "Giant Teddy Bear", "Personalized Teddy", "Teddy Bear with Roses",
+    "Snake Toy", "Rubber Snake Toy", "Remote Control Snake", "Plush Snake",
+    "Coffee Mug", "Personalized Coffee Mug", "Magic Mug", "Coffee Beans",
+    "Gaming Mouse", "RGB Gaming Mouse", "Gaming Headset", "Gaming Keyboard",
+    "Watch", "Smart Watch", "Analog Watch", "Luxury Watch",
+    "Scented Candle", "Aromatherapy Candle", "Decorative Candle",
+    "Perfume", "Body Spray", "Gift Set", "Wallet", "Leather Wallet",
+    "Shoes", "Sneakers", "Running Shoes", "Flower Bouquet", "Roses",
+    "Chocolate Box", "Luxury Chocolates", "Jewelry", "Necklace", "Bracelet",
+    "Ring", "Earrings", "Book", "Novel", "Notebook", "Diary", "Journal",
+    "T-Shirt", "Hoodie", "Sweater", "Jacket", "Jeans", "Dress", "Skirt"
+];
+
 let currentBudget = "Any";
 let currentAura = "Any";
 
-// Check input to enable/disable button
-function checkInput() {
+// Handle input typing & show suggestions
+function handleInput() {
     const input = document.getElementById('giftInput').value.trim();
     const btn = document.getElementById('revealBtn');
+    const suggestionsBox = document.getElementById('suggestionsBox');
     
+    // Enable/Disable Button
     if (input.length > 0) {
         btn.classList.add('active');
         btn.disabled = false;
     } else {
         btn.classList.remove('active');
         btn.disabled = true;
+        suggestionsBox.style.display = 'none';
+        return;
     }
+
+    // Filter Suggestions
+    if (input.length > 0) {
+        const matches = allGiftNames.filter(item => 
+            item.toLowerCase().includes(input.toLowerCase())
+        ).slice(0, 5); // Max 5 suggestions
+
+        if (matches.length > 0) {
+            suggestionsBox.innerHTML = '';
+            matches.forEach(match => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                // Highlight the matching part (Optional, but looks cool)
+                const regex = new RegExp(`(${input})`, 'gi');
+                div.innerHTML = match.replace(regex, '<strong style="color:#e8c36a;">$1</strong>');
+                
+                // On click, fill the input
+                div.onmousedown = function() {
+                    document.getElementById('giftInput').value = match;
+                    suggestionsBox.style.display = 'none';
+                };
+                suggestionsBox.appendChild(div);
+            });
+            suggestionsBox.style.display = 'flex';
+        } else {
+            suggestionsBox.style.display = 'none';
+        }
+    }
+}
+
+// Hide suggestions when clicking outside
+function hideSuggestions() {
+    setTimeout(() => {
+        document.getElementById('suggestionsBox').style.display = 'none';
+    }, 200);
 }
 
 // Modal Logic
@@ -513,7 +603,6 @@ function closeModal(id) {
     document.getElementById(id).style.display = 'none';
 }
 
-// Close modal when clicking outside
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {
         event.target.style.display = 'none';
@@ -525,7 +614,7 @@ function selectBudget(element, value) {
     document.querySelectorAll('#budgetOptions .option-item').forEach(el => el.classList.remove('selected'));
     element.classList.add('selected');
     currentBudget = value;
-    document.getElementById('selectedBudget').innerText = value.split(' / ')[0]; // Show only INR in button for space
+    document.getElementById('selectedBudget').innerText = value.split(' / ')[0];
     closeModal('budgetModal');
 }
 
@@ -546,13 +635,14 @@ function findGifts() {
 
     const resultsSection = document.getElementById('results');
     const loader = document.getElementById('loader');
+    const suggestionsBox = document.getElementById('suggestionsBox');
     
+    suggestionsBox.style.display = 'none'; // Hide suggestions on search
     resultsSection.style.display = 'none';
     loader.style.display = 'block';
     
     const affiliateTag = "vividauraart-21";
 
-    // Combine query with budget and aura for better AI results
     let finalQuery = searchQuery;
     if(currentBudget !== 'Any') finalQuery += `, Budget: ${currentBudget}`;
     if(currentAura !== 'Any') finalQuery += `, Vibe: ${currentAura}`;
