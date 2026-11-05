@@ -16,7 +16,18 @@ export default async function handler(req, res) {
     const { query } = req.body;
     if (!query) return res.status(400).json({ error: 'Query is required' });
 
-    const prompt = `You are a world-class luxury gift concierge. The user will describe a person. Return exactly 8 highly specific, premium, and unique gift ideas as a valid JSON array of strings. Do not include markdown, code blocks, or any text other than the JSON array. Example format: ["Item 1", "Item 2", "Item 3"]`;
+    // 🔥 UPDATED PROMPT: Focuses on ACCURACY, SIMPLICITY, and E-COMMERCE FRIENDLY names.
+    const prompt = `You are a highly accurate, practical gift recommendation engine.
+The user will describe a person, an item, or an occasion (e.g., "Snake toy", "A gamer", "Coffee lover").
+Your task is to return exactly 8 highly accurate, easy-to-find gift ideas that directly match the user's query. 
+
+RULES:
+1. Keep the product names short, simple, and natural. (e.g., "Realistic Rubber Snake Toy", "Gaming Mouse", "Coffee Mug Gift Set").
+2. Do NOT invent overly luxurious, rare, or impossible-to-find items like "24K gold-plated Oaxaca figurines".
+3. The items MUST be easily searchable on Amazon.
+4. Return ONLY a valid JSON array of strings. No markdown, no extra text.
+
+Example format: ["Realistic Rubber Snake Toy", "Remote Control Snake", "Plush Snake Stuffed Animal", "Snake Figurine"]`;
 
     function cleanAndParse(responseText) {
         try {
@@ -35,9 +46,8 @@ export default async function handler(req, res) {
 
     let gifts = null;
     let engineUsed = "None";
-    let errorLog = [];
 
-    // --- ENGINE 1: GEMINI (Using Gemini 1.5 Flash - correct model name) ---
+    // --- ENGINE 1: GEMINI ---
     if (!gifts && process.env.GEMINI_API_KEY) {
         try {
             console.log("Trying Gemini...");
@@ -52,17 +62,11 @@ export default async function handler(req, res) {
             if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
                 gifts = cleanAndParse(data.candidates[0].content.parts[0].text);
                 if(gifts) engineUsed = "Gemini";
-            } else {
-                errorLog.push("Gemini: " + JSON.stringify(data));
-                console.error("Gemini Error:", JSON.stringify(data));
             }
-        } catch (error) { 
-            errorLog.push("Gemini fetch failed: " + error.message);
-            console.error("Gemini failed:", error.message); 
-        }
+        } catch (error) { console.error("Gemini failed"); }
     }
 
-    // --- ENGINE 2: OPENROUTER (Llama 3.1 - more stable) ---
+    // --- ENGINE 2: OPENROUTER ---
     if (!gifts && process.env.OPENROUTER_API_KEY) {
         try {
             console.log("Trying OpenRouter...");
@@ -75,7 +79,7 @@ export default async function handler(req, res) {
                     "X-Title": "VividGifts"
                 },
                 body: JSON.stringify({
-                    model: "meta-llama/llama-3.1-8b-instruct", // Updated model
+                    model: "meta-llama/llama-3.1-8b-instruct",
                     messages: [
                         { role: "system", content: prompt },
                         { role: "user", content: query }
@@ -86,17 +90,11 @@ export default async function handler(req, res) {
             if (data.choices && data.choices[0]) {
                 gifts = cleanAndParse(data.choices[0].message.content);
                 if(gifts) engineUsed = "OpenRouter";
-            } else {
-                errorLog.push("OpenRouter: " + JSON.stringify(data));
-                console.error("OpenRouter Error:", JSON.stringify(data));
             }
-        } catch (error) { 
-            errorLog.push("OpenRouter fetch failed: " + error.message);
-            console.error("OpenRouter failed:", error.message); 
-        }
+        } catch (error) { console.error("OpenRouter failed"); }
     }
 
-    // --- ENGINE 3: HUGGING FACE (Mistral - updated endpoint) ---
+    // --- ENGINE 3: HUGGING FACE ---
     if (!gifts && process.env.HUGGINGFACE_API_KEY) {
         try {
             console.log("Trying Hugging Face...");
@@ -115,14 +113,8 @@ export default async function handler(req, res) {
             if (hfData && hfData[0] && hfData[0].generated_text) {
                 gifts = cleanAndParse(hfData[0].generated_text);
                 if(gifts) engineUsed = "HuggingFace";
-            } else {
-                errorLog.push("HuggingFace: " + JSON.stringify(hfData));
-                console.error("HuggingFace Error:", JSON.stringify(hfData));
             }
-        } catch (error) { 
-            errorLog.push("HuggingFace fetch failed: " + error.message);
-            console.error("HuggingFace failed:", error.message); 
-        }
+        } catch (error) { console.error("HuggingFace failed"); }
     }
 
     // --- FINAL RESPONSE ---
@@ -132,7 +124,6 @@ export default async function handler(req, res) {
         return res.status(200).json({ 
             success: false, 
             error: 'All AI Engines failed.', 
-            details: errorLog, 
             gifts: [] 
         });
     }
