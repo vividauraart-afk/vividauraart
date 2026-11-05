@@ -118,7 +118,7 @@ border-radius:20px;
 padding:2px;
 background:linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff);
 box-shadow:0 0 25px rgba(155,107,255,0.25);
-margin-bottom:24px;
+margin-bottom:15px;
 }
 
 .magic-inner{
@@ -144,32 +144,147 @@ height:80px;
 
 textarea::placeholder{color:#666;font-style:italic;}
 
-/* Reveal Button */
+/* Reveal Button (Disabled by default) */
 .reveal-btn{
 width:100%;
 padding:16px;
 border:none;
 border-radius:12px;
-background:linear-gradient(110deg,rgba(201,161,74,0.15),rgba(155,107,255,0.2));
-border:1.5px solid rgba(201,161,74,0.6);
-color:#e8c36a;
+background:linear-gradient(110deg,rgba(201,161,74,0.05),rgba(155,107,255,0.05));
+border:1.5px solid rgba(201,161,74,0.2);
+color:#666;
 font-family:'Inter',sans-serif;
 font-size:15px;
 font-weight:700;
-cursor:pointer;
+cursor:not-allowed;
 transition:0.3s;
-box-shadow:0 0 10px rgba(201,161,74,0.15);
 display:flex;
 align-items:center;
 justify-content:center;
 gap:8px;
+opacity: 0.5;
 }
 
-.reveal-btn:active{
+/* Active state for button */
+.reveal-btn.active {
+background:linear-gradient(110deg,rgba(201,161,74,0.15),rgba(155,107,255,0.2));
+border:1.5px solid rgba(201,161,74,0.6);
+color:#e8c36a;
+cursor:pointer;
+opacity: 1;
+box-shadow:0 0 10px rgba(201,161,74,0.15);
+}
+
+.reveal-btn.active:active{
 transform:scale(0.97);
 box-shadow:0 0 25px rgba(212,107,255,0.5);
 border-color:#d46bff;
 color:#fff;
+}
+
+/* Filters Section */
+.filters-section {
+display: flex;
+gap: 10px;
+width: 100%;
+margin-bottom: 20px;
+justify-content: center;
+}
+
+.filter-btn {
+background: rgba(255,255,255,0.04);
+border: 1px solid rgba(255,255,255,0.1);
+color: #ccc;
+padding: 10px 15px;
+border-radius: 50px;
+font-size: 13px;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 6px;
+transition: 0.2s;
+}
+
+.filter-btn:active {
+background: rgba(155,107,255,0.2);
+border-color: #9b6bff;
+color: #fff;
+}
+
+/* Modal/Dropdown Styles */
+.modal {
+display: none;
+position: fixed;
+top: 0; left: 0; right: 0; bottom: 0;
+background: rgba(0,0,0,0.8);
+z-index: 100;
+justify-content: center;
+align-items: center;
+backdrop-filter: blur(5px);
+}
+
+.modal-content {
+background: #111;
+border: 1px solid rgba(201,161,74,0.3);
+border-radius: 16px;
+width: 90%;
+max-width: 350px;
+padding: 20px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+from { transform: scale(0.9); opacity: 0; }
+to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 15px;
+border-bottom: 1px solid rgba(255,255,255,0.1);
+padding-bottom: 10px;
+}
+
+.modal-title {
+font-family: 'Cinzel', serif;
+color: #e8c36a;
+font-size: 18px;
+}
+
+.close-btn {
+background: none;
+border: none;
+color: #888;
+font-size: 20px;
+cursor: pointer;
+}
+
+.options-list {
+display: flex;
+flex-direction: column;
+gap: 10px;
+max-height: 60vh;
+overflow-y: auto;
+}
+
+.option-item {
+background: rgba(255,255,255,0.03);
+padding: 12px 15px;
+border-radius: 8px;
+cursor: pointer;
+color: #ccc;
+font-size: 14px;
+transition: 0.2s;
+border: 1px solid transparent;
+}
+
+.option-item:active, .option-item.selected {
+background: rgba(155,107,255,0.15);
+border-color: #9b6bff;
+color: #fff;
 }
 
 /* Loading State */
@@ -287,14 +402,23 @@ margin-bottom:20px;
 
 <div class="magic-box">
 <div class="magic-inner">
-<!-- Placeholder will be set by JavaScript -->
-<textarea id="giftInput"></textarea>
-<button class="reveal-btn" onclick="findGifts()">✨ Reveal Gifts</button>
+<textarea id="giftInput" oninput="checkInput()"></textarea>
+<button class="reveal-btn" id="revealBtn" onclick="findGifts()" disabled>✨ Reveal Gifts</button>
 </div>
 </div>
 
+<!-- Filters -->
+<div class="filters-section">
+    <div class="filter-btn" onclick="openModal('budgetModal')">
+        <span>💰 Budget:</span> <span id="selectedBudget">Any</span>
+    </div>
+    <div class="filter-btn" onclick="openModal('auraModal')">
+        <span>✨ Aura:</span> <span id="selectedAura">Any</span>
+    </div>
+</div>
+
 <!-- Loading Text -->
-<div class="loader" id="loader">Channeling the Aura...<br><span style="font-size:10px;color:#aaa;letter-spacing:1px;">The Oracle is consulting the 4 realms</span></div>
+<div class="loader" id="loader">Channeling the Aura...<br><span style="font-size:10px;color:#aaa;letter-spacing:1px;">The Oracle is consulting the realms</span></div>
 
 <!-- Results Section -->
 <div class="results-section" id="results">
@@ -303,6 +427,44 @@ margin-bottom:20px;
 </div>
 
 <div class="footer">© 2026 VIVID AURA ART</div>
+
+<!-- Budget Modal -->
+<div class="modal" id="budgetModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title">Select Budget</div>
+            <button class="close-btn" onclick="closeModal('budgetModal')">✕</button>
+        </div>
+        <div class="options-list" id="budgetOptions">
+            <div class="option-item selected" onclick="selectBudget(this, 'Any')">Any Budget</div>
+            <div class="option-item" onclick="selectBudget(this, 'Under ₹500 / $10')">Under ₹500 / $10</div>
+            <div class="option-item" onclick="selectBudget(this, '₹500 - ₹1500 / $10-$25')">₹500 - ₹1500 / $10-$25</div>
+            <div class="option-item" onclick="selectBudget(this, '₹1500 - ₹3000 / $25-$50')">₹1500 - ₹3000 / $25-$50</div>
+            <div class="option-item" onclick="selectBudget(this, '₹3000 - ₹7000 / $50-$100')">₹3000 - ₹7000 / $50-$100</div>
+            <div class="option-item" onclick="selectBudget(this, 'Premium (₹7000+ / $100+)')">Premium (₹7000+ / $100+)</div>
+        </div>
+    </div>
+</div>
+
+<!-- Aura Modal -->
+<div class="modal" id="auraModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title">Select Aura (Vibe)</div>
+            <button class="close-btn" onclick="closeModal('auraModal')">✕</button>
+        </div>
+        <div class="options-list" id="auraOptions">
+            <div class="option-item selected" onclick="selectAura(this, 'Any')">Any Aura</div>
+            <div class="option-item" onclick="selectAura(this, 'Mystical')">🔮 Mystical</div>
+            <div class="option-item" onclick="selectAura(this, 'Luxury')">💎 Luxury</div>
+            <div class="option-item" onclick="selectAura(this, 'Funny')">😂 Funny</div>
+            <div class="option-item" onclick="selectAura(this, 'Sentimental')">💖 Sentimental</div>
+            <div class="option-item" onclick="selectAura(this, 'Practical')">🛠️ Practical</div>
+            <div class="option-item" onclick="selectAura(this, 'Eco-Friendly')">🌱 Eco-Friendly</div>
+            <div class="option-item" onclick="selectAura(this, 'Tech/Gadget')">📱 Tech/Gadget</div>
+        </div>
+    </div>
+</div>
 
 <script>
 // Premium Rotating Placeholders
@@ -317,23 +479,70 @@ const examples = [
     "A superhero fanatic who collects action figures & comics"
 ];
 
-// Function to set a random placeholder
 function setRandomPlaceholder() {
     const randomExample = examples[Math.floor(Math.random() * examples.length)];
     document.getElementById('giftInput').placeholder = `e.g. '${randomExample}'`;
 }
 
-// Set placeholder on initial page load
 setRandomPlaceholder();
 
+// Selected Values
+let currentBudget = "Any";
+let currentAura = "Any";
+
+// Check input to enable/disable button
+function checkInput() {
+    const input = document.getElementById('giftInput').value.trim();
+    const btn = document.getElementById('revealBtn');
+    
+    if (input.length > 0) {
+        btn.classList.add('active');
+        btn.disabled = false;
+    } else {
+        btn.classList.remove('active');
+        btn.disabled = true;
+    }
+}
+
+// Modal Logic
+function openModal(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+    }
+}
+
+// Selection Logic
+function selectBudget(element, value) {
+    document.querySelectorAll('#budgetOptions .option-item').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
+    currentBudget = value;
+    document.getElementById('selectedBudget').innerText = value.split(' / ')[0]; // Show only INR in button for space
+    closeModal('budgetModal');
+}
+
+function selectAura(element, value) {
+    document.querySelectorAll('#auraOptions .option-item').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
+    currentAura = value;
+    document.getElementById('selectedAura').innerText = value;
+    closeModal('auraModal');
+}
+
+// Main Search Function
 function findGifts() {
     const inputField = document.getElementById('giftInput');
     let searchQuery = inputField.value.trim();
     
-    if(!searchQuery) {
-        alert("Please describe who you are shopping for! ✨");
-        return;
-    }
+    if(!searchQuery) return;
 
     const resultsSection = document.getElementById('results');
     const loader = document.getElementById('loader');
@@ -343,10 +552,15 @@ function findGifts() {
     
     const affiliateTag = "vividauraart-21";
 
+    // Combine query with budget and aura for better AI results
+    let finalQuery = searchQuery;
+    if(currentBudget !== 'Any') finalQuery += `, Budget: ${currentBudget}`;
+    if(currentAura !== 'Any') finalQuery += `, Vibe: ${currentAura}`;
+
     fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: searchQuery })
+        body: JSON.stringify({ query: finalQuery })
     })
     .then(response => response.json())
     .then(data => {
@@ -356,16 +570,11 @@ function findGifts() {
         let gifts = data.gifts || []; 
         
         if (gifts.length === 0) {
-            // Fallback if AI fails
             gifts = [
                 `Best Selling ${searchQuery}`, 
                 `Premium ${searchQuery}`, 
                 `Personalized ${searchQuery}`,
-                `Luxury ${searchQuery}`,
-                `Trending ${searchQuery} Gift`,
-                `Exclusive ${searchQuery}`,
-                `Top Rated ${searchQuery}`,
-                `Handcrafted ${searchQuery}`
+                `Luxury ${searchQuery}`
             ];
         }
 
@@ -391,7 +600,6 @@ function findGifts() {
 
         resultsSection.innerHTML = resultsHTML;
         
-        // Change placeholder for the next search
         setRandomPlaceholder();
 
         setTimeout(() => {
