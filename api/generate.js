@@ -16,18 +16,19 @@ export default async function handler(req, res) {
     const { query } = req.body;
     if (!query) return res.status(400).json({ error: 'Query is required' });
 
-    // 🔥 UPDATED PROMPT: Focuses on ACCURACY, SIMPLICITY, and E-COMMERCE FRIENDLY names.
-    const prompt = `You are a highly accurate, practical gift recommendation engine.
-The user will describe a person, an item, or an occasion (e.g., "Snake toy", "A gamer", "Coffee lover").
-Your task is to return exactly 8 highly accurate, easy-to-find gift ideas that directly match the user's query. 
+    // 🔥 STRICT PROMPT: യൂസർ ടൈപ്പ് ചെയ്ത അതേ വാക്കുകൾ മാത്രം റിസൾട്ടിൽ വരാൻ
+    const prompt = `You are a strict, highly accurate search assistant.
+The user will provide a search term (e.g., "Snake toy", "Coloring book").
+Your ONLY task is to return exactly 8 variations of that EXACT item.
 
 RULES:
-1. Keep the product names short, simple, and natural. (e.g., "Realistic Rubber Snake Toy", "Gaming Mouse", "Coffee Mug Gift Set").
-2. Do NOT invent overly luxurious, rare, or impossible-to-find items like "24K gold-plated Oaxaca figurines".
-3. The items MUST be easily searchable on Amazon.
-4. Return ONLY a valid JSON array of strings. No markdown, no extra text.
+1. Every single suggestion MUST contain the exact core keyword the user typed.
+2. Do NOT suggest related but different items. (e.g., If user says "Coloring book", do NOT suggest "Sticker book" or "Doodle book").
+3. Keep the names simple, natural, and easily searchable on Amazon. (e.g., "Adult Coloring Book", "Kids Coloring Book", "Mandala Coloring Book").
+4. Do NOT invent overly luxurious or unrelated items.
+5. Return ONLY a valid JSON array of strings. No markdown, no extra text.
 
-Example format: ["Realistic Rubber Snake Toy", "Remote Control Snake", "Plush Snake Stuffed Animal", "Snake Figurine"]`;
+Example for "Coloring book": ["Adult Coloring Book", "Kids Coloring Book", "Mandala Coloring Book", "Animal Coloring Book", "Relaxing Coloring Book", "Floral Coloring Book", "Fantasy Coloring Book", "Travel Coloring Book"]`;
 
     function cleanAndParse(responseText) {
         try {
