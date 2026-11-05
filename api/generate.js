@@ -3,144 +3,95 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS,POST');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
-
+    if (req.method === 'OPTIONS') { res.status(200).end(); return; }
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
     const { query } = req.body;
     if (!query) return res.status(400).json({ error: 'Query is required' });
 
-    const prompt = `You are a world-class luxury gift concierge. The user will describe a person. Return exactly 8 highly specific, premium, and unique gift ideas as a valid JSON array of strings. Do not include markdown, code blocks, or any text other than the JSON array. Example format: ["Item 1", "Item 2", "Item 3"]`;
+    const keys = {
+        gemini: !!process.env.GEMINI_API_KEY,
+        grok: !!process.env.GROK_API_KEY,
+        openrouter: !!process.env.OPENROUTER_API_KEY,
+        huggingface: !!process.env.HUGGINGFACE_API_KEY
+    };
 
-    function cleanAndParse(responseText) {
+    const prompt = `You are a luxury gift concierge. Return exactly 8 gift ideas as valid JSON array of strings. No markdown. Format: ["Item 1", "Item 2"]`;
+
+    function cleanAndParse(text) {
         try {
-            let cleanText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-            const firstBracket = cleanText.indexOf('[');
-            const lastBracket = cleanText.lastIndexOf(']');
-            if (firstBracket !== -1 && lastBracket !== -1) {
-                cleanText = cleanText.substring(firstBracket, lastBracket + 1);
-                return JSON.parse(cleanText);
-            }
-        } catch (e) {
-            console.error("Parse error:", e.message);
-        }
+            let clean = text.replace(/```json/g, '').replace(/```/g, '').trim();
+            const s = clean.indexOf('['); const e = clean.lastIndexOf(']');
+            if (s !== -1 && e !== -1) { clean = clean.substring(s, e + 1); return JSON.parse(clean); }
+        } catch (e) { console.error("Parse error:", e.message); }
         return null;
     }
 
-    let gifts = null;
-    let engineUsed = "None";
+    let gifts = null; let engineUsed = "None"; let errorLog = [];
 
-    // --- ENGINE 1: GEMINI ---
-    if (!gifts && process.env.GEMINI_API_KEY) {
+    // ENGINE 1: GEMINI 1.5 FLASH (Fixed!)
+    if (!gifts && keys.gemini) {
         try {
             console.log("Trying Gemini...");
-            const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: `${prompt}\n\nUser Query: ${query}` }] }]
-                })
+            const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ contents: [{ parts: [{ text: `${prompt}\n\nUser: ${query}` }] }] })
             });
-            const data = await geminiRes.json();
-            if (data.candidates && data.candidates[0].content.parts[0].text) {
-                gifts = cleanAndParse(data.candidates[0].content.parts[0].text);
+            const d = await r.json();
+            if (d.candidates?.[0]?.content?.parts[0]?.text) {
+                gifts = cleanAndParse(d.candidates[0].content.parts[0].text);
                 if(gifts) engineUsed = "Gemini";
-            } else {
-                console.error("Gemini API Error Response:", JSON.stringify(data));
-            }
-        } catch (error) { console.error("Gemini failed:", error.message); }
+            } else { errorLog.push("Gemini: " + JSON.stringify(d).slice(0,200)); console.error("Gemini Error:", d); }
+        } catch (e) { errorLog.push("Gemini fetch failed: " + e.message); console.error("Gemini failed:", e.message); }
     }
 
-    // --- ENGINE 2: GROK ---
-    if (!gifts && process.env.GROK_API_KEY) {
-        try {
-            console.log("Trying Grok...");
-            const grokRes = await fetch("https://api.x.ai/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${process.env.GROK_API_KEY}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    model: "grok-1",
-                    messages: [
-                        { role: "system", content: prompt },
-                        { role: "user", content: query }
-                    ]
-                })
-            });
-            const data = await grokRes.json();
-            if (data.choices && data.choices[0]) {
-                gifts = cleanAndParse(data.choices[0].message.content);
-                if(gifts) engineUsed = "Grok";
-            } else {
-                 console.error("Grok API Error Response:", JSON.stringify(data));
-            }
-        } catch (error) { console.error("Grok failed:", error.message); }
-    }
-
-    // --- ENGINE 3: OPENROUTER ---
-    if (!gifts && process.env.OPENROUTER_API_KEY) {
+    // ENGINE 2: OPENROUTER FREE GROK (Fixed! - Free Model!)
+    if (!gifts && keys.openrouter) {
         try {
             console.log("Trying OpenRouter...");
-            const openRouterRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                 method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-                    "Content-Type": "application/json"
-                },
+                headers: { "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`, "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    model: "meta-llama/llama-3-8b-instruct",
-                    messages: [
-                        { role: "system", content: prompt },
-                        { role: "user", content: query }
-                    ]
+                    model: "x-ai/grok-4-fast:free", // FREE GROK!
+                    messages: [{ role: "system", content: prompt }, { role: "user", content: query }]
                 })
             });
-            const data = await openRouterRes.json();
-            if (data.choices && data.choices[0]) {
-                gifts = cleanAndParse(data.choices[0].message.content);
-                if(gifts) engineUsed = "OpenRouter";
-            } else {
-                 console.error("OpenRouter API Error Response:", JSON.stringify(data));
-            }
-        } catch (error) { console.error("OpenRouter failed:", error.message); }
+            const d = await r.json();
+            if (d.choices?.[0]) { gifts = cleanAndParse(d.choices[0].message.content); if(gifts) engineUsed = "OpenRouter"; }
+            else { errorLog.push("OpenRouter: " + JSON.stringify(d).slice(0,200)); console.error("OpenRouter Error:", d); }
+        } catch (e) { errorLog.push("OpenRouter failed: " + e.message); console.error("OpenRouter failed:", e.message); }
     }
 
-    // --- ENGINE 4: HUGGING FACE ---
-    if (!gifts && process.env.HUGGINGFACE_API_KEY) {
+    // ENGINE 3: GROK DIRECT (Fixed!)
+    if (!gifts && keys.grok) {
+        try {
+            console.log("Trying Grok...");
+            const r = await fetch("https://api.x.ai/v1/chat/completions", {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${process.env.GROK_API_KEY}`, "Content-Type": "application/json" },
+                body: JSON.stringify({ model: "grok-2-latest", messages: [{ role: "system", content: prompt }, { role: "user", content: query }] })
+            });
+            const d = await r.json();
+            if (d.choices?.[0]) { gifts = cleanAndParse(d.choices[0].message.content); if(gifts) engineUsed = "Grok"; }
+            else { errorLog.push("Grok: " + JSON.stringify(d).slice(0,200)); console.error("Grok Error:", d); }
+        } catch (e) { errorLog.push("Grok failed: " + e.message); console.error("Grok failed:", e.message); }
+    }
+
+    // ENGINE 4: HUGGING FACE (Fixed! - Free Model!)
+    if (!gifts && keys.huggingface) {
         try {
             console.log("Trying Hugging Face...");
-            const hfRes = await fetch("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2", {
+            const r = await fetch("https://api-inference.huggingface.co/models/google/gemma-2-2b-it", {
                 method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    inputs: `<s>[INST] ${prompt} \n\n User query: ${query} [/INST]`,
-                    parameters: { max_new_tokens: 300, temperature: 0.7 }
-                })
+                headers: { "Authorization": `Bearer ${process.env.HUGGINGFACE_API_KEY}`, "Content-Type": "application/json" },
+                body: JSON.stringify({ inputs: `${prompt}\n\nUser: ${query}`, parameters: { max_new_tokens: 200 } })
             });
-            const hfData = await hfRes.json();
-            if (hfData && hfData[0] && hfData[0].generated_text) {
-                gifts = cleanAndParse(hfData[0].generated_text);
-                if(gifts) engineUsed = "HuggingFace";
-            } else {
-                 console.error("HuggingFace API Error Response:", JSON.stringify(hfData));
-            }
-        } catch (error) { console.error("HuggingFace failed:", error.message); }
+            const d = await r.json();
+            if (d[0]?.generated_text) { gifts = cleanAndParse(d[0].generated_text); if(gifts) engineUsed = "HuggingFace"; }
+            else { errorLog.push("HF: " + JSON.stringify(d).slice(0,200)); console.error("HF Error:", d); }
+        } catch (e) { errorLog.push("HF failed: " + e.message); console.error("HF failed:", e.message); }
     }
 
-    if (gifts && Array.isArray(gifts) && gifts.length > 0) {
-        return res.status(200).json({ success: true, gifts: gifts.slice(0, 8), source: engineUsed });
-    } else {
-        return res.status(200).json({ success: false, error: 'All AI Engines failed. Using fallback.', gifts: [] });
-    }
+    if (gifts?.length > 0) return res.status(200).json({ success: true, gifts: gifts.slice(0, 8), source: engineUsed });
+    else return res.status(200).json({ success: false, error: 'All Engines failed', details: errorLog, gifts: [] });
 }
