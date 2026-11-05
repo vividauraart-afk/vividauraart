@@ -148,7 +148,7 @@ textarea::placeholder{color:#666;font-style:italic;}
 /* Auto-suggestions Dropdown */
 .suggestions-box {
 position: absolute;
-top: 85%;
+top: 100%;
 left: 0;
 width: 100%;
 background: #0a0a0f;
@@ -157,7 +157,8 @@ border-radius: 12px;
 z-index: 50;
 display: none;
 flex-direction: column;
-overflow: hidden;
+overflow-y: auto;
+max-height: 200px;
 box-shadow: 0 10px 20px rgba(0,0,0,0.8);
 margin-top: 5px;
 }
@@ -212,6 +213,21 @@ transform:scale(0.97);
 box-shadow:0 0 25px rgba(212,107,255,0.5);
 border-color:#d46bff;
 color:#fff;
+}
+
+/* Loading Spinner */
+.spinner {
+display: none;
+width: 20px;
+height: 20px;
+border: 2.5px solid rgba(232,195,106,0.3);
+border-top-color: #e8c36a;
+border-radius: 50%;
+animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+to { transform: rotate(360deg); }
 }
 
 /* Filters Section */
@@ -439,7 +455,10 @@ margin-bottom:20px;
 <!-- Live Suggestions Box -->
 <div class="suggestions-box" id="suggestionsBox"></div>
 
-<button class="reveal-btn" id="revealBtn" onclick="findGifts()" disabled>✨ Reveal Gifts</button>
+<button class="reveal-btn" id="revealBtn" onclick="findGifts()" disabled>
+    <span id="btnText">✨ Reveal Gifts</span>
+    <div class="spinner" id="btnSpinner"></div>
+</button>
 </div>
 </div>
 
@@ -522,20 +541,35 @@ function setRandomPlaceholder() {
 
 setRandomPlaceholder();
 
-// Live Suggestions Data (നിനക്ക് വേണ്ടത്ര പേരുകൾ ഇവിടെ കൂട്ടിച്ചേർക്കാം)
+// 🔥 HUGE INTERNAL DICTIONARY (Google Translate Style Autocomplete)
 const allGiftNames = [
-    "Coloring Book", "Adult Coloring Book", "Kids Coloring Book", "Mandala Coloring Book",
-    "Teddy Bear", "Giant Teddy Bear", "Personalized Teddy", "Teddy Bear with Roses",
-    "Snake Toy", "Rubber Snake Toy", "Remote Control Snake", "Plush Snake",
-    "Coffee Mug", "Personalized Coffee Mug", "Magic Mug", "Coffee Beans",
-    "Gaming Mouse", "RGB Gaming Mouse", "Gaming Headset", "Gaming Keyboard",
-    "Watch", "Smart Watch", "Analog Watch", "Luxury Watch",
-    "Scented Candle", "Aromatherapy Candle", "Decorative Candle",
-    "Perfume", "Body Spray", "Gift Set", "Wallet", "Leather Wallet",
-    "Shoes", "Sneakers", "Running Shoes", "Flower Bouquet", "Roses",
-    "Chocolate Box", "Luxury Chocolates", "Jewelry", "Necklace", "Bracelet",
-    "Ring", "Earrings", "Book", "Novel", "Notebook", "Diary", "Journal",
-    "T-Shirt", "Hoodie", "Sweater", "Jacket", "Jeans", "Dress", "Skirt"
+    // A - Z Common Gifts
+    "Airpods", "Alexa", "Action Figure", "Art Print", "Apron", "Aquarium",
+    "Backpack", "Book", "Bracelet", "Bluetooth Speaker", "Bike", "Board Game", "Bouquet", "Body Lotion", "Belt", "Blanket", "Bottle",
+    "Camera", "Candle", "Chocolate", "Coffee Mug", "Coloring Book", "Charger", "Cushion", "Camera Lens", "Cookbook", "Cake", "Card", "Cup", "Clock",
+    "Desk Lamp", "Diary", "Drone", "Dress", "Dumbbell", "Doll", "Drawing Set",
+    "Earrings", "Earbuds", "E-Reader", "Exercise Mat",
+    "Fitness Tracker", "Flower Pot", "Fountain Pen", "Face Mask", "Football", "Fridge Magnet",
+    "Gaming Mouse", "Gaming Keyboard", "Gaming Headset", "Guitar", "Glass Set", "Goggles",
+    "Hamper", "Headphones", "Hoodie", "Hair Dryer", "Handbag", "Hat", "Helmet",
+    "iPad", "iPhone Case", "Incense Sticks", "Iron",
+    "Jacket", "Jewelry Box", "Journal", "Jeans", "Jigsaw Puzzle",
+    "Keychain", "Kitchen Set", "Kite", "Keyboard",
+    "Laptop", "Leather Wallet", "Lego Set", "Lamp", "Lipstick", "Luggage Tag",
+    "Microphone", "Mug", "Makeup Kit", "Mouse Pad", "Massager",
+    "Necklace", "Notebook", "Necktie", "Night Lamp",
+    "Oven Gloves", "Oil Diffuser", "Origami Kit",
+    "Pen", "Perfume", "Pendant", "Pillow", "Photo Frame", "Power Bank", "Puzzle", "Plant", "Polaroid Camera",
+    "Quilt", "Quirky Mug",
+    "Ring", "Remote Control Car", "Robot Toy", "Running Shoes", "Roses", "Rubik's Cube",
+    "Scarf", "Smart Watch", "Speaker", "Snake Toy", "Sneakers", "Sketchbook", "Sunglasses", "Sweater", "Sticker", "Scented Candle", "Spa Kit",
+    "Teddy Bear", "T-Shirt", "Toy Car", "Travel Bag", "Tumbler", "Tripod", "Table Lamp",
+    "Umbrella", "USB Drive",
+    "Vase", "Video Game", "VR Headset",
+    "Wallet", "Watch", "Water Bottle", "Wireless Charger", "Wall Art", "Wine Glass",
+    "Xylophone",
+    "Yoga Mat", "Yoyo",
+    "Zipper Pouch", "Zodiac Sign"
 ];
 
 let currentBudget = "Any";
@@ -558,25 +592,27 @@ function handleInput() {
         return;
     }
 
-    // Filter Suggestions
+    // Filter Suggestions (Google Style)
     if (input.length > 0) {
+        // എന്ത് അടിച്ചാലും അത് ഉൾപ്പെടുന്ന വാക്കുകൾ തിരയും
         const matches = allGiftNames.filter(item => 
             item.toLowerCase().includes(input.toLowerCase())
-        ).slice(0, 5); // Max 5 suggestions
+        ).slice(0, 6); // Max 6 suggestions
 
         if (matches.length > 0) {
             suggestionsBox.innerHTML = '';
             matches.forEach(match => {
                 const div = document.createElement('div');
                 div.className = 'suggestion-item';
-                // Highlight the matching part (Optional, but looks cool)
+                // Highlight the matching part
                 const regex = new RegExp(`(${input})`, 'gi');
                 div.innerHTML = match.replace(regex, '<strong style="color:#e8c36a;">$1</strong>');
                 
-                // On click, fill the input
+                // On click, fill the input and search
                 div.onmousedown = function() {
                     document.getElementById('giftInput').value = match;
                     suggestionsBox.style.display = 'none';
+                    findGifts(); // Click ചെയ്യുമ്പോൾ നേരിട്ട് സെർച്ച് ആകും
                 };
                 suggestionsBox.appendChild(div);
             });
@@ -587,7 +623,6 @@ function handleInput() {
     }
 }
 
-// Hide suggestions when clicking outside
 function hideSuggestions() {
     setTimeout(() => {
         document.getElementById('suggestionsBox').style.display = 'none';
@@ -626,7 +661,7 @@ function selectAura(element, value) {
     closeModal('auraModal');
 }
 
-// Main Search Function
+// Main Search Function with Spinner
 function findGifts() {
     const inputField = document.getElementById('giftInput');
     let searchQuery = inputField.value.trim();
@@ -636,10 +671,19 @@ function findGifts() {
     const resultsSection = document.getElementById('results');
     const loader = document.getElementById('loader');
     const suggestionsBox = document.getElementById('suggestionsBox');
+    const btnText = document.getElementById('btnText');
+    const btnSpinner = document.getElementById('btnSpinner');
+    const revealBtn = document.getElementById('revealBtn');
     
-    suggestionsBox.style.display = 'none'; // Hide suggestions on search
+    suggestionsBox.style.display = 'none'; 
     resultsSection.style.display = 'none';
     loader.style.display = 'block';
+    
+    // 🔥 Change Button to Loading State (Spinner)
+    btnText.style.display = 'none';
+    btnSpinner.style.display = 'block';
+    revealBtn.disabled = true;
+    revealBtn.classList.remove('active');
     
     const affiliateTag = "vividauraart-21";
 
@@ -656,6 +700,12 @@ function findGifts() {
     .then(data => {
         loader.style.display = 'none';
         resultsSection.style.display = 'block';
+        
+        // 🔥 Reset Button to Normal State
+        btnText.style.display = 'block';
+        btnSpinner.style.display = 'none';
+        revealBtn.disabled = false;
+        revealBtn.classList.add('active');
         
         let gifts = data.gifts || []; 
         
@@ -699,6 +749,11 @@ function findGifts() {
     .catch(error => {
         console.error('Error:', error);
         loader.style.display = 'none';
+        // Reset button on error
+        btnText.style.display = 'block';
+        btnSpinner.style.display = 'none';
+        revealBtn.disabled = false;
+        revealBtn.classList.add('active');
         alert("The Aura Oracle is resting. Please try again later.");
     });
 }
