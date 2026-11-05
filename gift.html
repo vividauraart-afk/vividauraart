@@ -230,10 +230,9 @@ animation: spin 0.8s linear infinite;
 to { transform: rotate(360deg); }
 }
 
-/* Filters Section */
+/* Filters Section (Only Budget now) */
 .filters-section {
 display: flex;
-gap: 10px;
 width: 100%;
 margin-bottom: 20px;
 justify-content: center;
@@ -244,7 +243,7 @@ z-index: 10;
 background: rgba(255,255,255,0.04);
 border: 1px solid rgba(255,255,255,0.1);
 color: #ccc;
-padding: 10px 15px;
+padding: 10px 20px;
 border-radius: 50px;
 font-size: 13px;
 cursor: pointer;
@@ -366,26 +365,28 @@ from{opacity:0;transform:translateY(15px)}
 to{opacity:1;transform:translateY(0)}
 }
 
-/* Product List Card Style */
+/* ✨ VIVID AURA THEMED PRODUCT CARD (Gold & Violet) ✨ */
 .product-list-card {
-    background: #0a0a0f;
-    border: 1.5px solid rgba(201,161,74,0.3);
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 10px;
+    /* നമ്മുടെ പേജിലെ പഴയ പോലെ ഗോൾഡൻ & വയലറ്റ് ബോർഡർ */
+    background: linear-gradient(rgba(20,10,30,0.8), rgba(10,5,15,0.8)) padding-box,
+                linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff) border-box;
+    border: 1.5px solid transparent;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     text-decoration: none;
     transition: 0.3s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     gap: 12px;
 }
 
 .product-list-card:active {
     transform: scale(0.97);
-    border-color: #ff9900;
-    box-shadow: 0 0 15px rgba(255,153,0,0.3);
+    box-shadow: 0 0 20px rgba(155,107,255,0.4);
+    border-color: #d46bff;
 }
 
 .product-info {
@@ -396,22 +397,26 @@ to{opacity:1;transform:translateY(0)}
 }
 
 .product-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-family: 'Cinzel', serif; /* വിവിഡ് ഓറ സ്റ്റൈൽ ഫോണ്ട് */
+    font-size: 15px;
     font-weight: 700;
-    color: #fff;
+    background: linear-gradient(110deg,#e8c36a,#fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+/* Support Button-ന് സമാനമായ ഗ്ലോ ബട്ടൺ */
 .buy-btn-small {
-    background: linear-gradient(110deg, rgba(255,153,0,0.15), rgba(255,153,0,0.05));
-    border: 1px solid #ff9900;
-    color: #ffcc00;
-    padding: 8px 16px;
-    border-radius: 8px;
+    position: relative;
+    background: linear-gradient(110deg, rgba(201,161,74,0.15), rgba(155,107,255,0.15));
+    border: 1px solid rgba(201,161,74,0.6);
+    color: #e8c36a;
+    padding: 10px 18px;
+    border-radius: 50px;
     font-size: 12px;
     font-weight: bold;
     white-space: nowrap;
@@ -419,6 +424,14 @@ to{opacity:1;transform:translateY(0)}
     align-items: center;
     gap: 5px;
     flex-shrink: 0;
+    box-shadow: 0 0 10px rgba(201,161,74,0.15);
+    transition: 0.3s;
+}
+
+.product-list-card:active .buy-btn-small {
+    background: linear-gradient(110deg, rgba(201,161,74,0.3), rgba(155,107,255,0.3));
+    color: #fff;
+    box-shadow: 0 0 15px rgba(212,107,255,0.5);
 }
 
 /* Footer */
@@ -462,13 +475,10 @@ margin-bottom:20px;
 </div>
 </div>
 
-<!-- Filters -->
+<!-- Filters (Only Budget) -->
 <div class="filters-section">
     <div class="filter-btn" onclick="openModal('budgetModal')">
         <span>💰 Budget:</span> <span id="selectedBudget">Any</span>
-    </div>
-    <div class="filter-btn" onclick="openModal('auraModal')">
-        <span>✨ Aura:</span> <span id="selectedAura">Any</span>
     </div>
 </div>
 
@@ -492,31 +502,13 @@ margin-bottom:20px;
         </div>
         <div class="options-list" id="budgetOptions">
             <div class="option-item selected" onclick="selectBudget(this, 'Any')">Any Budget</div>
-            <div class="option-item" onclick="selectBudget(this, 'Under ₹500 / $10')">Under ₹500 / $10</div>
+            <!-- ഏറ്റവും കുറഞ്ഞ വിലയിൽ തുടങ്ങുന്നു -->
+            <div class="option-item" onclick="selectBudget(this, 'Under ₹100 / $1')">Under ₹100 / $1</div>
+            <div class="option-item" onclick="selectBudget(this, '₹100 - ₹500 / $1-$10')">₹100 - ₹500 / $1-$10</div>
             <div class="option-item" onclick="selectBudget(this, '₹500 - ₹1500 / $10-$25')">₹500 - ₹1500 / $10-$25</div>
             <div class="option-item" onclick="selectBudget(this, '₹1500 - ₹3000 / $25-$50')">₹1500 - ₹3000 / $25-$50</div>
             <div class="option-item" onclick="selectBudget(this, '₹3000 - ₹7000 / $50-$100')">₹3000 - ₹7000 / $50-$100</div>
             <div class="option-item" onclick="selectBudget(this, 'Premium (₹7000+ / $100+)')">Premium (₹7000+ / $100+)</div>
-        </div>
-    </div>
-</div>
-
-<!-- Aura Modal -->
-<div class="modal" id="auraModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div class="modal-title">Select Aura (Vibe)</div>
-            <button class="close-btn" onclick="closeModal('auraModal')">✕</button>
-        </div>
-        <div class="options-list" id="auraOptions">
-            <div class="option-item selected" onclick="selectAura(this, 'Any')">Any Aura</div>
-            <div class="option-item" onclick="selectAura(this, 'Mystical')">🔮 Mystical</div>
-            <div class="option-item" onclick="selectAura(this, 'Luxury')">💎 Luxury</div>
-            <div class="option-item" onclick="selectAura(this, 'Funny')">😂 Funny</div>
-            <div class="option-item" onclick="selectAura(this, 'Sentimental')">💖 Sentimental</div>
-            <div class="option-item" onclick="selectAura(this, 'Practical')">🛠️ Practical</div>
-            <div class="option-item" onclick="selectAura(this, 'Eco-Friendly')">🌱 Eco-Friendly</div>
-            <div class="option-item" onclick="selectAura(this, 'Tech/Gadget')">📱 Tech/Gadget</div>
         </div>
     </div>
 </div>
@@ -543,7 +535,6 @@ setRandomPlaceholder();
 
 // 🔥 HUGE INTERNAL DICTIONARY (Google Translate Style Autocomplete)
 const allGiftNames = [
-    // A - Z Common Gifts
     "Airpods", "Alexa", "Action Figure", "Art Print", "Apron", "Aquarium",
     "Backpack", "Book", "Bracelet", "Bluetooth Speaker", "Bike", "Board Game", "Bouquet", "Body Lotion", "Belt", "Blanket", "Bottle",
     "Camera", "Candle", "Chocolate", "Coffee Mug", "Coloring Book", "Charger", "Cushion", "Camera Lens", "Cookbook", "Cake", "Card", "Cup", "Clock",
@@ -573,7 +564,6 @@ const allGiftNames = [
 ];
 
 let currentBudget = "Any";
-let currentAura = "Any";
 
 // Handle input typing & show suggestions
 function handleInput() {
@@ -594,25 +584,22 @@ function handleInput() {
 
     // Filter Suggestions (Google Style)
     if (input.length > 0) {
-        // എന്ത് അടിച്ചാലും അത് ഉൾപ്പെടുന്ന വാക്കുകൾ തിരയും
         const matches = allGiftNames.filter(item => 
             item.toLowerCase().includes(input.toLowerCase())
-        ).slice(0, 6); // Max 6 suggestions
+        ).slice(0, 6); 
 
         if (matches.length > 0) {
             suggestionsBox.innerHTML = '';
             matches.forEach(match => {
                 const div = document.createElement('div');
                 div.className = 'suggestion-item';
-                // Highlight the matching part
                 const regex = new RegExp(`(${input})`, 'gi');
                 div.innerHTML = match.replace(regex, '<strong style="color:#e8c36a;">$1</strong>');
                 
-                // On click, fill the input and search
                 div.onmousedown = function() {
                     document.getElementById('giftInput').value = match;
                     suggestionsBox.style.display = 'none';
-                    findGifts(); // Click ചെയ്യുമ്പോൾ നേരിട്ട് സെർച്ച് ആകും
+                    findGifts(); 
                 };
                 suggestionsBox.appendChild(div);
             });
@@ -653,14 +640,6 @@ function selectBudget(element, value) {
     closeModal('budgetModal');
 }
 
-function selectAura(element, value) {
-    document.querySelectorAll('#auraOptions .option-item').forEach(el => el.classList.remove('selected'));
-    element.classList.add('selected');
-    currentAura = value;
-    document.getElementById('selectedAura').innerText = value;
-    closeModal('auraModal');
-}
-
 // Main Search Function with Spinner
 function findGifts() {
     const inputField = document.getElementById('giftInput');
@@ -679,7 +658,7 @@ function findGifts() {
     resultsSection.style.display = 'none';
     loader.style.display = 'block';
     
-    // 🔥 Change Button to Loading State (Spinner)
+    // Change Button to Loading State (Spinner)
     btnText.style.display = 'none';
     btnSpinner.style.display = 'block';
     revealBtn.disabled = true;
@@ -689,7 +668,6 @@ function findGifts() {
 
     let finalQuery = searchQuery;
     if(currentBudget !== 'Any') finalQuery += `, Budget: ${currentBudget}`;
-    if(currentAura !== 'Any') finalQuery += `, Vibe: ${currentAura}`;
 
     fetch('/api/generate', {
         method: 'POST',
@@ -701,7 +679,7 @@ function findGifts() {
         loader.style.display = 'none';
         resultsSection.style.display = 'block';
         
-        // 🔥 Reset Button to Normal State
+        // Reset Button to Normal State
         btnText.style.display = 'block';
         btnSpinner.style.display = 'none';
         revealBtn.disabled = false;
@@ -726,10 +704,11 @@ function findGifts() {
             const itemQuery = encodeURIComponent(giftName);
             const amazonLink = `https://www.amazon.in/s?k=${itemQuery}&tag=${affiliateTag}`;
             
+            // വിവിഡ് ഓറ സ്റ്റൈൽ കാർഡ്
             resultsHTML += `
                 <a href="${amazonLink}" target="_blank" class="product-list-card">
                     <div class="product-info">
-                        <div class="product-title">✨ ${giftName}</div>
+                        <div class="product-title">${giftName}</div>
                     </div>
                     <div class="buy-btn-small">
                         Buy ➜
