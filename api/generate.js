@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-    // CORS setup
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS,POST');
@@ -17,7 +16,6 @@ export default async function handler(req, res) {
     const { query } = req.body;
     if (!query) return res.status(400).json({ error: 'Query is required' });
 
-    // Strict prompt for a premium, international feel
     const prompt = `You are a world-class luxury gift concierge. The user will describe a person. Return exactly 8 highly specific, premium, and unique gift ideas as a valid JSON array of strings. Do not include markdown, code blocks, or any text other than the JSON array. Example format: ["Item 1", "Item 2", "Item 3"]`;
 
     function cleanAndParse(responseText) {
@@ -30,7 +28,7 @@ export default async function handler(req, res) {
                 return JSON.parse(cleanText);
             }
         } catch (e) {
-            console.error("Parse error:", e);
+            console.error("Parse error:", e.message);
         }
         return null;
     }
@@ -38,7 +36,7 @@ export default async function handler(req, res) {
     let gifts = null;
     let engineUsed = "None";
 
-    // --- ENGINE 1: GEMINI (Highest Quality & Speed) ---
+    // --- ENGINE 1: GEMINI ---
     if (!gifts && process.env.GEMINI_API_KEY) {
         try {
             console.log("Trying Gemini...");
@@ -53,11 +51,13 @@ export default async function handler(req, res) {
             if (data.candidates && data.candidates[0].content.parts[0].text) {
                 gifts = cleanAndParse(data.candidates[0].content.parts[0].text);
                 if(gifts) engineUsed = "Gemini";
+            } else {
+                console.error("Gemini API Error Response:", JSON.stringify(data));
             }
-        } catch (error) { console.error("Gemini failed"); }
+        } catch (error) { console.error("Gemini failed:", error.message); }
     }
 
-    // --- ENGINE 2: GROK (xAI - Smart & Witty) ---
+    // --- ENGINE 2: GROK ---
     if (!gifts && process.env.GROK_API_KEY) {
         try {
             console.log("Trying Grok...");
@@ -79,11 +79,13 @@ export default async function handler(req, res) {
             if (data.choices && data.choices[0]) {
                 gifts = cleanAndParse(data.choices[0].message.content);
                 if(gifts) engineUsed = "Grok";
+            } else {
+                 console.error("Grok API Error Response:", JSON.stringify(data));
             }
-        } catch (error) { console.error("Grok failed"); }
+        } catch (error) { console.error("Grok failed:", error.message); }
     }
 
-    // --- ENGINE 3: OPENROUTER (Llama 3) ---
+    // --- ENGINE 3: OPENROUTER ---
     if (!gifts && process.env.OPENROUTER_API_KEY) {
         try {
             console.log("Trying OpenRouter...");
@@ -105,11 +107,13 @@ export default async function handler(req, res) {
             if (data.choices && data.choices[0]) {
                 gifts = cleanAndParse(data.choices[0].message.content);
                 if(gifts) engineUsed = "OpenRouter";
+            } else {
+                 console.error("OpenRouter API Error Response:", JSON.stringify(data));
             }
-        } catch (error) { console.error("OpenRouter failed"); }
+        } catch (error) { console.error("OpenRouter failed:", error.message); }
     }
 
-    // --- ENGINE 4: HUGGING FACE (Mistral - Last Resort) ---
+    // --- ENGINE 4: HUGGING FACE ---
     if (!gifts && process.env.HUGGINGFACE_API_KEY) {
         try {
             console.log("Trying Hugging Face...");
@@ -128,15 +132,15 @@ export default async function handler(req, res) {
             if (hfData && hfData[0] && hfData[0].generated_text) {
                 gifts = cleanAndParse(hfData[0].generated_text);
                 if(gifts) engineUsed = "HuggingFace";
+            } else {
+                 console.error("HuggingFace API Error Response:", JSON.stringify(hfData));
             }
-        } catch (error) { console.error("HuggingFace failed"); }
+        } catch (error) { console.error("HuggingFace failed:", error.message); }
     }
 
-    // --- FINAL RESPONSE ---
     if (gifts && Array.isArray(gifts) && gifts.length > 0) {
         return res.status(200).json({ success: true, gifts: gifts.slice(0, 8), source: engineUsed });
     } else {
-        // Fallback if all APIs are down or keys are wrong
         return res.status(200).json({ success: false, error: 'All AI Engines failed. Using fallback.', gifts: [] });
     }
 }
