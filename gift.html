@@ -636,7 +636,10 @@ function selectBudget(element, value) {
     document.querySelectorAll('#budgetOptions .option-item').forEach(el => el.classList.remove('selected'));
     element.classList.add('selected');
     currentBudget = value;
-    document.getElementById('selectedBudget').innerText = value.split(' / ')[0];
+    
+    // 🔥 FIX: ഇവിടെയാണ് മാറ്റം വരുത്തിയത്. " / " എന്ന് വെച്ച് വിഭജിക്കുന്നതിന് പകരം മുഴുവൻ വാല്യൂ കാണിക്കും.
+    document.getElementById('selectedBudget').innerText = value; 
+    
     closeModal('budgetModal');
 }
 
