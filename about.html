@@ -122,21 +122,23 @@ color: #d46bff;
 font-weight: bold;
 }
 
-/* Email Button */
+/* ✨ EXACT 'CONTACT US' BUTTON STYLE ✨ */
 .email-btn {
 display: inline-block;
 background: linear-gradient(110deg, rgba(201,161,74,0.15), rgba(155,107,255,0.15));
 border: 1.5px solid rgba(201,161,74,0.6);
 color: #e8c36a;
-padding: 12px 24px;
+padding: 12px 30px;
 border-radius: 50px;
 text-decoration: none;
 font-weight: 700;
-font-size: 14px;
-margin-top: 10px;
+font-size: 15px;
+margin-top: 15px;
 box-shadow: 0 0 10px rgba(201,161,74,0.15);
 transition: 0.3s;
--webkit-touch-callout: none; /* ഐഫോണിൽ പ്രസ്സ് ചെയ്യുമ്പോൾ പോപ്പ്അപ്പ് വരാതിരിക്കാൻ */
+/* മൊബൈലിൽ പ്രസ്സ് ചെയ്യുമ്പോൾ പോപ്പ്അപ്പ് വരാതിരിക്കാൻ */
+-webkit-touch-callout: none; 
+user-select: none;
 }
 
 .email-btn:active {
@@ -184,12 +186,9 @@ margin-bottom:20px;
     <p>This website is an independent project. To keep the servers running and the AI thinking, we participate in the <strong>Amazon Services LLC Associates Program</strong>. This means if you find a great gift here and click through to buy it on Amazon, we may earn a small commission. <strong>This comes at NO extra cost to you.</strong></p>
 </div>
 
-<!-- Updated Contact Section with Short Button Text -->
-<div class="content-section">
-    <h2>Contact Us</h2>
-    <p>If you have any feature requests, found a bug, or just want to say hi, feel free to contact us. We are always tweaking the code on weekends!</p>
-    <!-- Email hidden, only button text shown -->
-    <a href="mailto:vividauraart@gmail.com" class="email-btn">📧 Contact Us</a>
+<!-- Contact Section: Only Button, No Heading, No Email Text -->
+<div class="content-section" style="text-align: center; margin-top: 40px;">
+    <a href="mailto:vividauraart@gmail.com" class="email-btn">Contact Us</a>
 </div>
 
 </div>
