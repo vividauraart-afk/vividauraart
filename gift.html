@@ -730,7 +730,6 @@ let isListening = false;
 function startVoice() {
     const voiceBtn = document.getElementById('voiceBtn');
     
-    // Check if browser supports it
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
         alert("Your browser does not support voice search. Please use Google Chrome or Safari.");
         return;
@@ -743,7 +742,7 @@ function startVoice() {
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SpeechRecognition();
-    recognition.lang = 'en-US'; // You can change to 'ml-IN' for Malayalam
+    recognition.lang = 'en-US'; 
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
@@ -756,7 +755,15 @@ function startVoice() {
         const speechResult = event.results[0][0].transcript;
         const inputField = document.getElementById('giftInput');
         inputField.value = speechResult;
-        handleInput(); // Enable button
+        
+        document.getElementById('suggestionsBox').style.display = 'none';
+        
+        handleInput(); 
+
+        // 🔥 AUTO-TRIGGER SEARCH after voice input
+        setTimeout(() => {
+            findGifts();
+        }, 500); // 0.5 second delay to let the text settle
     };
 
     recognition.onerror = function(event) {
