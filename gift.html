@@ -367,7 +367,6 @@ to{opacity:1;transform:translateY(0)}
 
 /* ✨ VIVID AURA THEMED PRODUCT CARD (Gold & Violet) ✨ */
 .product-list-card {
-    /* നമ്മുടെ പേജിലെ പഴയ പോലെ ഗോൾഡൻ & വയലറ്റ് ബോർഡർ */
     background: linear-gradient(rgba(20,10,30,0.8), rgba(10,5,15,0.8)) padding-box,
                 linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff) border-box;
     border: 1.5px solid transparent;
@@ -397,7 +396,7 @@ to{opacity:1;transform:translateY(0)}
 }
 
 .product-title {
-    font-family: 'Cinzel', serif; /* വിവിഡ് ഓറ സ്റ്റൈൽ ഫോണ്ട് */
+    font-family: 'Cinzel', serif;
     font-size: 15px;
     font-weight: 700;
     background: linear-gradient(110deg,#e8c36a,#fff);
@@ -409,7 +408,6 @@ to{opacity:1;transform:translateY(0)}
     text-overflow: ellipsis;
 }
 
-/* Support Button-ന് സമാനമായ ഗ്ലോ ബട്ടൺ */
 .buy-btn-small {
     position: relative;
     background: linear-gradient(110deg, rgba(201,161,74,0.15), rgba(155,107,255,0.15));
@@ -436,11 +434,32 @@ to{opacity:1;transform:translateY(0)}
 
 /* Footer */
 .footer{
-margin-top:30px;
+margin-top:20px;
 text-align:center;
 opacity:0.3;
 font-size:11px;
 margin-bottom:20px;
+}
+
+/* Footer Links (About & Privacy) */
+.footer-links {
+display: flex;
+gap: 15px;
+justify-content: center;
+font-size: 12px;
+margin-top: 15px;
+margin-bottom: 10px;
+}
+
+.footer-links a {
+color: #c9a14a;
+text-decoration: none;
+border-bottom: 1px solid transparent;
+transition: 0.2s;
+}
+
+.footer-links a:hover, .footer-links a:active {
+border-bottom: 1px solid #c9a14a;
 }
 </style>
 </head>
@@ -489,9 +508,15 @@ margin-bottom:20px;
 <div class="results-section" id="results">
 </div>
 
+<!-- Footer Links -->
+<div class="footer-links">
+    <a href="about.html">About Us</a>
+    <a href="privacy.html">Privacy Policy</a>
 </div>
 
 <div class="footer">© 2026 VIVID AURA ART</div>
+
+</div>
 
 <!-- Budget Modal -->
 <div class="modal" id="budgetModal">
@@ -636,10 +661,7 @@ function selectBudget(element, value) {
     document.querySelectorAll('#budgetOptions .option-item').forEach(el => el.classList.remove('selected'));
     element.classList.add('selected');
     currentBudget = value;
-    
-    // 🔥 FIX: ഇവിടെയാണ് മാറ്റം വരുത്തിയത്. " / " എന്ന് വെച്ച് വിഭജിക്കുന്നതിന് പകരം മുഴുവൻ വാല്യൂ കാണിക്കും.
     document.getElementById('selectedBudget').innerText = value; 
-    
     closeModal('budgetModal');
 }
 
@@ -707,7 +729,6 @@ function findGifts() {
             const itemQuery = encodeURIComponent(giftName);
             const amazonLink = `https://www.amazon.in/s?k=${itemQuery}&tag=${affiliateTag}`;
             
-            // വിവിഡ് ഓറ സ്റ്റൈൽ കാർഡ്
             resultsHTML += `
                 <a href="${amazonLink}" target="_blank" class="product-list-card">
                     <div class="product-info">
