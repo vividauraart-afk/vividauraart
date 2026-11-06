@@ -16,19 +16,17 @@ export default async function handler(req, res) {
     const { query } = req.body;
     if (!query) return res.status(400).json({ error: 'Query is required' });
 
-    // 🔥 AI-യോട് കൃത്യമായി പറയുന്നു, എക്സ്ട്രാ വാക്കുകൾ ചേർക്കരുത് എന്ന്.
     const prompt = `You are a strict search assistant.
-The user will provide a search term (e.g., "Snake", "Teddy", "Watch", "Chocolate").
+The user will provide a search term (e.g., "Snake", "Teddy", "Watch").
 Your ONLY task is to return exactly 8 simple variations of that EXACT item.
 
 STRICT RULES:
 1. Every single suggestion MUST contain the exact core word the user typed.
-2. Do NOT invent new items or add unrelated words (e.g., If user says "Snake", do NOT say "Serpent" or "Reptile").
+2. Do NOT invent new items or add unrelated words (e.g., If user says "Snake", do NOT say "Serpent").
 3. Do NOT use words like "Premium", "Luxury", or "Exclusive".
-4. The items must be affordable and easily searchable on Amazon.
-5. Return ONLY a valid JSON array of strings. No markdown, no extra text.
+4. Return ONLY a valid JSON array of strings. No markdown, no extra text.
 
-Example for "Snake": ["Snake", "Snake Toy", "Snake Gift", "Snake Set", "Toy Snake", "Rubber Snake", "Plastic Snake", "Snake Pack"]`;
+Example for "Watch": ["Watch", "Smart Watch", "Watch Band", "Watch Case", "Watch Strap", "Digital Watch", "Analog Watch", "Kids Watch"]`;
 
     function cleanAndParse(responseText) {
         try {
@@ -45,33 +43,41 @@ Example for "Snake": ["Snake", "Snake Toy", "Snake Gift", "Snake Set", "Toy Snak
         return null;
     }
 
-    // 🔥 THE FILTRATION SYSTEM (JavaScript Rules)
-    function filterGifts(gifts, userQuery) {
+    function advancedFilter(gifts, userQuery) {
         if (!gifts || !Array.isArray(gifts)) return [];
         
-        const lowerQuery = userQuery.toLowerCase().split(',')[0].trim(); // ബജറ്റ് ഒഴിവാക്കി വെറും വാക്ക് എടുക്കാൻ
+        const baseQuery = userQuery.toLowerCase().split(',')[0].trim(); 
         
-        return gifts.filter(gift => {
-            const lowerGift = gift.toLowerCase();
-            
-            // Rule 1: യൂസർ അടിച്ച വാക്ക് അതിൽ ഉണ്ടായിരിക്കണം
-            if (!lowerGift.includes(lowerQuery)) return false;
-            
-            // Rule 2: "Premium", "Luxury" തുടങ്ങിയ വാക്കുകൾ പാടില്ല
-            const forbiddenWords = ["premium", "luxury", "exclusive", "deluxe"];
-            if (forbiddenWords.some(word => lowerGift.includes(word))) return false;
-            
-            // Rule 3: വളരെ നീളം കൂടിയ പേരുകൾ പാടില്ല (Max 40 characters)
-            if (gift.length > 40) return false;
+        const forbiddenWords = ["premium", "luxury", "exclusive", "deluxe", "expensive"];
+        const seen = new Set();
+        const filtered = [];
 
-            return true;
-        });
+        for (let gift of gifts) {
+            const lowerGift = gift.toLowerCase();
+
+            if (forbiddenWords.some(word => lowerGift.includes(word))) continue;
+
+            if (gift.length > 45) continue;
+
+            if (!lowerGift.includes(baseQuery)) continue;
+
+            if (seen.has(lowerGift)) continue;
+
+            const irrelevantWords = ["phone", "headset", "laptop", "tv", "shoe", "dress"];
+            if (baseQuery !== "phone" && baseQuery !== "headset") {
+                if (irrelevantWords.some(word => lowerGift.includes(word))) continue;
+            }
+
+            seen.add(lowerGift);
+            filtered.push(gift);
+        }
+
+        return filtered;
     }
 
     let gifts = null;
     let engineUsed = "None";
 
-    // --- ENGINE 1: GEMINI ---
     if (!gifts && process.env.GEMINI_API_KEY) {
         try {
             console.log("Trying Gemini...");
@@ -85,14 +91,12 @@ Example for "Snake": ["Snake", "Snake Toy", "Snake Gift", "Snake Set", "Toy Snak
             const data = await geminiRes.json();
             if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
                 const rawGifts = cleanAndParse(data.candidates[0].content.parts[0].text);
-                // 🔥 Filter ചെയ്യുന്നു
-                gifts = filterGifts(rawGifts, query);
+                gifts = advancedFilter(rawGifts, query);
                 if(gifts && gifts.length > 0) engineUsed = "Gemini";
             }
         } catch (error) { console.error("Gemini failed"); }
     }
 
-    // --- ENGINE 2: OPENROUTER ---
     if (!gifts && process.env.OPENROUTER_API_KEY) {
         try {
             console.log("Trying OpenRouter...");
@@ -115,26 +119,59 @@ Example for "Snake": ["Snake", "Snake Toy", "Snake Gift", "Snake Set", "Toy Snak
             const data = await openRouterRes.json();
             if (data.choices && data.choices[0]) {
                 const rawGifts = cleanAndParse(data.choices[0].message.content);
-                gifts = filterGifts(rawGifts, query);
+                gifts = advancedFilter(rawGifts, query);
                 if(gifts && gifts.length > 0) engineUsed = "OpenRouter";
             }
         } catch (error) { console.error("OpenRouter failed"); }
     }
 
-    // --- FINAL RESPONSE ---
-    // ഫിൽട്ടർ ചെയ്തതിന് ശേഷം 8 എണ്ണം ഉണ്ടെങ്കിൽ അത് തരും, ഇല്ലെങ്കിൽ Fallback
+    if (!gifts && process.env.HUGGINGFACE_API_KEY) {
+        try {
+            console.log("Trying Hugging Face...");
+            const hfRes = await fetch("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    inputs: `<s>[INST] ${prompt} \n\n User query: ${query} [/INST]`,
+                    parameters: { max_new_tokens: 300, temperature: 0.7 }
+                })
+            });
+            const hfData = await hfRes.json();
+            if (hfData && hfData[0] && hfData[0].generated_text) {
+                const rawGifts = cleanAndParse(hfData[0].generated_text);
+                gifts = advancedFilter(rawGifts, query);
+                if(gifts && gifts.length > 0) engineUsed = "HuggingFace";
+            }
+        } catch (error) { console.error("HuggingFace failed"); }
+    }
+
     if (gifts && Array.isArray(gifts) && gifts.length > 0) {
-        return res.status(200).json({ success: true, gifts: gifts.slice(0, 8), source: engineUsed });
+        const finalGifts = gifts.slice(0, 8);
+        if (finalGifts.length < 8) {
+            const baseQ = query.split(',')[0].trim();
+            const fallbacks = [`${baseQ} Toy`, `${baseQ} Gift`, `${baseQ} Set`, `${baseQ} Combo`];
+            for (let f of fallbacks) {
+                if (finalGifts.length >= 8) break;
+                if (!finalGifts.some(g => g.toLowerCase() === f.toLowerCase())) {
+                    finalGifts.push(f);
+                }
+            }
+        }
+        return res.status(200).json({ success: true, gifts: finalGifts, source: engineUsed });
     } else {
+        const baseQ = query.split(',')[0].trim();
         const fallbackGifts = [
-            `${query.split(',')[0].trim()}`, 
-            `${query.split(',')[0].trim()} Toy`, 
-            `${query.split(',')[0].trim()} Gift`, 
-            `${query.split(',')[0].trim()} Set`,
-            `${query.split(',')[0].trim()} Pack`,
-            `${query.split(',')[0].trim()} Combo`,
-            `Toy ${query.split(',')[0].trim()}`,
-            `Best ${query.split(',')[0].trim()}`
+            `${baseQ}`, 
+            `${baseQ} Toy`, 
+            `${baseQ} Gift`, 
+            `${baseQ} Set`,
+            `${baseQ} Pack`,
+            `${baseQ} Combo`,
+            `Toy ${baseQ}`,
+            `Best ${baseQ}`
         ];
         return res.status(200).json({ 
             success: true, 
