@@ -10,164 +10,53 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
-body{
-background:#000;
-color:#fff;
-font-family:'Inter',sans-serif;
-min-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:20px 15px;
-overflow-x:hidden
-}
-
-body::before{
-content:'';
-position:fixed;
-inset:0;
-background:radial-gradient(ellipse at top,#1a1025 0%,#000 60%);
-z-index:-1
-}
-
-/* Back Button */
-.back-btn{
-position:absolute;
-top:20px;
-left:20px;
-color:#c9a14a;
-text-decoration:none;
-font-size:24px;
-z-index:10;
-transition:transform 0.2s, color 0.2s;
-}
+body{background:#000;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 15px;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at top,#1a1025 0%,#000 60%);z-index:-1}
+.back-btn{position:absolute;top:20px;left:20px;color:#c9a14a;text-decoration:none;font-size:24px;z-index:10;transition:transform 0.2s, color 0.2s;}
 .back-btn:active{transform:scale(0.9);color:#fff;}
+.container{position:relative;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;margin-top:40px;margin-bottom:40px;}
 
-.container{
-position:relative;
-width:100%;
-max-width:420px;
-display:flex;
-flex-direction:column;
-align-items:center;
-margin-top:40px;
-margin-bottom:40px;
+h1{font-family:'Cinzel',serif;font-size:28px;text-align:center;line-height:1.2;color:#fff;margin-bottom:20px;}
+h1 .highlight{background:linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.quote-box{background:linear-gradient(rgba(20,10,30,0.8),rgba(10,5,15,0.8)) padding-box,linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff) border-box;border:1.5px solid transparent;border-radius:16px;padding:24px;margin-bottom:30px;box-shadow:0 5px 20px rgba(0,0,0,0.5);}
+.quote-text{font-family:'Cinzel',serif;font-size:15px;line-height:1.8;color:#e8c36a;text-align:center;font-style:italic;}
+
+.content-section{width:100%;margin-bottom:25px;}
+
+/* CONTACT US ഹെഡിംഗിന് വേണ്ടിയുള്ള സ്പെഷ്യൽ സ്റ്റൈൽ */
+.contact-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: #c9a14a;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(201,161,74,0.3);
+    padding-bottom: 5px;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-h1{
-font-family:'Cinzel',serif;
-font-size:28px;
-text-align:center;
-line-height:1.2;
-color:#fff;
-margin-bottom:20px;
+/* ക്ലിക്ക് ചെയ്യുമ്പോൾ അടിവര വരാൻ */
+.contact-heading:hover, .contact-heading:active {
+    border-bottom: 1px solid #d46bff; /* വയലറ്റ് കളർ അടിവര */
+    color: #d46bff;
 }
 
-h1 .highlight{
-background:linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+.content-section p{font-size:14px;color:#ccc;line-height:1.6;margin-bottom:10px;}
+.content-section strong{color:#fff;}
+.highlight-text{color:#d46bff;font-weight:bold;}
 
-/* Quote Section */
-.quote-box {
-background: linear-gradient(rgba(20,10,30,0.8), rgba(10,5,15,0.8)) padding-box,
-            linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff) border-box;
-border: 1.5px solid transparent;
-border-radius: 16px;
-padding: 24px;
-margin-bottom: 30px;
-box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-}
-
-.quote-text {
-font-family: 'Cinzel', serif;
-font-size: 15px;
-line-height: 1.8;
-color: #e8c36a;
-text-align: center;
-font-style: italic;
-}
-
-/* Content Sections */
-.content-section {
-width: 100%;
-margin-bottom: 25px;
-}
-
-.content-section h2 {
-font-family: 'Cinzel', serif;
-font-size: 18px;
-color: #c9a14a;
-margin-bottom: 10px;
-border-bottom: 1px solid rgba(201,161,74,0.3);
-padding-bottom: 5px;
-}
-
-.content-section p {
-font-size: 14px;
-color: #ccc;
-line-height: 1.6;
-margin-bottom: 10px;
-}
-
-.content-section strong {
-color: #fff;
-}
-
-/* Highlights */
-.highlight-text {
-color: #d46bff;
-font-weight: bold;
-}
-
-/* ✨ EXACT 'CONTACT US' BUTTON STYLE ✨ */
-.email-btn {
-display: inline-block;
-background: linear-gradient(110deg, rgba(201,161,74,0.15), rgba(155,107,255,0.15));
-border: 1.5px solid rgba(201,161,74,0.6);
-color: #e8c36a;
-padding: 12px 30px;
-border-radius: 50px;
-text-decoration: none;
-font-weight: 700;
-font-size: 15px;
-margin-top: 15px;
-box-shadow: 0 0 10px rgba(201,161,74,0.15);
-transition: 0.3s;
-/* മൊബൈലിൽ പ്രസ്സ് ചെയ്യുമ്പോൾ പോപ്പ്അപ്പ് വരാതിരിക്കാൻ */
--webkit-touch-callout: none; 
-user-select: none;
-}
-
-.email-btn:active {
-transform: scale(0.95);
-box-shadow: 0 0 20px rgba(212,107,255,0.5);
-border-color: #d46bff;
-color: #fff;
-}
-
-/* Footer */
-.footer{
-margin-top:20px;
-text-align:center;
-opacity:0.3;
-font-size:11px;
-margin-bottom:20px;
-}
+.footer{margin-top:20px;text-align:center;opacity:0.3;font-size:11px;margin-bottom:20px;}
 </style>
 </head>
 
 <body>
-
 <a href="gift.html" class="back-btn">←</a>
-
 <div class="container">
-
 <h1>The Story of <br><span class="highlight">VIVID AURA ART</span></h1>
 
-<!-- English Translation of the User's Beautiful Words -->
 <div class="quote-box">
     <div class="quote-text">
         "A gift is a choice. A choice to be remembered forever by both the giver and the receiver. A gift can be the reason someone becomes dear to you, and you become dear to them. The value of a gift is not determined by how costly it is. It's not just about whether you deserve to receive it; rather, your true worth lies in the fact that you are the gift. If a gift makes them remember you and you remember them, that is the true value of the gift."
@@ -175,25 +64,26 @@ margin-bottom:20px;
 </div>
 
 <div class="content-section">
-    <h2>Why We Built This</h2>
+    <h2 style="font-family:'Cinzel',serif;font-size:18px;color:#c9a14a;margin-bottom:10px;border-bottom:1px solid rgba(201,161,74,0.3);padding-bottom:5px;">Why We Built This</h2>
     <p>Have you ever searched Google for "What gift should I buy for my dad?" and always ended up seeing the same old watches and wallets? Gift shopping isn't just buying an item; it's an art. But most gift guides on the internet are written by people who don't know our personal tastes.</p>
     <p>That's why we built this at <strong>VIVID AURA ART</strong>. We don't just write a list. Instead, we combined 4 different AI engines to create <strong>"The Aura Oracle"</strong> - a magical gift concierge.</p>
 </div>
 
 <div class="content-section">
-    <h2>Transparency & Pricing</h2>
+    <h2 style="font-family:'Cinzel',serif;font-size:18px;color:#c9a14a;margin-bottom:10px;border-bottom:1px solid rgba(201,161,74,0.3);padding-bottom:5px;">Transparency & Pricing</h2>
     <p>This gift finder is <span class="highlight-text">100% Free to use</span>.</p>
     <p>This website is an independent project. To keep the servers running and the AI thinking, we participate in the <strong>Amazon Services LLC Associates Program</strong>. This means if you find a great gift here and click through to buy it on Amazon, we may earn a small commission. <strong>This comes at NO extra cost to you.</strong></p>
 </div>
 
-<!-- Contact Section: Only Button, No Heading, No Email Text -->
-<div class="content-section" style="text-align: center; margin-top: 40px;">
-    <a href="mailto:vividauraart@gmail.com" class="email-btn">Contact Us</a>
+<!-- ഇവിടെയാണ് നീ പറഞ്ഞത് പോലെ മാറ്റിയത് -->
+<div class="content-section">
+    <!-- CONTACT US ഹെഡിംഗ് തന്നെ ഒരു ലിങ്ക് ആക്കി മാറ്റി -->
+    <a href="mailto:vividauraart@gmail.com" class="contact-heading">Contact Us</a>
+    
+    <p>If you have any feature requests, found a bug, or just want to say hi, feel free to contact us. We are always tweaking the code on weekends!</p>
 </div>
 
 </div>
-
 <div class="footer">© 2026 VIVID AURA ART</div>
-
 </body>
 </html>
