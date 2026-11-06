@@ -100,14 +100,51 @@ background:linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff);
 -webkit-text-fill-color:transparent;
 }
 
+/* New Subtitle */
 .subtitle{
 font-size:14px;
 color:#aaa;
 text-align:center;
 line-height:1.6;
-margin-bottom:25px;
+margin-bottom:15px;
 padding:0 10px;
-font-style:italic;
+}
+
+/* Animation Tagline */
+.tagline-container {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+margin-bottom: 25px;
+font-family: 'Cinzel', serif;
+font-size: 14px;
+}
+
+.tagline-gift {
+color: #e8c36a;
+font-weight: 700;
+letter-spacing: 1px;
+}
+
+.tagline-text {
+color: #d46bff;
+font-style: italic;
+white-space: nowrap;
+overflow: hidden;
+border-right: 2px solid #d46bff;
+width: 0;
+animation: typing 2.5s steps(30, end) forwards, blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+from { width: 0 }
+to { width: 100% }
+}
+
+@keyframes blink-caret {
+from, to { border-color: transparent }
+50% { border-color: #d46bff; }
 }
 
 /* Main Magic Box */
@@ -365,7 +402,7 @@ from{opacity:0;transform:translateY(15px)}
 to{opacity:1;transform:translateY(0)}
 }
 
-/* ✨ VIVID AURA THEMED PRODUCT CARD (Gold & Violet) ✨ */
+/* Product List Card Style */
 .product-list-card {
     background: linear-gradient(rgba(20,10,30,0.8), rgba(10,5,15,0.8)) padding-box,
                 linear-gradient(110deg,#c9a14a,#9b6bff,#d46bff) border-box;
@@ -470,21 +507,26 @@ border-bottom: 1px solid #c9a14a;
 
 <div class="container">
 
-<!-- VIVIDGIFTS Logo with Soft Glow -->
 <div class="logo-wrap">
     <img src="vividgifts-logo.png" alt="VIVIDGIFTS Logo" class="gift-logo">
 </div>
 
 <h1>Consult the <br><span class="highlight">Aura Oracle</span></h1>
 
+<!-- New Subtitle -->
 <p class="subtitle">
-"Describe their soul, their passions, their vibe. <br>Let our magic weave the perfect gift."
+    Tell us who the gift is for, and let our AI do the searching for you.
 </p>
+
+<!-- Animation: Gift | Giving It From The Heart -->
+<div class="tagline-container">
+    <span class="tagline-gift">GIFT</span>
+    <span class="tagline-text">Giving It From The Heart</span>
+</div>
 
 <div class="magic-box">
 <div class="magic-inner">
 <textarea id="giftInput" oninput="handleInput()" onblur="hideSuggestions()" autocomplete="off"></textarea>
-<!-- Live Suggestions Box -->
 <div class="suggestions-box" id="suggestionsBox"></div>
 
 <button class="reveal-btn" id="revealBtn" onclick="findGifts()" disabled>
@@ -494,21 +536,17 @@ border-bottom: 1px solid #c9a14a;
 </div>
 </div>
 
-<!-- Filters (Only Budget) -->
 <div class="filters-section">
     <div class="filter-btn" onclick="openModal('budgetModal')">
         <span>💰 Budget:</span> <span id="selectedBudget">Any</span>
     </div>
 </div>
 
-<!-- Loading Text -->
 <div class="loader" id="loader">Channeling the Aura...<br><span style="font-size:10px;color:#aaa;letter-spacing:1px;">The Oracle is consulting the realms</span></div>
 
-<!-- Results Section -->
 <div class="results-section" id="results">
 </div>
 
-<!-- Footer Links -->
 <div class="footer-links">
     <a href="about.html">About Us</a>
     <a href="privacy.html">Privacy Policy</a>
@@ -518,7 +556,6 @@ border-bottom: 1px solid #c9a14a;
 
 </div>
 
-<!-- Budget Modal -->
 <div class="modal" id="budgetModal">
     <div class="modal-content">
         <div class="modal-header">
@@ -527,7 +564,6 @@ border-bottom: 1px solid #c9a14a;
         </div>
         <div class="options-list" id="budgetOptions">
             <div class="option-item selected" onclick="selectBudget(this, 'Any')">Any Budget</div>
-            <!-- ഏറ്റവും കുറഞ്ഞ വിലയിൽ തുടങ്ങുന്നു -->
             <div class="option-item" onclick="selectBudget(this, 'Under ₹100 / $1')">Under ₹100 / $1</div>
             <div class="option-item" onclick="selectBudget(this, '₹100 - ₹500 / $1-$10')">₹100 - ₹500 / $1-$10</div>
             <div class="option-item" onclick="selectBudget(this, '₹500 - ₹1500 / $10-$25')">₹500 - ₹1500 / $10-$25</div>
@@ -539,7 +575,6 @@ border-bottom: 1px solid #c9a14a;
 </div>
 
 <script>
-// Premium Rotating Placeholders
 const examples = [
     "A midnight dreamer who journals & loves rainy vibes",
     "My sister - pastel obsession & chaotic good energy",
@@ -558,7 +593,6 @@ function setRandomPlaceholder() {
 
 setRandomPlaceholder();
 
-// 🔥 HUGE INTERNAL DICTIONARY (Google Translate Style Autocomplete)
 const allGiftNames = [
     "Airpods", "Alexa", "Action Figure", "Art Print", "Apron", "Aquarium",
     "Backpack", "Book", "Bracelet", "Bluetooth Speaker", "Bike", "Board Game", "Bouquet", "Body Lotion", "Belt", "Blanket", "Bottle",
@@ -590,13 +624,11 @@ const allGiftNames = [
 
 let currentBudget = "Any";
 
-// Handle input typing & show suggestions
 function handleInput() {
     const input = document.getElementById('giftInput').value.trim();
     const btn = document.getElementById('revealBtn');
     const suggestionsBox = document.getElementById('suggestionsBox');
     
-    // Enable/Disable Button
     if (input.length > 0) {
         btn.classList.add('active');
         btn.disabled = false;
@@ -607,7 +639,6 @@ function handleInput() {
         return;
     }
 
-    // Filter Suggestions (Google Style)
     if (input.length > 0) {
         const matches = allGiftNames.filter(item => 
             item.toLowerCase().includes(input.toLowerCase())
@@ -641,7 +672,6 @@ function hideSuggestions() {
     }, 200);
 }
 
-// Modal Logic
 function openModal(id) {
     document.getElementById(id).style.display = 'flex';
 }
@@ -656,7 +686,6 @@ window.onclick = function(event) {
     }
 }
 
-// Selection Logic
 function selectBudget(element, value) {
     document.querySelectorAll('#budgetOptions .option-item').forEach(el => el.classList.remove('selected'));
     element.classList.add('selected');
@@ -665,7 +694,6 @@ function selectBudget(element, value) {
     closeModal('budgetModal');
 }
 
-// Main Search Function with Spinner
 function findGifts() {
     const inputField = document.getElementById('giftInput');
     let searchQuery = inputField.value.trim();
@@ -683,7 +711,6 @@ function findGifts() {
     resultsSection.style.display = 'none';
     loader.style.display = 'block';
     
-    // Change Button to Loading State (Spinner)
     btnText.style.display = 'none';
     btnSpinner.style.display = 'block';
     revealBtn.disabled = true;
@@ -704,7 +731,6 @@ function findGifts() {
         loader.style.display = 'none';
         resultsSection.style.display = 'block';
         
-        // Reset Button to Normal State
         btnText.style.display = 'block';
         btnSpinner.style.display = 'none';
         revealBtn.disabled = false;
@@ -752,7 +778,6 @@ function findGifts() {
     .catch(error => {
         console.error('Error:', error);
         loader.style.display = 'none';
-        // Reset button on error
         btnText.style.display = 'block';
         btnSpinner.style.display = 'none';
         revealBtn.disabled = false;
