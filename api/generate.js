@@ -16,19 +16,18 @@ export default async function handler(req, res) {
     const { query } = req.body;
     if (!query) return res.status(400).json({ error: 'Query is required' });
 
-    // 🔥 STRICT PROMPT: യൂസർ ടൈപ്പ് ചെയ്ത അതേ വാക്കുകൾ മാത്രം റിസൾട്ടിൽ വരാൻ
-    const prompt = `You are a strict, highly accurate search assistant.
-The user will provide a search term (e.g., "Snake toy", "Coloring book").
-Your ONLY task is to return exactly 8 variations of that EXACT item.
+    // 🔥 UPDATED PROMPT: Gift-focused, Amazon-friendly names
+    const prompt = `You are a world-class gift concierge.
+The user will provide a search term or describe a person.
+Your task is to return exactly 8 highly relevant, premium, and GIFT-READY product names as a valid JSON array of strings.
 
 RULES:
-1. Every single suggestion MUST contain the exact core keyword the user typed.
-2. Do NOT suggest related but different items. (e.g., If user says "Coloring book", do NOT suggest "Sticker book" or "Doodle book").
-3. Keep the names simple, natural, and easily searchable on Amazon. (e.g., "Adult Coloring Book", "Kids Coloring Book", "Mandala Coloring Book").
-4. Do NOT invent overly luxurious or unrelated items.
-5. Return ONLY a valid JSON array of strings. No markdown, no extra text.
+1. Do NOT return raw ingredient or generic names (e.g., "Dark Chocolate", "Milk Chocolate").
+2. Instead, return gift-ready items (e.g., "Luxury Dark Chocolate Gift Box", "Premium Chocolate Hamper", "Personalized Chocolate Set").
+3. Keep the names natural, appealing, and easily searchable on Amazon.
+4. Return ONLY a valid JSON array of strings. No markdown, no extra text.
 
-Example for "Coloring book": ["Adult Coloring Book", "Kids Coloring Book", "Mandala Coloring Book", "Animal Coloring Book", "Relaxing Coloring Book", "Floral Coloring Book", "Fantasy Coloring Book", "Travel Coloring Book"]`;
+Example for "Chocolate": ["Luxury Dark Chocolate Gift Box", "Premium Chocolate Hamper", "Personalized Chocolate Set", "Imported Chocolate Assortment", "Chocolate Gift Basket", "Ferrero Rocher Gift Pack", "Cadbury Celebration Pack", "Handmade Artisan Chocolates"]`;
 
     function cleanAndParse(responseText) {
         try {
