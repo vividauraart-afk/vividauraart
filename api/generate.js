@@ -16,18 +16,19 @@ export default async function handler(req, res) {
     const { query } = req.body;
     if (!query) return res.status(400).json({ error: 'Query is required' });
 
-    // 🔥 UPDATED PROMPT: Gift-focused, Amazon-friendly names
-    const prompt = `You are a world-class gift concierge.
-The user will provide a search term or describe a person.
-Your task is to return exactly 8 highly relevant, premium, and GIFT-READY product names as a valid JSON array of strings.
+    // 🔥 STRICT AI PROMPT: AI തന്നെയാണ് ചെയ്യുന്നത്, പക്ഷേ കൃത്യമായി യൂസർ അടിച്ച വാക്ക് മാത്രം.
+    const prompt = `You are a strict search assistant.
+The user will provide a search term (e.g., "Snake", "Teddy", "Watch", "Chocolate").
+Your ONLY task is to return exactly 8 simple variations of that EXACT item.
 
-RULES:
-1. Do NOT return raw ingredient or generic names (e.g., "Dark Chocolate", "Milk Chocolate").
-2. Instead, return gift-ready items (e.g., "Luxury Dark Chocolate Gift Box", "Premium Chocolate Hamper", "Personalized Chocolate Set").
-3. Keep the names natural, appealing, and easily searchable on Amazon.
-4. Return ONLY a valid JSON array of strings. No markdown, no extra text.
+STRICT RULES:
+1. Every single suggestion MUST contain the exact core word the user typed.
+2. Do NOT invent new items or add unrelated words (e.g., If user says "Snake", do NOT say "Snake Figurine", "Sticker", "Doll"). Just use "Snake", "Snake Toy", "Snake Gift", "Snake Set".
+3. Do NOT use words like "Premium", "Luxury", or "Exclusive".
+4. The items must be affordable and easily searchable on Amazon (priced above ₹100).
+5. Return ONLY a valid JSON array of strings. No markdown, no extra text.
 
-Example for "Chocolate": ["Luxury Dark Chocolate Gift Box", "Premium Chocolate Hamper", "Personalized Chocolate Set", "Imported Chocolate Assortment", "Chocolate Gift Basket", "Ferrero Rocher Gift Pack", "Cadbury Celebration Pack", "Handmade Artisan Chocolates"]`;
+Example for "Snake": ["Snake", "Snake Toy", "Snake Gift", "Snake Set", "Toy Snake", "Rubber Snake", "Plastic Snake", "Snake Pack"]`;
 
     function cleanAndParse(responseText) {
         try {
@@ -121,10 +122,21 @@ Example for "Chocolate": ["Luxury Dark Chocolate Gift Box", "Premium Chocolate H
     if (gifts && Array.isArray(gifts) && gifts.length > 0) {
         return res.status(200).json({ success: true, gifts: gifts.slice(0, 8), source: engineUsed });
     } else {
+        // AI എല്ലാം ഫെയിൽ ആയാൽ മാത്രം ഈ ഭാഗം വരും (നീ ടൈപ്പ് ചെയ്ത അതേ വാക്ക് തന്നെ തരും)
+        const fallbackGifts = [
+            `${query}`, 
+            `${query} Toy`, 
+            `${query} Gift`, 
+            `${query} Set`,
+            `${query} Pack`,
+            `${query} Combo`,
+            `Toy ${query}`,
+            `Best ${query}`
+        ];
         return res.status(200).json({ 
-            success: false, 
-            error: 'All AI Engines failed.', 
-            gifts: [] 
+            success: true, 
+            gifts: fallbackGifts, 
+            source: "Fallback System" 
         });
     }
 }
