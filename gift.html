@@ -127,11 +127,19 @@ font-weight: 700;
 letter-spacing: 1px;
 }
 
-/* Removed the border and cursor animation */
+/* Typewriter effect without the cursor */
 .tagline-text {
 color: #d46bff;
 font-style: italic;
 white-space: nowrap;
+overflow: hidden;
+width: 0;
+animation: typing 2.5s steps(30, end) forwards;
+}
+
+@keyframes typing {
+from { width: 0 }
+to { width: 100% }
 }
 
 /* Main Magic Box */
@@ -504,7 +512,7 @@ border-bottom: 1px solid #c9a14a;
     Tell us who the gift is for, and let our AI do the searching for you.
 </p>
 
-<!-- Updated Tagline without cursor -->
+<!-- Typewriter Animation without cursor -->
 <div class="tagline-container">
     <span class="tagline-gift">GIFT</span>
     <span class="tagline-text">Giving It Freely Together</span>
