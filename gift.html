@@ -161,6 +161,13 @@ padding:20px;
 display:flex;
 flex-direction:column;
 gap:15px;
+position: relative;
+}
+
+/* Wrapper for textarea and mic button */
+.input-wrapper {
+position: relative;
+width: 100%;
 }
 
 textarea{
@@ -173,9 +180,51 @@ font-size:15px;
 resize:none;
 outline:none;
 height:80px;
+padding-right: 40px;
 }
 
 textarea::placeholder{color:#666;font-style:italic;}
+
+/* Voice Button */
+.voice-btn {
+position: absolute;
+bottom: 5px;
+right: 0;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(201,161,74,0.3);
+border-radius: 50%;
+width: 36px;
+height: 36px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: 0.3s;
+z-index: 10;
+}
+
+.voice-btn svg {
+width: 18px;
+height: 18px;
+fill: #c9a14a;
+}
+
+/* Animation when listening */
+.voice-btn.listening {
+background: rgba(212,107,255,0.2);
+border-color: #d46bff;
+animation: pulseMic 1.5s infinite;
+}
+
+.voice-btn.listening svg {
+fill: #d46bff;
+}
+
+@keyframes pulseMic {
+0% { box-shadow: 0 0 0 0 rgba(212,107,255,0.4); }
+70% { box-shadow: 0 0 0 10px rgba(212,107,255,0); }
+100% { box-shadow: 0 0 0 0 rgba(212,107,255,0); }
+}
 
 /* Auto-suggestions Dropdown */
 .suggestions-box {
@@ -512,7 +561,6 @@ border-bottom: 1px solid #c9a14a;
     Tell us who the gift is for, and let our AI do the searching for you.
 </p>
 
-<!-- Typewriter Animation without cursor -->
 <div class="tagline-container">
     <span class="tagline-gift">GIFT</span>
     <span class="tagline-text">Giving It Freely Together</span>
@@ -520,8 +568,17 @@ border-bottom: 1px solid #c9a14a;
 
 <div class="magic-box">
 <div class="magic-inner">
-<textarea id="giftInput" oninput="handleInput()" onblur="hideSuggestions()" autocomplete="off"></textarea>
-<div class="suggestions-box" id="suggestionsBox"></div>
+<div class="input-wrapper">
+    <textarea id="giftInput" oninput="handleInput()" onblur="hideSuggestions()" autocomplete="off"></textarea>
+    <div class="suggestions-box" id="suggestionsBox"></div>
+    <!-- Voice Button -->
+    <button class="voice-btn" id="voiceBtn" onclick="startVoice()" title="Speak your gift idea">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+        </svg>
+    </button>
+</div>
 
 <button class="reveal-btn" id="revealBtn" onclick="findGifts()" disabled>
     <span id="btnText">✨ Reveal Gifts</span>
@@ -664,6 +721,56 @@ function hideSuggestions() {
     setTimeout(() => {
         document.getElementById('suggestionsBox').style.display = 'none';
     }, 200);
+}
+
+// Voice Recognition Logic
+let recognition;
+let isListening = false;
+
+function startVoice() {
+    const voiceBtn = document.getElementById('voiceBtn');
+    
+    // Check if browser supports it
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("Your browser does not support voice search. Please use Google Chrome or Safari.");
+        return;
+    }
+
+    if (isListening) {
+        recognition.stop();
+        return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = 'en-US'; // You can change to 'ml-IN' for Malayalam
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = function() {
+        isListening = true;
+        voiceBtn.classList.add('listening');
+    };
+
+    recognition.onresult = function(event) {
+        const speechResult = event.results[0][0].transcript;
+        const inputField = document.getElementById('giftInput');
+        inputField.value = speechResult;
+        handleInput(); // Enable button
+    };
+
+    recognition.onerror = function(event) {
+        console.error("Speech error:", event.error);
+        voiceBtn.classList.remove('listening');
+        isListening = false;
+    };
+
+    recognition.onend = function() {
+        voiceBtn.classList.remove('listening');
+        isListening = false;
+    };
+
+    recognition.start();
 }
 
 function openModal(id) {
